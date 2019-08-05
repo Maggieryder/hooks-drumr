@@ -96,16 +96,16 @@ class Sequencer {
   //   sequenceNote(trackIndex,step);
   // }
 
-  updateSwingFactor(e){
-    let val = e.target.value;
+  updateSwingFactor(val){
+    // let val = e.target.value;
     // updateInputStyle('swing', val);
     //sheet.textContent = getTrackStyle('swing', val);
     this.updateParams({swingFactor:val/100});
-    $('#swingMeter').html(val+'%');
+    // $('#swingMeter').html(val+'%');
   }
 
-  updateTempo(e){
-    let val = e.target.value
+  updateTempo(val){
+    // let val = e.target.value
     // tot = e.target.max - e.target.min,
     // perc = (val-e.target.min)/tot;
     // updateInputStyle('tempo', perc*100);

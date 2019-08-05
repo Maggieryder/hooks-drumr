@@ -59,11 +59,13 @@ const useSequencer = () => {
 
   const setTempo = value => {
     console.log('setTempo', value)
+    SEQUENCER.updateTempo(value)
     dispatch({ type: TYPES.UPDATE_TEMPO, value })
   }
 
   const setSwing = value => {
     console.log('setSwing', value)
+    SEQUENCER.updateSwingFactor(value)
     dispatch({ type: TYPES.UPDATE_SWING, value })
   }
 
