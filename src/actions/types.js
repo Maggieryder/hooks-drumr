@@ -1,3 +1,7 @@
+export const IS_PLAYING = 'IS_PLAYING'
+
+export const UPDATE_SEQUENCES = 'UPDATE_SEQUENCES'
+
 export const UPDATE_TEMPO = 'UPDATE_TEMPO'
 
 export const UPDATE_SWING = 'UPDATE_SWING'
@@ -18,14 +22,11 @@ export const UPDATE_KIT_BUFFERS = 'UPDATE_KIT_BUFFERS'
 
 export const UPDATE_VERB_BUFFERS = 'UPDATE_VERB_BUFFERS'
 
-export const IS_PLAYING = 'IS_PLAYING'
-
 export const IS_LOADING = 'IS_LOADING'
 
 export const HAS_ERROR = 'HAS_ERROR'
 
 export const DATA_LOADED = 'DATA_LOADED'
-
 
 export const ADD_TRACK = 'ADD_TRACK'
 

@@ -9,21 +9,6 @@ import Track from '../api/Track'
 
 // import tracksReducer, { initialState } from '../reducers/tracksReducer'
 
-// import { initAudioCtx } from '../api/AudioCtx'
-// import Mixer from '../api/Mixer'
-// import Reverb from '../api/Reverb'
-// import Delay from '../api/Delay'
-// import Compressor from '../api/Compressor'
-// import Track from '../api/Track'
-// import Sequencer from '../api/Sequencer'
-
-// const AUDIO_CONTEXT = initAudioCtx();
-// const MIXER = new Mixer(AUDIO_CONTEXT)
-// const REVERB = new Reverb(AUDIO_CONTEXT, MIXER.wetMix())
-// const DELAY = new Delay(AUDIO_CONTEXT, MIXER.wetMix())
-// const COMPRESSOR = new Compressor(AUDIO_CONTEXT, MIXER.masterMix())
-// const SEQUENCER = new Sequencer(AUDIO_CONTEXT)
-
 import { AUDIO_CONTEXT, MIXER, REVERB, DELAY } from '../api'
 
 // const initialTracksState = {
@@ -51,22 +36,15 @@ const useDrumr = () => {
   const {state:{ controller, tracks }, dispatch} = useContext(DrumrContext);
   // console.log(tracks)
 
-  const { isLoading,
+  const { 
+    isLoading,
     error,
-    context,
     kits,
     verbs,
     kitBuffers,
     verbBuffers,
     currentKitId,
-    currentVerbId, 
-    signature,
-    tempo,
-    swing,
-    numBars,
-    numBeats,
-    numSteps,
-    sequences
+    currentVerbId
      } = controller
 
 
@@ -75,8 +53,6 @@ const useDrumr = () => {
   // const [tracks, dispatch] = useReducer(tracksReducer, initialState)
 
   // console.log('tracks',tracks)
-
-  
 
   // const [tracks, dispatch] = useReducer((tracks, { type, value }) => {
   //   switch (type) {
@@ -104,14 +80,6 @@ const useDrumr = () => {
     dispatch({ type: TYPES.ADD_TRACK, value: track })
     // console.log(' - - - TRACKS', tracks)
   }
-
-  // const muteTrack = (id) => {
-  //   dispatch({ type: TYPES.MUTE_TRACK, value: id })
-  // }
-
-  // const soloTrack = (id) => {
-  //   dispatch({ type: TYPES.SOLO_TRACK, value: id })
-  // }
 
 
   const loadData = async (url) => {  
@@ -175,68 +143,19 @@ const useDrumr = () => {
     dispatch({ type: TYPES.UPDATE_KIT_ID, value: index })
   }
 
-  const onNoteTap = (trackId, barId, stepId) => {
-    console.log(tracks.all)
-    console.log('trackIndex', trackId, 'bar', barId, 'step', stepId);
-    const track = tracks.all[trackId]
-    console.log('track', track)
-    track.triggerSample(0)
+  // const onNoteTap = (trackId, barId, stepId) => {
+  //   console.log(tracks.all)
+  //   console.log('trackIndex', trackId, 'bar', barId, 'step', stepId);
+  //   const track = tracks.all[trackId]
+  //   console.log('track', track)
+  //   track.triggerSample(0)
     // console.log('Sequencer.running', Sequencer.running());
     // if (!Sequencer.running()){
     //   // MIXER.tracks[trackIndex].triggerSample(CTX.currentTime);
     //   // Sequencer.sequenceNote(trackId, barId, stepId);
     // }  
-  }
-  // const triggerSample = (buffer, time) => {
-  //   const sample = new Sample( AUDIO_CONTEXT, buffer ),
-  //   pannedSample = new PannerNode( AUDIO_CONTEXT, sample)
-  //   console.log('REVERB.node()', REVERB.node())
-  //   console.log('DELAY.node()', DELAY.node())
-  //   console.log('MIXER.masterMix()', MIXER.masterMix())
-  //   connectGain(AUDIO_CONTEXT, pannedSample, REVERB.node() )
-  //   connectGain(AUDIO_CONTEXT, pannedSample, DELAY.node() )
-  //   connectGain(AUDIO_CONTEXT, pannedSample, MIXER.masterMix())
-  //   trigger(sample, time);
   // }
 
-  const setTempo = value => {
-    console.log('setTempo', value)
-    dispatch({ type: TYPES.UPDATE_TEMPO, value })
-  }
-
-  const setSwing = value => {
-    console.log('setSwing', value)
-    dispatch({ type: TYPES.UPDATE_SWING, value })
-  }
-
-  const setNumBars = value => {
-    console.log('setNumBars', value)
-    dispatch({ type: TYPES.UPDATE_NUMBARS, value })
-  }
-
-  const setNumBeats = value => {
-    console.log('setNumBars', value)
-    dispatch({ type: TYPES.UPDATE_NUMBEATS, value })
-  }
-
-  const setNumSteps = value => {
-    console.log('setNumBars', value)
-    dispatch({ type: TYPES.UPDATE_NUMSTEPS, value })
-  }
-
-  const toggleReverb = (isOn) => {
-    REVERB.toggleReverb(isOn)
-  }
-  const assignReverbBuffer = (buffer) => {
-    REVERB.reverbBuffer(buffer)
-  }
-  const toggleDelay = (isOn) => {
-    DELAY.toggleDelay(isOn)
-  }
-
-  // const updateWetVolume = (val) => {
-  //   mixer.updateWetVolume(val)
-  // }
 
   // function playTrack(index) {
   //   if (index === state.currentTrackIndex) {
@@ -258,57 +177,25 @@ const useDrumr = () => {
   //   setState(state => ({ ...state, isPlaying: !state.isPlaying }));
   // }
 
-  // function playPreviousTrack() {
-  //   const newIndex = ((state.currentTrackIndex + -1) % state.tracks.length + state.tracks.length) % state.tracks.length;
-  //   playTrack(newIndex);
-  // }
-
-  // function playNextTrack() {
-  //   const newIndex = (state.currentTrackIndex + 1) % state.tracks.length;
-  //   playTrack(newIndex);
-  // }
-
   return {
-    // playTrack,
     // togglePlay,
-    // currentTrackName: state.currentTrackIndex !== null && state.tracks[state.currentTrackIndex].name,
-    // trackList: state.tracks,
     // isPlaying: state.isPlaying,
-    // playPreviousTrack,
-    // playNextTrack,
+
     loadData,
     loadBuffers,
     setCurrentKitId,
     isLoading,
     error,
-    context,
     kits,
     verbs,
     kitBuffers,
     verbBuffers,
     currentKitId,
     currentVerbId,
-    assignReverbBuffer,
-    onNoteTap,
-    signature,
-    tempo, 
-    swing,
-    numBars,
-    numSteps,
-    numBeats,
-    sequences,
     tracks,
     addTrack,
-    setTracks,
-    setTempo,
-    setSwing,
-    setNumBars,
-    setNumBeats,
-    setNumSteps,
-    toggleReverb,
-    toggleDelay,
-    // updateWetVolume
+    setTracks
   }
-};
+}
 
 export default useDrumr;

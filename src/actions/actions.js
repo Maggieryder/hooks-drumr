@@ -1,5 +1,15 @@
 import * as TYPES from '../actions'
 
+export const togglePlay = ( bool ) => ({
+  type: TYPES.IS_PLAYING,
+  value: bool
+})
+
+export const updateSequences = ( arr ) => ({
+  type: TYPES.UPDATE_SEQUENCES,
+  value: arr
+})
+
 export const updateTempo = ( num ) => ({
   type: TYPES.UPDATE_TEMPO,
   value: num
@@ -55,14 +65,12 @@ export const updateVerbBuffers = ( buffers ) => ({
   value: buffers
 })
 
-export const togglePlay = ( ) => ({
-  type: TYPES.IS_PLAYING
-})
-
 export const isLoading = ( bool ) => ({
-  type: TYPES.IS_LOADING
+  type: TYPES.IS_LOADING,
+  value: bool
 })
 
-export const hasError = ( bool ) => ({
-  type: TYPES.HAS_ERROR
+export const hasError = ( err ) => ({
+  type: TYPES.HAS_ERROR,
+  value: err
 })

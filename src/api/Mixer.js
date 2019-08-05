@@ -1,8 +1,3 @@
-// import Reverb from '../api/Reverb'
-// import Delay from '../api/Delay'
-// import Compressor from '../api/Delay'
-
-
 class Mixer {
   constructor(context){
     this._context = context
@@ -16,10 +11,6 @@ class Mixer {
     this._wetMix = this._context.createGain()
     this._dryMix = this._context.createGain()
     this._masterMix = this._context.createGain()
-    // this._reverb = new Reverb(this._context, this.wetMix())
-    // this._delay = new Delay(this._context, this.wetMix())
-    // console.log('this._reverb', this.reverb())
-    // this._compressor = new Compressor(this._context, this.masterMix())
     this._wetMute = false
     this._dryMute = false
     this.connect()
@@ -77,31 +68,6 @@ class Mixer {
   dryMix(){
     return this._dryMix
   }
-  // reverb(){
-  //   return this._reverb.node()
-  // }
-  // delay(){
-  //   return this._delay.node()
-  // }
-  // compressor(){
-  //   return this._compressor.node()
-  // }
-  
-  // toggleReverb(isOn){
-  //   console.log('[Mixer] toggletoggleReverb', isOn)
-  //   this._reverb.toggleOn(isOn)
-  // }
-  // reverbBuffer(buffer){
-  //   this._reverb.setImpulse(buffer)
-  // }
-  // toggleDelay(isOn){
-  //   this._delay.toggleOn(isOn)
-  // }
-  // addTrack(){
-  //   const id = this._tracks.length
-  //   const track = new Track(id, this._context, this._masterMix, this.reverb(), this.delay())
-  //   this._tracks = [...this._tracks, track]
-  // }
 }
 
 export default Mixer

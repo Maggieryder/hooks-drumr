@@ -129,6 +129,7 @@ class Sequencer {
     }
     return message;
   }
+  
 
   secondsPerBeat(){
     return 60.0 / this.tempo;

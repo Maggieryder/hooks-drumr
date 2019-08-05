@@ -8,29 +8,38 @@ import Control from '../components/control'
 import Processors from '../components/processors'
 
 import useDrumr from '../hooks/useDrumr'
+import useSequencer from '../hooks/useSequencer'
 
 import classes from './controller.module.scss'
 
 const Controller = () => {
   const { 
-          loadData, 
-          loadBuffers, 
-          kits, 
-          currentKitId, 
-          setCurrentKitId, 
-          verbs, 
-          tempo, 
-          setTempo, 
-          swing, 
-          setSwing, 
-          numBars, 
-          setNumBars, 
-          numBeats, 
-          setNumBeats, 
-          numSteps, 
-          setNumSteps,
-          tracks,
-          addTrack } = useDrumr()
+    loadData, 
+    loadBuffers, 
+    kits, 
+    currentKitId, 
+    setCurrentKitId, 
+    verbs,   
+    tracks,
+    addTrack } = useDrumr()
+
+  const {
+    isPlaying,
+    tempo, 
+    setTempo, 
+    swing, 
+    setSwing, 
+    numBars, 
+    setNumBars, 
+    numBeats, 
+    setNumBeats, 
+    numSteps, 
+    setNumSteps,
+    sequences,
+    setSequences,
+    togglePlay,
+    signature,
+    setSignature } = useSequencer()
 
 
   const numBarsOptions = [

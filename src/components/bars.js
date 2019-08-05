@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Bar from './bar'
 
-import useDrumr from '../hooks/useDrumr'
+import useSequencer from '../hooks/useSequencer'
 
 import classes from './bars.module.scss'
 
 const Bars = ( { track } ) => {
 
-  const { numBars } = useDrumr();
+  const { numBars } = useSequencer()
 
   const [bars, setBars] = useState([0,1])
 

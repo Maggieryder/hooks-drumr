@@ -5,11 +5,13 @@ import Step from './step'
 
 import classes from './bar.module.scss'
 
-import useDrumr from '../hooks/useDrumr'
+// import useDrumr from '../hooks/useDrumr'
+import useSequencer from '../hooks/useSequencer'
 
 const Bar = ( { trackId, barId } ) => {
 
-  const { onNoteTap, numBeats, numSteps } = useDrumr();
+  // const { onNoteTap } = useDrumr();
+  const { onNoteTap, numBeats, numSteps } = useSequencer();
 
   const [steps, setSteps] = useState([])
 

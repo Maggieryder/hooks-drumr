@@ -2,17 +2,7 @@ import React, { useReducer } from 'react'
 
 import rootReducer from '../reducers'
 
-
-// const AUDIO_CONTEXT = initAudioCtx()
-// const reverb =  new Reverb(CTX)
-
 // import tracksReducer from '../reducers/tracksReducer'
-
-
-// const audioApiState = {
-//   context: CTX,
-//   reverb: new Reverb(CTX),
-// }
 
 const initialState = {
   isLoading: false,
@@ -22,14 +12,17 @@ const initialState = {
   kitBuffers: [{ label: '...', value: '0'}],
   verbBuffers: null,
   currentKitId: 1,
-  currentVerbId: 0,
+  currentVerbId: 0 
+}
+
+const initialSequencerState = {
+  isPlaying: false,
   signature:'4/4',
   tempo: 96,
   swing: 0,
   numBars: 1,
   numBeats: 4,
   numSteps: 16,
-  mixer: null,
   sequences: []
 }
 
@@ -41,6 +34,7 @@ const initialTracksState = {
 
 const rootState = {
   controller: initialState,
+  sequencer: initialSequencerState,
   tracks: initialTracksState
 }
 

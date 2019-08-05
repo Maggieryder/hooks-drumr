@@ -14,7 +14,10 @@ const initAudioCtx = () => {
   }
 }
 
+const hasGetUserMedia = () => {
+  return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia || navigator.msGetUserMedia)
+}
 
 
-
-export { initAudioCtx }
+export { initAudioCtx, hasGetUserMedia }
