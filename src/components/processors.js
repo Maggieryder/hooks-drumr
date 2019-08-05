@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Control from './control'
 import Select from './ui/select'
 import InputRange from './ui/inputRange'

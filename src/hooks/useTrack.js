@@ -5,12 +5,11 @@ import { TrackContext } from '../context/TrackContext'
 
 import useDrumr from '../hooks/useDrumr'
 
-import Track from '../api/Track'
-
+//import Track from '../api/Track'
 
 const useTrack = () => {
 
-  const { tracks, kitBuffers } = useDrumr(DrumrContext)
+  const { tracks } = useDrumr(DrumrContext)
 
   const [state, setState] = useContext(TrackContext)
 

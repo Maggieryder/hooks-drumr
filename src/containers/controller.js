@@ -30,8 +30,7 @@ const Controller = () => {
           numSteps, 
           setNumSteps,
           tracks,
-          addTrack,
-          setTracks } = useDrumr()
+          addTrack } = useDrumr()
 
 
   const numBarsOptions = [

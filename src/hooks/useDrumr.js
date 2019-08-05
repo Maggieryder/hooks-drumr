@@ -5,7 +5,7 @@ import { DrumrContext } from '../context/DrumrContext'
 import * as TYPES from '../actions/types'
 
 import Track from '../api/Track'
-import { Sample, PannerNode, connectGain, trigger } from '../api/Sample'
+// import { Sample, PannerNode, connectGain, trigger } from '../api/Sample'
 
 // import tracksReducer, { initialState } from '../reducers/tracksReducer'
 
@@ -91,7 +91,7 @@ const useDrumr = () => {
 
   const setTracks = () => {
     console.log('setTracks >>>>>')
-    [0,1,2,3].map((item, i)=> addTrack(i)) 
+    [0,1,2,3].map(i => addTrack(i)) 
   }
 
   const addTrack = (id) => {
@@ -105,13 +105,13 @@ const useDrumr = () => {
     // console.log(' - - - TRACKS', tracks)
   }
 
-  const muteTrack = (id) => {
-    dispatch({ type: TYPES.MUTE_TRACK, value: id })
-  }
+  // const muteTrack = (id) => {
+  //   dispatch({ type: TYPES.MUTE_TRACK, value: id })
+  // }
 
-  const soloTrack = (id) => {
-    dispatch({ type: TYPES.SOLO_TRACK, value: id })
-  }
+  // const soloTrack = (id) => {
+  //   dispatch({ type: TYPES.SOLO_TRACK, value: id })
+  // }
 
 
   const loadData = async (url) => {  
@@ -187,17 +187,17 @@ const useDrumr = () => {
     //   // Sequencer.sequenceNote(trackId, barId, stepId);
     // }  
   }
-  const triggerSample = (buffer, time) => {
-    const sample = new Sample( AUDIO_CONTEXT, buffer ),
-    pannedSample = new PannerNode( AUDIO_CONTEXT, sample)
-    console.log('REVERB.node()', REVERB.node())
-    console.log('DELAY.node()', DELAY.node())
-    console.log('MIXER.masterMix()', MIXER.masterMix())
-    connectGain(AUDIO_CONTEXT, pannedSample, REVERB.node() )
-    connectGain(AUDIO_CONTEXT, pannedSample, DELAY.node() )
-    connectGain(AUDIO_CONTEXT, pannedSample, MIXER.masterMix())
-    trigger(sample, time);
-  }
+  // const triggerSample = (buffer, time) => {
+  //   const sample = new Sample( AUDIO_CONTEXT, buffer ),
+  //   pannedSample = new PannerNode( AUDIO_CONTEXT, sample)
+  //   console.log('REVERB.node()', REVERB.node())
+  //   console.log('DELAY.node()', DELAY.node())
+  //   console.log('MIXER.masterMix()', MIXER.masterMix())
+  //   connectGain(AUDIO_CONTEXT, pannedSample, REVERB.node() )
+  //   connectGain(AUDIO_CONTEXT, pannedSample, DELAY.node() )
+  //   connectGain(AUDIO_CONTEXT, pannedSample, MIXER.masterMix())
+  //   trigger(sample, time);
+  // }
 
   const setTempo = value => {
     console.log('setTempo', value)

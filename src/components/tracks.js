@@ -8,7 +8,7 @@ import useDrumr from '../hooks/useDrumr'
 
 const Tracks = () => {
 
-  const { tracks, setTracks } = useDrumr()
+  const { tracks } = useDrumr()
 
   useEffect(() => {
     // setTracks()

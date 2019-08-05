@@ -38,7 +38,7 @@ export default function(state = initialState, action) {
           ...state,
           muted: [...state.muted, action.value]
         }
-    case TYPES.UNSOLO_TRACK:
+    case TYPES.UNMUTE_TRACK:
         return {
           ...state,
           muted: state.muted.filter(t => t.id !== action.value)

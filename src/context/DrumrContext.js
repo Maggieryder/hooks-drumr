@@ -1,10 +1,5 @@
 import React, { useReducer } from 'react'
 
-// import { initAudioCtx } from '../api/AudioCtx'
-import Reverb from '../api/Reverb'
-import Delay from '../api/Delay'
-import Compressor from '../api/Compressor'
-
 import rootReducer from '../reducers'
 
 
