@@ -1,0 +1,17 @@
+@import '../scss/vars';
+
+.controls { 
+  background: $black-02;
+  // border-top: 1px solid $white-01;
+  // border-bottom: 1px solid $white-01;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns:  repeat(5, 1fr) repeat(2, auto);
+  height:61px;
+  transition: transform .5s ease-out;
+  width: 50%;
+  // transform: translateY(-100%);
+  &.show {
+    transform: translateY(0);
+  }
+}

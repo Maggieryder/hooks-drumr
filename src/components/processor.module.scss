@@ -1,0 +1,25 @@
+@import '../scss/vars';
+
+.processor {
+  background: $black-02;
+  // border-top: 1px solid $white-01;
+  border-bottom: 1px solid $white-01;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns:  90px repeat(5, calc((100% - 90px) / 5));
+
+
+  width: 100%;
+  //   position: relative;
+  //   box-sizing: border-box;
+  //   // display: grid;
+  //   // align-items: center;
+  //   // height: 100%;   
+  //   // border-left: 1px solid $white-01;
+  //   padding: 0 1rem;
+  //   display: grid;
+  // // grid-template-columns: repeat(auto, 1fr);
+  // grid-template-rows: 1fr auto;
+  // width: 100%;
+  // height: auto;
+  }

@@ -1,0 +1,23 @@
+@import '../scss/vars';
+
+.bar {
+  position: relative;
+  display: grid;
+  // grid-template-columns: repeat(12, 1fr);
+  // grid-template-columns: repeat(16, 1fr);
+  height: 100%;
+  width: 100%;
+  border-right: 1px solid $white-01;
+ 
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    // background: $white-01;
+    border-top: 1px dotted $white-01;
+  }
+}

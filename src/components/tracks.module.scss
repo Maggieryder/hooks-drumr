@@ -1,0 +1,16 @@
+@import '../scss/vars';
+
+.tracks {
+  display: grid;
+  grid-template-rows: repeat(auto, 1fr);
+  width: 100%;
+  height: auto;
+  /* background: #fc0; */
+}
+
+.select-kit {
+  color: black!important;
+  option {
+    color: inherit;
+  }
+}
