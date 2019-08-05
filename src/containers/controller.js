@@ -144,6 +144,11 @@ const Controller = () => {
         >+</button>
         <Label>Add Track</Label>
       </Control>
+      <Control>
+        <button
+          onClick={ value => togglePlay() }
+        >></button>
+      </Control>
         
       </div>
       <Tracks />
