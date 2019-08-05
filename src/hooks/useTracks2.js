@@ -11,7 +11,7 @@ import useDrumr from '../hooks/useDrumr'
 
   const useTrack = () => {
   
-  const { tracks, kitBuffers } = useDrumr(DrumrContext)
+  const { tracks } = useDrumr(DrumrContext)
 
   const [state, setState] = useContext(TrackContext)
 
