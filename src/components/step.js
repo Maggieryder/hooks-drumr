@@ -22,8 +22,9 @@ const Step = ({ onTap, step, isBeat, velocity, sustain }) => {
 
   const handleClick = event => {
     // prevIsOn = !prevIsOn
+    // console.log('step isOn before', isOn)
     setIsOn(!isOn)
-    onTap()
+    onTap(!isOn)
   }
 
   return (

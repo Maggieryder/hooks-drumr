@@ -35,7 +35,7 @@ const Bar = ( { trackId, barId } ) => {
           return <Step key={i} 
                       step={Math.floor(i/numBeats) + 1} 
                       isBeat={i % numBeats === 0} 
-                      onTap={() => onNoteTap(trackId, barId, i)} 
+                      onTap={(isOn) => onNoteTap(trackId, barId, i, isOn)} 
                       velocity={.5} />
         })}
     </div>

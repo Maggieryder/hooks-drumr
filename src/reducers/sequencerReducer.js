@@ -1,4 +1,5 @@
 import * as TYPES from '../actions'
+import sequenceReducer from './sequenceReducer'
 
 const initialState = {
   isPlaying: false,
@@ -11,9 +12,21 @@ const initialState = {
   sequences: []
 }
 
+
+
 export default function(state = initialState, action) {
-  // console.log('tracksReducer action', action)
+  console.log('sequencerReducer action', action)
   switch (action.type){
+    case TYPES.ADD_TRACK:
+        return {
+          ...state,
+          sequences: [...state.sequences, sequenceReducer(undefined, action)]
+        }
+    case TYPES.REMOVE_TRACK:
+        return {
+          ...state,
+          sequences: state.sequences.filter(t => t !== action.trackId)
+        }
     case TYPES.IS_PLAYING:
         return {
           ...state,
@@ -22,7 +35,7 @@ export default function(state = initialState, action) {
     case TYPES.UPDATE_SEQUENCES:
         return {
           ...state,
-          sequences: action.value
+          sequences: state.sequences.map(s => sequenceReducer(s, action))
         }
     case TYPES.UPDATE_TEMPO:
         return {

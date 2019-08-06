@@ -2,6 +2,10 @@ export const IS_PLAYING = 'IS_PLAYING'
 
 export const UPDATE_SEQUENCES = 'UPDATE_SEQUENCES'
 
+export const ADD_BAR = 'ADD_BAR'
+
+export const REMOVE_BAR = 'REMOVE_BAR'
+
 export const UPDATE_TEMPO = 'UPDATE_TEMPO'
 
 export const UPDATE_SWING = 'UPDATE_SWING'
