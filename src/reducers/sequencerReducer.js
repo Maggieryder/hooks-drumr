@@ -15,7 +15,7 @@ const initialState = {
 
 
 export default function(state = initialState, action) {
-  console.log('sequencerReducer action', action)
+  // console.log('sequencerReducer action', action)
   switch (action.type){
     case TYPES.ADD_TRACK:
         return {
@@ -35,7 +35,7 @@ export default function(state = initialState, action) {
     case TYPES.UPDATE_SEQUENCES:
         return {
           ...state,
-          sequences: state.sequences.map(s => sequenceReducer(s, action))
+          sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
     case TYPES.UPDATE_TEMPO:
         return {

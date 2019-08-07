@@ -28,15 +28,15 @@ const useSequencer = () => {
       })
     }, [sequences])
 
-  const setSequences = ({ trackId, barId, stepId }) => {
-    console.log('[useTrack] setSequence', { trackId, barId, stepId })
-    // sequences[trackId][barId][stepId]
-    // setState(state => ({ 
-    //   ...state, 
-    //   sequence: value 
-    // }));
-    dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, trackId, barId, stepId } })
-  }
+  // const setSequences = ({ trackId, barId, stepId }) => {
+  //   console.log('[useTrack] setSequence', { trackId, barId, stepId })
+  //   // sequences[trackId][barId][stepId]
+  //   // setState(state => ({ 
+  //   //   ...state, 
+  //   //   sequence: value 
+  //   // }));
+  //   dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, trackId, barId, stepId } })
+  // }
 
   const onNoteTap = (trackId, barId, stepId, isOn) => {
     console.log('trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
@@ -110,7 +110,7 @@ const useSequencer = () => {
     setNumBeats,
     setNumSteps,
     sequences,
-    setSequences,
+    // setSequences,
     togglePlay,
     onNoteTap
   }
