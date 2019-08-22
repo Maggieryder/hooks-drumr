@@ -35,6 +35,7 @@ const Controller = () => {
     setNumBeats, 
     numSteps, 
     setNumSteps,
+    bar,
     sequences,
     setSequences,
     togglePlay,

@@ -5,12 +5,10 @@ import Step from './step'
 
 import classes from './bar.module.scss'
 
-// import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
 
 const Bar = ( { trackId, barId } ) => {
 
-  // const { onNoteTap } = useDrumr();
   const { onNoteTap, numBeats, numSteps } = useSequencer();
 
   const [steps, setSteps] = useState([])
@@ -18,10 +16,11 @@ const Bar = ( { trackId, barId } ) => {
   useEffect(() => {
     // console.log('numSteps', numSteps)
     setSteps(Array.apply(null, {length: numSteps}).map(Number.call, Number))
+    //Array.apply(null, new Array(10)).map(Number.prototype.valueOf,0) // array of zeros
     return (() => {
       
      })
-  }, [numSteps, numBeats])
+  }, [numSteps])
 
   const style = {
     gridTemplateColumns: 'repeat('+numSteps+', 1fr)'

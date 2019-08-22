@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useCallback } from 'react'
 import { DrumrContext } from '../context/DrumrContext'
 
 import * as TYPES from '../actions/types'
@@ -22,11 +22,24 @@ const useSequencer = () => {
     sequences
      } = sequencer
 
+  const [bar, setBar] = useState([])
+
     useEffect(() => {
-      console.log('[useSequencer] sequence update', sequences)
+      // console.log('[useSequencer] sequence update', sequences)
       return (() => {
       })
     }, [sequences])
+
+    useEffect(() => {
+      // setBar(Array(numSteps).fill(0))
+      setBar(Array.apply(null, {length: numSteps}).map(() => 0))
+      // setBar(numSteps === 12 ? [0,0,0,0,0,0,0,0,0,0,0,0] : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+      console.log('[useSequencer] numSteps update', numSteps)
+    }, [numSteps])
+
+    useEffect(() => {
+      console.log('[useSequencer] bar update', bar)
+    }, [bar])
 
   // const setSequences = ({ trackId, barId, stepId }) => {
   //   console.log('[useTrack] setSequence', { trackId, barId, stepId })
@@ -38,19 +51,31 @@ const useSequencer = () => {
   //   dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, trackId, barId, stepId } })
   // }
 
-  const onNoteTap = (trackId, barId, stepId, isOn) => {
-    console.log('trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
-    const track = tracks.all[trackId]
-    console.log('track', track)
-    // track.triggerSample(0)
-    // console.log('Sequencer.running', Sequencer.running());
-    if (!isPlaying){
-      track.triggerSample(AUDIO_CONTEXT.currentTime);
-    //   SEQUENCER.sequenceNote(trackId, barId, stepId);
-    }
-    // const seq = bar
-    dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })  
-  }
+  const onNoteTap = useCallback(
+    (trackId, barId, stepId, isOn) => {
+      console.log('trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
+      const track = tracks.all[trackId]
+      console.log('track', track)
+      // console.log('Sequencer.running', Sequencer.running());
+      if (!isPlaying){
+        track.triggerSample(AUDIO_CONTEXT.currentTime);
+      //   SEQUENCER.sequenceNote(trackId, barId, stepId);
+      }
+      dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })
+    },
+    [],
+  )
+  // (trackId, barId, stepId, isOn) => {
+  //   console.log('trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
+  //   const track = tracks.all[trackId]
+  //   console.log('track', track)
+  //   // console.log('Sequencer.running', Sequencer.running());
+  //   if (!isPlaying){
+  //     track.triggerSample(AUDIO_CONTEXT.currentTime);
+  //   //   SEQUENCER.sequenceNote(trackId, barId, stepId);
+  //   }
+  //   dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })  
+  // }
 
   function togglePlay() {
     //   if (state.isPlaying) {
@@ -86,7 +111,7 @@ const useSequencer = () => {
   }
 
   const setNumSteps = value => {
-    console.log('setNumBars', value)
+    console.log('setNumSteps', value)
     dispatch({ type: TYPES.UPDATE_NUMSTEPS, value })
   }
 
@@ -103,6 +128,7 @@ const useSequencer = () => {
     numBars,
     numSteps,
     numBeats,
+    bar,
     setTempo,
     setSwing,
     setSignature,

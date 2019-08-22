@@ -95,7 +95,7 @@ const Controls = ( { track } ) => {
         <CurrentValue>{Math.round(gain).toString()}</CurrentValue>
       </Control>
       <Control>
-        <InputRange id='pan' min={-50} max={50} step={1} onChange={e => setPan({ trackId: track.id(), value: e.target.value })} value={+pan}></InputRange>
+        <InputRange id='pan' min={-5} max={5} step={.1} onChange={e => setPan({ trackId: track.id(), value: e.target.value })} value={+pan}></InputRange>
         <Label>Pan</Label>
         <CurrentValue>{Math.round(pan/10).toString()}</CurrentValue>
       </Control>
