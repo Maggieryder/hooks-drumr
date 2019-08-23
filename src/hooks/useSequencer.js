@@ -25,7 +25,7 @@ const useSequencer = () => {
   const [bar, setBar] = useState([])
 
     useEffect(() => {
-      // console.log('[useSequencer] sequence update', sequences)
+      console.log('[useSequencer] sequence update', sequences)
       return (() => {
       })
     }, [sequences])
@@ -34,11 +34,11 @@ const useSequencer = () => {
       // setBar(Array(numSteps).fill(0))
       setBar(Array.apply(null, {length: numSteps}).map(() => 0))
       // setBar(numSteps === 12 ? [0,0,0,0,0,0,0,0,0,0,0,0] : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-      console.log('[useSequencer] numSteps update', numSteps)
+      // console.log('[useSequencer] numSteps update', numSteps)
     }, [numSteps])
 
     useEffect(() => {
-      console.log('[useSequencer] bar update', bar)
+      // console.log('[useSequencer] bar update', bar)
     }, [bar])
 
   // const setSequences = ({ trackId, barId, stepId }) => {
@@ -55,7 +55,7 @@ const useSequencer = () => {
     (trackId, barId, stepId, isOn) => {
       console.log('trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
       const track = tracks.all[trackId]
-      console.log('track', track)
+      // console.log('track', track)
       // console.log('Sequencer.running', Sequencer.running());
       if (!isPlaying){
         track.triggerSample(AUDIO_CONTEXT.currentTime);
@@ -89,24 +89,24 @@ const useSequencer = () => {
   }
 
   const setTempo = value => {
-    console.log('setTempo', value)
+    // console.log('setTempo', value)
     SEQUENCER.updateTempo(value)
     dispatch({ type: TYPES.UPDATE_TEMPO, value })
   }
 
   const setSwing = value => {
-    console.log('setSwing', value)
+    // console.log('setSwing', value)
     SEQUENCER.updateSwingFactor(value)
     dispatch({ type: TYPES.UPDATE_SWING, value })
   }
 
   const setNumBars = value => {
-    console.log('setNumBars', value)
+    // console.log('setNumBars', value)
     dispatch({ type: TYPES.UPDATE_NUMBARS, value })
   }
 
   const setNumBeats = value => {
-    console.log('setNumBars', value)
+    // console.log('setNumBars', value)
     dispatch({ type: TYPES.UPDATE_NUMBEATS, value })
   }
 
@@ -116,7 +116,7 @@ const useSequencer = () => {
   }
 
   const setSignature = value => {
-    console.log('setSignature', value)
+    // console.log('setSignature', value)
     dispatch({ type: TYPES.UPDATE_SIGNATURE, value })
   }
 

@@ -15,7 +15,8 @@ const Bar = ( { trackId, barId } ) => {
 
   useEffect(() => {
     // console.log('numSteps', numSteps)
-    setSteps(Array.apply(null, {length: numSteps}).map(Number.call, Number))
+    // setSteps(Array.apply(null, {length: numSteps}).map(Number.call, Number))
+    setSteps(Array.apply(null, {length: numSteps}).map(() => 0))
     //Array.apply(null, new Array(10)).map(Number.prototype.valueOf,0) // array of zeros
     return (() => {
       
@@ -30,7 +31,7 @@ const Bar = ( { trackId, barId } ) => {
     <div 
       className={classes.bar} 
       style={style}>
-        {steps.map(i => {
+        {steps.map((n,i) => {
           return <Step key={i} 
                       step={Math.floor(i/numBeats) + 1} 
                       isBeat={i % numBeats === 0} 

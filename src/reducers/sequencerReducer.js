@@ -15,7 +15,7 @@ const initialState = {
 
 
 export default function(state = initialState, action) {
-  // console.log('sequencerReducer action', action)
+  console.log('sequencerReducer action', action.value)
   switch (action.type){
     case TYPES.ADD_TRACK:
         return {

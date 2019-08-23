@@ -1,21 +1,20 @@
 import * as TYPES from '../actions'
 
-// const initialState = {
-//     id: 0,
-//     bar: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-//     bars: [state.bar, state.bar, state.bar, state.bar]
-//     ]
-// }
+const initialState = {
+    id: null,
+    bar: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    sequence: []
+}
 
-const initialState = [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-]
+// const initialState = [
+//     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+//     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+//     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+//     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+// ]
 
 const sequence = (steps, bars) => {
-    
+
 }
 
 
@@ -24,17 +23,27 @@ const sequence = (steps, bars) => {
 export default function(state = initialState, action) {
     console.log('sequence Reducer action', action)
     switch (action.type){
-        case TYPES.ADD_BAR:
+        case TYPES.ADD_TRACK:
+            return {
+                ...state,
+                id: action.value._trackId,
+                sequence: [state.bar]
+            }
+        // case TYPES.ADD_BAR:
             // return {...state,
-            //             id: action.trackId, 
+            //             id: action.value._trackId, 
             //             bars: action.steps
             //         }
-            return [...state, action.value]
-        case TYPES.REMOVE_BAR:
-            return state.filter((b, i) => i !== action.index)
+            // return [...state, action.value]
+        // case TYPES.REMOVE_BAR:
+        //     return state.filter((b, i) => i !== action.index)
         case TYPES.UPDATE_SEQUENCES:
             const { trackId, barId, stepId, isOn } = action.value
-            return state.map((bar, i) => {
+            if (state.id !== trackId) return state
+  
+            return {
+                ...state,
+                sequence: state.sequence.map((bar, i) => {
                     if(i === barId) {
                         return bar.map((step, j) => {
                             if(j === stepId) {
@@ -45,6 +54,7 @@ export default function(state = initialState, action) {
                     }
                     return bar
               })
+            }
             // return [                // make a new array
             //     ...state.slice(0, barId), // copy the first items up to barId unchanged
             //     // insert the new item
