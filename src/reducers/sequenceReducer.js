@@ -29,6 +29,11 @@ export default function(state = initialState, action) {
                 id: action.value._trackId,
                 sequence: [state.bar]
             }
+        case TYPES.UPDATE_NUMSTEPS:
+            return {
+                ...state,
+                bar: Array.apply(null, {length: action.value}).map(() => 0)
+            }
         // case TYPES.ADD_BAR:
             // return {...state,
             //             id: action.value._trackId, 

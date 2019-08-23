@@ -141,6 +141,7 @@ export default class Track {
     this._buffer = buffer
   }
   triggerSample(time) {
+    console.log('triggerSample')
     // this._sample.start(time)
     // const sample = new Sample( this._context, this._buffer ),
     // pannedSample = new PannerNode( this._context, sample)
