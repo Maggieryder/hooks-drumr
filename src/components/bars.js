@@ -10,7 +10,7 @@ const Bars = ( { track } ) => {
 
   const { numBars } = useSequencer()
 
-  const [bars, setBars] = useState([0,1])
+  const [bars, setBars] = useState(Array.apply(null, {length: numBars}).map(Number.call, Number))
 
   useEffect(() => {
     setBars(Array.apply(null, {length: numBars}).map(Number.call, Number))

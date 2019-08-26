@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 
 // import { DrumrContext } from '../context/DrumrContext'
 // import * as TYPES from '../actions/types'
@@ -17,7 +17,7 @@ const useCompressor = () => {
     const [compRelease, setCompRelease] = useState(0.25)
 
     useEffect(() => {
-        console.log('[useCompressor] INIT')
+        // console.log('[useCompressor] INIT')
         return (() => {
             COMPRESSOR.destroy()
         })
@@ -25,7 +25,7 @@ const useCompressor = () => {
 
 
     useEffect(() => {
-        console.log('[useCompressor] compOn', compOn)
+        // console.log('[useCompressor] compOn', compOn)
         COMPRESSOR.toggleOn(compOn)
         return (() => {
 
@@ -33,43 +33,28 @@ const useCompressor = () => {
       }, [compOn])
 
     useEffect(() => {      
-        console.log('[useCompressor] compThreshold', compThreshold)
+        // console.log('[useCompressor] compThreshold', compThreshold)
         COMPRESSOR.updateThreshold(compThreshold)
-        return (() => {
-
-        })
     }, [compThreshold])
 
     useEffect(() => {      
-        console.log('[useCompressor] compKnee', compKnee)
+        // console.log('[useCompressor] compKnee', compKnee)
         COMPRESSOR.updateKnee(compKnee)
-        return (() => {
-
-        })
     }, [compKnee])
 
     useEffect(() => {      
-        console.log('[useCompressor] compRatio', compRatio)
+        // console.log('[useCompressor] compRatio', compRatio)
         COMPRESSOR.updateRatio(compRatio)
-        return (() => {
-
-        })
     }, [compRatio])
 
     useEffect(() => {      
-        console.log('[useCompressor] compAttack', compAttack)
+        // console.log('[useCompressor] compAttack', compAttack)
         COMPRESSOR.updateAttack(compAttack)
-        return (() => {
-
-        })
     }, [compAttack])
 
     useEffect(() => {      
-        console.log('[useCompressor] compRelease', compRelease)
+        // console.log('[useCompressor] compRelease', compRelease)
         COMPRESSOR.updateRelease(compRelease)
-        return (() => {
-
-        })
     }, [compRelease])
 
     return {

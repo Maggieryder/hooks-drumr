@@ -16,7 +16,7 @@ export default function(state = initialState, action) {
     case TYPES.ADD_TRACK:
         return {
           ...state,
-          all: [...state.all, action.value]
+          all: [...state.all, action.value.track]
         }
     case TYPES.REMOVE_TRACK:
         return {

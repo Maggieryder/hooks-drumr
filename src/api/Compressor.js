@@ -17,19 +17,19 @@ class Compressor extends Processor {
     this.updateRelease(.25); 
   }
   updateThreshold(val){
-    console.log('updateThreshold', val);
+    // console.log('updateThreshold', val);
     this._compressor.threshold.value = val;
   }
   updateKnee(val){
-    console.log('updateKnee', val);
+    // console.log('updateKnee', val);
     this._compressor.knee.value = val;
   }
   updateRatio(val){
-    console.log('updateRatio', val);
+    // console.log('updateRatio', val);
     this._compressor.ratio.value = val;
   }
   updateReduction(val){
-    console.log('updateReduction', val);
+    // console.log('updateReduction', val);
     //if (typeof this.compressor.reduction === 'float') {
       this._compressor.reduction = val;
     // } else {
@@ -37,11 +37,11 @@ class Compressor extends Processor {
     // }
   }
   updateAttack(val){
-    console.log('updateAttack', val);
+    // console.log('updateAttack', val);
     this._compressor.attack.value = val;
   }
   updateRelease(val){
-    console.log('updateRelease', val);
+    // console.log('updateRelease', val);
     this._compressor.release.value = val;
   }
   connect(){

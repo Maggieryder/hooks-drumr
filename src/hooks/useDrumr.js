@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useContext } from 'react'
+import { useContext, useCallback } from 'react'
 import { DrumrContext } from '../context/DrumrContext'
 // import * as ACTIONS from '../actions'
 import * as TYPES from '../actions/types'
@@ -9,7 +9,7 @@ import Track from '../api/Track'
 
 // import tracksReducer, { initialState } from '../reducers/tracksReducer'
 
-import { AUDIO_CONTEXT, MIXER, REVERB, DELAY } from '../api'
+import { AUDIO_CONTEXT, MIXER } from '../api'
 
 // const initialTracksState = {
 //   all: [],
@@ -33,7 +33,8 @@ import { AUDIO_CONTEXT, MIXER, REVERB, DELAY } from '../api'
 
 
 const useDrumr = () => {
-  const {state:{ controller, tracks }, dispatch} = useContext(DrumrContext);
+  const {state:{ controller, sequencer, tracks }, dispatch} = useContext(DrumrContext)
+  const { numSteps, numBars } = sequencer
   // console.log(tracks)
 
   const { 
@@ -65,21 +66,23 @@ const useDrumr = () => {
   //   }
   // }, []);
 
-  const setTracks = () => {
-    console.log('setTracks >>>>>')
-    [0,1,2,3].map(i => addTrack(i)) 
-  }
+  // const setTracks = () => {
+  //   console.log('setTracks >>>>>')
+  //   [0,1,2,3].map(i => addTrack(i)) 
+  // }
 
-  const addTrack = (id) => {
+  const addTrack = useCallback((id) => {
     const track = new Track(id, AUDIO_CONTEXT, MIXER)
     // console.log('addTrack', track)
     // setState(state => ({ 
     //   ...state, 
     //   tracks: [...state.tracks, track] 
     // }))
-    dispatch({ type: TYPES.ADD_TRACK, value: track })
+      dispatch({ type: TYPES.ADD_TRACK, value: { track: track, numSteps, numBars } })
     // console.log(' - - - TRACKS', tracks)
-  }
+    },
+    [],
+  )
 
 
   const loadData = async (url) => {  
@@ -193,8 +196,8 @@ const useDrumr = () => {
     currentKitId,
     currentVerbId,
     tracks,
-    addTrack,
-    setTracks
+    addTrack
+    // setTracks
   }
 }
 

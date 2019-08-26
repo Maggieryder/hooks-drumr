@@ -11,15 +11,15 @@ class Delay extends Processor {
     this._filter = this._context.createBiquadFilter()
   }
   updateDelayTime(val){
-    console.log('updateDelayTime', val);
+    // console.log('updateDelayTime', val);
     this._delay.delayTime.value = val;
   }
   updateFeedbackGain(val){
-    console.log('updateFeedbackGain', val);
+    // console.log('updateFeedbackGain', val);
     this._feedback.gain.value = val;
   }
   updateFrequency(val){
-    console.log('updateFrequency', val);
+    // console.log('updateFrequency', val);
     this._filter.frequency.value = val;
   }
   connect(){

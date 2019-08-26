@@ -24,22 +24,18 @@ const useSequencer = () => {
 
   const [bar, setBar] = useState([])
 
-    useEffect(() => {
-      console.log('[useSequencer] sequence update', sequences)
-      return (() => {
-      })
-    }, [sequences])
+  useEffect(() => {
+    console.log('[useSequencer] sequence update', sequences)
+  }, [sequences, numSteps, numBars])
 
-    useEffect(() => {
-      // setBar(Array(numSteps).fill(0))
-      setBar(Array.apply(null, {length: numSteps}).map(() => 0))
-      // setBar(numSteps === 12 ? [0,0,0,0,0,0,0,0,0,0,0,0] : [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
-      // console.log('[useSequencer] numSteps update', numSteps)
-    }, [numSteps])
+  // useEffect(() => {
+  //   setBar(Array.apply(null, {length: numSteps}).map(() => 0))
+  //   // console.log('[useSequencer] numSteps update', numSteps)
+  // }, [numSteps])
 
-    useEffect(() => {
-      // console.log('[useSequencer] bar update', bar)
-    }, [bar])
+  useEffect(() => {
+    // console.log('[useSequencer] bar update', bar)
+  }, [bar])
 
   // const setSequences = ({ trackId, barId, stepId }) => {
   //   console.log('[useTrack] setSequence', { trackId, barId, stepId })
@@ -55,7 +51,6 @@ const useSequencer = () => {
     (trackId, barId, stepId, isOn) => {
       console.log('NOTE TAP trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
       const track = tracks.all[trackId]
-      // console.log('track', track)
       
       // console.log('Sequencer.running', Sequencer.running());
       if (!isPlaying){
@@ -66,17 +61,6 @@ const useSequencer = () => {
     },
     [],
   )
-  // (trackId, barId, stepId, isOn) => {
-  //   console.log('trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
-  //   const track = tracks.all[trackId]
-  //   console.log('track', track)
-  //   // console.log('Sequencer.running', Sequencer.running());
-  //   if (!isPlaying){
-  //     track.triggerSample(AUDIO_CONTEXT.currentTime);
-  //   //   SEQUENCER.sequenceNote(trackId, barId, stepId);
-  //   }
-  //   dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })  
-  // }
 
   function togglePlay() {
     //   if (state.isPlaying) {

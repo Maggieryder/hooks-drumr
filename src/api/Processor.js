@@ -14,7 +14,7 @@ class Processor {
 
   }
   toggleOn(isOn) {
-    console.log('[Processor] toggleOn', isOn)
+    // console.log('[Processor] toggleOn', isOn)
     if (!isOn && this.isConnected()){
       this.disconnect()
     } else if (isOn && !this.isConnected()){

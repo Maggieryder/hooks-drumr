@@ -63,13 +63,13 @@ const Controller = () => {
     })
   }, [])
 
-  useEffect(() => {
-    const { all } = tracks
-    console.log('all', all.length)
-    return (() => {
+  // useEffect(() => {
+  //   const { all } = tracks
+  //   console.log('[ controller ] all length', all.length)
+  //   return (() => {
       
-    })
-  }, [tracks])
+  //   })
+  // }, [tracks])
 
   useEffect(() => {
     if (kits) {
@@ -85,7 +85,7 @@ const Controller = () => {
 
   useEffect(() => { 
     if (verbs) {
-      console.log('verbs', verbs[0])
+      // console.log('verbs', verbs[0])
       loadBuffers(verbs[0], 'verbBuffers')
     } 
     return (() => {
@@ -158,4 +158,4 @@ const Controller = () => {
   )
 }
 
-export default Controller
+export default React.memo(Controller)

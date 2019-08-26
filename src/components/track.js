@@ -10,7 +10,7 @@ import classes from './track.module.scss'
 const Track = ( { track } ) => {
 
   useEffect(() => {
-    // console.log('[ Tracks ] trackId', trackId)
+    // console.log('[ Track ] trackId', track.id())
     return (() => {
       
     })

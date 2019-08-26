@@ -82,7 +82,7 @@ export default class Track {
 //     this.sample.trigger(time);
 //   }
   toggleMute(){ 
-    console.log('toggleMute')
+    // console.log('toggleMute')
     this._mute = !this._mute
     this._mute ? this.disconnect() : this.connect();
   }
@@ -96,48 +96,48 @@ export default class Track {
     return this._solo;
   }
   updateVolume(value){
-    console.log('[Track Api] updateVolume '+this.id()+' volume', value )
+    // console.log('[Track Api] updateVolume '+this.id()+' volume', value )
     this._outputGain.gain.value = value;
   }
   getVolume(){
     return this._outputGain.gain.value;
   }
   updatePan(value){
-    console.log('[Track Api] updatePan id '+this.id()+' value', value )
+    // console.log('[Track Api] updatePan id '+this.id()+' value', value )
     let xpos = value,
     zpos = 1 - Math.abs(xpos);
     this._panner.setPosition(xpos, 0, zpos);
   }
   updateReverbSend(value){
-    console.log('[Track Api] updateReverbSend id '+this.id()+' send', value )
+    // console.log('[Track Api] updateReverbSend id '+this.id()+' send', value )
     this._reverbSendGain.gain.value = value;
   }
   reverbSend(){
     return this._reverbSendGain.gain.value;
   }
   updateDelaySend(value){
-    console.log('[Track Api] updateDelaySend id '+this.id()+' send', value )
+    // console.log('[Track Api] updateDelaySend id '+this.id()+' send', value )
     this._delaySendGain.gain.value = value;
   }
   delaySend(){
     return this._delaySendGain.gain.value;
   }
   connect(){
-    console.log('[Track Api] connect '+this.id())
+    // console.log('[Track Api] connect '+this.id())
     this._reverbSendGain.connect(this._reverbNode)
     this._delaySendGain.connect(this._delayNode)
     this._outputGain.connect(this._destination)
     // this._meter.connect()
   }
   disconnect(){
-    console.log('[Track Api] disconnect '+this.id())
+    // console.log('[Track Api] disconnect '+this.id())
     this._reverbSendGain.disconnect(this._reverbNode)
     this._delaySendGain.disconnect(this._delayNode)
     this._outputGain.disconnect(this._destination)
     // this._meter.disconnect();
   }
   assignTrackBuffer(buffer){
-    console.log('[Track Api] assignTrackBuffer', buffer)
+    // console.log('[Track Api] assignTrackBuffer', buffer)
     this._buffer = buffer
   }
   triggerSample(time) {

@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
         case TYPES.ADD_TRACK:
             return {
                 ...state,
-                id: action.value._trackId,
+                id: action.value.track.id(),
                 sequence: [state.bar]
             }
         case TYPES.UPDATE_NUMSTEPS:

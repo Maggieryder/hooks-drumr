@@ -8,28 +8,28 @@ import useDrumr from '../hooks/useDrumr'
 
 const Tracks = () => {
 
-  const { tracks } = useDrumr()
+  const { tracks: { all } } = useDrumr()
 
   useEffect(() => {
     // setTracks()
-    console.log('[ TRACKS ] tracks INIT')
+    // console.log('[ TRACKS ] tracks INIT')
     return (() => { 
     })
   }, []);
 
   useEffect(() => {
-    const { all } = tracks
+    // const { all } = tracks
 
     console.log('[ TRACKS ] tracks CHANGE ALL', all)
 
     return (() => {
       
     })
-  }, [ tracks ]);
+  }, [ all ]);
 
   return (
       <div className={classes.tracks}>    
-        { tracks.all.map((track, i ) => {
+        { all.map((track, i ) => {
             return <Track key={i} track={track} />
           }) }
       </div>

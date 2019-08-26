@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 
 // import { DrumrContext } from '../context/DrumrContext'
 // import * as TYPES from '../actions/types'
@@ -15,7 +15,7 @@ const useReverb = () => {
     const [ reverbId, setReverbId ] = useState(0)
 
     useEffect(() => {
-        console.log('[useReverb] INIT', verbBuffers)
+        // console.log('[useReverb] INIT', verbBuffers)
         return (() => {
             REVERB.destroy()
         })
@@ -36,7 +36,7 @@ const useReverb = () => {
     useEffect(() => {
         
         if (verbBuffers) {
-            console.log('[useReverb] verbBuffers', verbBuffers[reverbId].buffer)
+            // console.log('[useReverb] verbBuffers', verbBuffers[reverbId].buffer)
             REVERB.setImpulse(verbBuffers[reverbId].buffer)
         }
         return (() => {
