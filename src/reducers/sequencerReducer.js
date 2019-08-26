@@ -51,7 +51,8 @@ export default function(state = initialState, action) {
     case TYPES.UPDATE_NUMBARS:
         return {
           ...state,
-          numBars: action.value
+          numBars: action.value.numBars,
+          sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
     case TYPES.UPDATE_NUMBEATS:
         return {
@@ -61,7 +62,8 @@ export default function(state = initialState, action) {
     case TYPES.UPDATE_NUMSTEPS:
         return {
           ...state,
-          numSteps: action.value
+          numSteps: action.value.numSteps,
+          sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
     case TYPES.UPDATE_SIGNATURE:
         return {

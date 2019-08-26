@@ -81,7 +81,7 @@ const useDrumr = () => {
       dispatch({ type: TYPES.ADD_TRACK, value: { track: track, numSteps, numBars } })
     // console.log(' - - - TRACKS', tracks)
     },
-    [],
+    [ numSteps, numBars ],
   )
 
 

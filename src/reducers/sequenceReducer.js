@@ -2,23 +2,14 @@ import * as TYPES from '../actions'
 
 const initialState = {
     id: null,
-    bar: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     sequence: []
 }
 
-// const initialState = [
-//     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-//     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-//     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-//     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-// ]
-
-const sequence = (steps, bars) => {
-
+const getSequence = (steps, bars) => {
+    return Array.apply(null, {length: bars}).map(() => {
+         return   Array.apply(null, {length: steps}).map(() => 0)
+    })  
 }
-
-
-
 
 export default function(state = initialState, action) {
     console.log('sequence Reducer action', action)
@@ -27,21 +18,14 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 id: action.value.track.id(),
-                sequence: [state.bar]
+                sequence: getSequence(action.value.numSteps, action.value.numBars)
             }
         case TYPES.UPDATE_NUMSTEPS:
+        case TYPES.UPDATE_NUMBARS:
             return {
                 ...state,
-                bar: Array.apply(null, {length: action.value}).map(() => 0)
+                sequence: getSequence(action.value.numSteps, action.value.numBars)
             }
-        // case TYPES.ADD_BAR:
-            // return {...state,
-            //             id: action.value._trackId, 
-            //             bars: action.steps
-            //         }
-            // return [...state, action.value]
-        // case TYPES.REMOVE_BAR:
-        //     return state.filter((b, i) => i !== action.index)
         case TYPES.UPDATE_SEQUENCES:
             const { trackId, barId, stepId, isOn } = action.value
             if (state.id !== trackId) return state

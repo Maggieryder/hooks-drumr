@@ -26,7 +26,7 @@ const initialSequencerState = {
   sequences: []
 }
 
-// sequences: {
+// sequences: { // as objects
 //  '0': [
 //        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 //        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]

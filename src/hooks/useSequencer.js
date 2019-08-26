@@ -9,7 +9,7 @@ SEQUENCER.init()
 
 const useSequencer = () => {
 
-  const {state:{ sequencer, tracks }, dispatch} = useContext(DrumrContext);
+  const {state:{ sequencer, tracks }, dispatch} = useContext(DrumrContext)
 
   const { 
     isPlaying,
@@ -22,20 +22,20 @@ const useSequencer = () => {
     sequences
      } = sequencer
 
-  const [bar, setBar] = useState([])
+  // const [bar, setBar] = useState([])
 
-  useEffect(() => {
-    console.log('[useSequencer] sequence update', sequences)
-  }, [sequences, numSteps, numBars])
+  // useEffect(() => {
+  //   console.log('[useSequencer] sequence update', sequences)
+  // }, [sequences, numSteps, numBars])
 
   // useEffect(() => {
   //   setBar(Array.apply(null, {length: numSteps}).map(() => 0))
   //   // console.log('[useSequencer] numSteps update', numSteps)
   // }, [numSteps])
 
-  useEffect(() => {
-    // console.log('[useSequencer] bar update', bar)
-  }, [bar])
+  // useEffect(() => {
+  //   // console.log('[useSequencer] bar update', bar)
+  // }, [bar])
 
   // const setSequences = ({ trackId, barId, stepId }) => {
   //   console.log('[useTrack] setSequence', { trackId, barId, stepId })
@@ -62,48 +62,64 @@ const useSequencer = () => {
     [],
   )
 
-  function togglePlay() {
-    //   if (state.isPlaying) {
-    //     state.audioPlayer.pause();
-    //   } else {
-    //     state.audioPlayer.play();
-    //   }
-    //   setState(state => ({ ...state, isPlaying: !state.isPlaying }));
-    SEQUENCER.togglePlay()
-    dispatch({ type: TYPES.IS_PLAYING })
-  }
+  const togglePlay = useCallback(
+    () => {
+      // console.log('togglePlay', isPlaying)
+      SEQUENCER.togglePlay()
+      dispatch({ type: TYPES.IS_PLAYING })
+    },
+    [],
+  )
 
-  const setTempo = value => {
+  const setTempo = useCallback(
+    value => {
     // console.log('setTempo', value)
     SEQUENCER.updateTempo(value)
     dispatch({ type: TYPES.UPDATE_TEMPO, value })
-  }
+    },
+    [],
+  )
 
-  const setSwing = value => {
+  const setSwing = useCallback(
+    value => {
     // console.log('setSwing', value)
     SEQUENCER.updateSwingFactor(value)
     dispatch({ type: TYPES.UPDATE_SWING, value })
-  }
+    },
+    [],
+  )
 
-  const setNumBars = value => {
-    // console.log('setNumBars', value)
-    dispatch({ type: TYPES.UPDATE_NUMBARS, value })
-  }
+  const setNumBars = useCallback(
+    value => {
+      // console.log('setNumBars', value)
+      dispatch({ type: TYPES.UPDATE_NUMBARS, value: { numSteps, numBars: Number(value) } })
+    },
+    [numSteps],
+  )
 
-  const setNumBeats = value => {
-    // console.log('setNumBars', value)
-    dispatch({ type: TYPES.UPDATE_NUMBEATS, value })
-  }
+  const setNumBeats = useCallback(
+    value => {
+      // console.log('setNumBars', value)
+      dispatch({ type: TYPES.UPDATE_NUMBEATS, value })
+    },
+    [],
+  )
 
-  const setNumSteps = value => {
-    console.log('setNumSteps', value)
-    dispatch({ type: TYPES.UPDATE_NUMSTEPS, value })
-  }
+  const setNumSteps = useCallback(
+    value => {
+      console.log('setNumSteps', value)
+      dispatch({ type: TYPES.UPDATE_NUMSTEPS, value: { numSteps: Number(value), numBars } })
+    },
+    [numBars],
+  )
 
-  const setSignature = value => {
-    // console.log('setSignature', value)
-    dispatch({ type: TYPES.UPDATE_SIGNATURE, value })
-  }
+  const setSignature = useCallback(
+    value => {
+      // console.log('setSignature', value)
+      dispatch({ type: TYPES.UPDATE_SIGNATURE, value })
+    },
+    [],
+  )
 
   return {
     isPlaying,
@@ -113,7 +129,6 @@ const useSequencer = () => {
     numBars,
     numSteps,
     numBeats,
-    bar,
     setTempo,
     setSwing,
     setSignature,
@@ -121,7 +136,6 @@ const useSequencer = () => {
     setNumBeats,
     setNumSteps,
     sequences,
-    // setSequences,
     togglePlay,
     onNoteTap
   }

@@ -18,6 +18,11 @@ class Sequencer {
     //this.updateParams(options);
   }
 
+  updateSequences(sequences){
+    this.sequences = sequences
+    console.log('[ api ] this.sequences', this.sequences)
+  }
+
   sequenceNote(trackIndex, barIndex, stepIndex) {
     this.sequences[trackIndex].steps[stepIndex] = this.sequences[trackIndex].steps[stepIndex]===0 ? 1 : 0;
     this.updateParams(this.sequences);
