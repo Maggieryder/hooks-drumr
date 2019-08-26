@@ -21,7 +21,7 @@ export default function(state = initialState, action) {
     case TYPES.REMOVE_TRACK:
         return {
           ...state,
-          all: state.all.filter(t => t.id !== action.value)
+          all: state.all.filter(t => t.id() !== action.trackId)
         }
     case TYPES.SOLO_TRACK:
         return {

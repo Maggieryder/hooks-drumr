@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import Step from './step'
@@ -7,21 +7,13 @@ import classes from './bar.module.scss'
 
 import useSequencer from '../hooks/useSequencer'
 
-const Bar = ( { trackId, barId } ) => {
+const Bar = ( { trackId, barId, sequence } ) => {
 
   const { onNoteTap, numBeats, numSteps } = useSequencer();
 
-  const [steps, setSteps] = useState([])
+  // useEffect(() => {
 
-  useEffect(() => {
-    // console.log('numSteps', numSteps)
-    // setSteps(Array.apply(null, {length: numSteps}).map(Number.call, Number))
-    setSteps(Array.apply(null, {length: numSteps}).map(() => 0))
-    //Array.apply(null, new Array(10)).map(Number.prototype.valueOf,0) // array of zeros
-    return (() => {
-      
-     })
-  }, [numSteps])
+  // }, [numBeats, numSteps])
 
   const style = {
     gridTemplateColumns: 'repeat('+numSteps+', 1fr)'
@@ -31,10 +23,12 @@ const Bar = ( { trackId, barId } ) => {
     <div 
       className={classes.bar} 
       style={style}>
-        {steps.map((n,i) => {
-          return <Step key={i} 
+        {sequence.map((s,i) => {
+          return <Step key={i}
+                      id={barId}
                       step={Math.floor(i/numBeats) + 1} 
                       isBeat={i % numBeats === 0} 
+                      isOne={s}
                       onTap={(isOn) => onNoteTap(trackId, barId, i, isOn)} 
                       velocity={.5} />
         })}

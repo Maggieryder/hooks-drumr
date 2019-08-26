@@ -1,30 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import classes from './step.module.scss'
 
-const Step = ({ onTap, step, isBeat, velocity, sustain }) => {
-
-  const [ isOn, setIsOn ] = useState(false);
-
-  // useEffect(() => {
-  //   // 
-  //   return (() => {
-  //     // 
-  //   })
-  // }, [isOn])
+const Step = ({ onTap, step, isBeat, isOne, velocity, sustain }) => {
 
   const style = {
     width: isBeat ? '30px' : '20px',
     height: isBeat ? '30px' : '20px',
     color: isBeat ? '#202020' : 'transparent',
-    background: isOn ? 'red' : '#505258'
+    background: isOne ? 'red' : '#505258'
   }
 
   const handleClick = event => {
     // prevIsOn = !prevIsOn
     // console.log('step isOn before', isOn)
-    setIsOn(!isOn)
-    onTap(!isOn)
+    onTap(!isOne)
   }
 
   return (
@@ -38,7 +28,8 @@ const Step = ({ onTap, step, isBeat, velocity, sustain }) => {
 Step.propTypes = {
   onTap: PropTypes.func.isRequired,
   step: PropTypes.number.isRequired,
-  isBeat: PropTypes.bool
+  isBeat: PropTypes.bool,
+  isOne: PropTypes.number
 }
 
 export default Step

@@ -12,18 +12,10 @@ const Bars = ( { track } ) => {
 
   const { sequences, numSteps, numBars } = useSequencer()
 
-  const [bars, setBars] = useState(Array.apply(null, {length: numBars}).map(Number.call, Number))
+  const barSequence = sequences.filter(s => s.id === track.id())[0].sequence
 
   useEffect(() => {
-    setBars(Array.apply(null, {length: numBars}).map(Number.call, Number))
-    // console.log('[ Bars ] track.id, bars', track.id(), bars)
-    return (() => {
-      
-    })
-  }, [numBars])
-
-  useEffect(() => {
-    console.log('[Bars] sequence update', sequences)
+    console.log('[ Bars ] barSequence', track.id(), ': ', barSequence)
     SEQUENCER.updateSequences(sequences)
   }, [sequences, numSteps, numBars])
 
@@ -34,8 +26,8 @@ const Bars = ( { track } ) => {
 
   return (
     <div className={classes.bars} style={style}>
-      {bars.map(i => {
-        return <Bar key={i} trackId={track.id()} barId={i}/>
+      {barSequence && barSequence.map((s,i) => {
+        return <Bar key={i} trackId={track.id()} barId={i} sequence={s}/>
       })}
     </div>
   )
@@ -43,7 +35,9 @@ const Bars = ( { track } ) => {
 
 Bars.propTypes = {
   track: PropTypes.object.isRequired,
-  numBars: PropTypes.number
+  sequences: PropTypes.array,
+  numBars: PropTypes.number,
+  numSteps: PropTypes.number
 }
 
 export default Bars

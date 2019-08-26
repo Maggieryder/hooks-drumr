@@ -17,16 +17,15 @@ const initialState = {
 export default function(state = initialState, action) {
   console.log('sequencerReducer action', action)
   switch (action.type){
-    case TYPES.ADD_TRACK:
-        
+    case TYPES.ADD_SEQUENCE: 
         return {
           ...state,
           sequences: [...state.sequences, sequenceReducer(undefined, action)]
         }
-    case TYPES.REMOVE_TRACK:
+    case TYPES.REMOVE_SEQUENCE:
         return {
           ...state,
-          sequences: state.sequences.filter(t => t !== action.trackId)
+          sequences: state.sequences.filter(s => s.id !== action.trackId)
         }
     case TYPES.IS_PLAYING:
         return {
@@ -54,6 +53,18 @@ export default function(state = initialState, action) {
           numBars: action.value.numBars,
           sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
+    case TYPES.ADD_BAR:
+        return {
+            ...state,
+            numBars: state.numBars + 1,
+            sequences: state.sequences.map(t => sequenceReducer(t, action))
+        }
+    case TYPES.REMOVE_BAR:
+        return {
+            ...state,
+            numBars: state.numBars - 1,
+            sequences: state.sequences.map(t => sequenceReducer(t, action))
+        }
     case TYPES.UPDATE_NUMBEATS:
         return {
           ...state,
@@ -63,6 +74,7 @@ export default function(state = initialState, action) {
         return {
           ...state,
           numSteps: action.value.numSteps,
+          numBeats: action.value.numSteps === 12 ? 3 : 4,
           sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
     case TYPES.UPDATE_SIGNATURE:

@@ -6,6 +6,7 @@ import InputRange from './ui/inputRange'
 import Label from './ui/label'
 import CurrentValue from './ui/currentValue'
 import Switch from './ui/switch'
+import DecreaseBtn from './ui/decreaseBtn'
 
 import useDrumr from '../hooks/useDrumr'
 import useTrack from '../hooks/useTrack'
@@ -14,7 +15,7 @@ import classes from './controls.module.scss'
 
 const Controls = ( { track } ) => {
 
-  const { tracks, kitBuffers } = useDrumr()
+  const { tracks, kitBuffers, removeTrack } = useDrumr()
 
   const { 
     voiceId, setVoiceId,
@@ -73,6 +74,13 @@ const Controls = ( { track } ) => {
 
   return (
     <div className={classes.controls}> 
+      <Control>
+        {/* <button
+          onClick={() => removeTrack(track.id())}
+        >-</button> */}
+        <DecreaseBtn clickHandler={() => removeTrack(track.id())} />
+        <Label>Remove Track</Label>
+      </Control> 
       <Control>
         <Select
           options={ kitBuffers }

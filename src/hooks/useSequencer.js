@@ -89,6 +89,22 @@ const useSequencer = () => {
     [],
   )
 
+  const addBar = useCallback(
+    () => {
+      dispatch({ type: TYPES.ADD_BAR, value: { numSteps } })
+    },
+    [numSteps],
+  )
+
+  const removeBar = useCallback(
+    () => {
+      if (numBars > 1) {
+        dispatch({ type: TYPES.REMOVE_BAR })
+      }
+    },
+    [numBars],
+  )
+
   const setNumBars = useCallback(
     value => {
       // console.log('setNumBars', value)
@@ -137,6 +153,8 @@ const useSequencer = () => {
     setNumSteps,
     sequences,
     togglePlay,
+    addBar,
+    removeBar,
     onNoteTap
   }
 }

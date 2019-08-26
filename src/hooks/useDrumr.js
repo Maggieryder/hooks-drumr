@@ -78,10 +78,19 @@ const useDrumr = () => {
     //   ...state, 
     //   tracks: [...state.tracks, track] 
     // }))
-      dispatch({ type: TYPES.ADD_TRACK, value: { track: track, numSteps, numBars } })
+      dispatch({ type: TYPES.ADD_SEQUENCE, value: { trackId:track.id(), numSteps, numBars } })
+      dispatch({ type: TYPES.ADD_TRACK, value: { track: track } })
     // console.log(' - - - TRACKS', tracks)
     },
     [ numSteps, numBars ],
+  )
+
+  const removeTrack = useCallback((id) => {
+      dispatch({ type: TYPES.REMOVE_TRACK, trackId: id })
+      dispatch({ type: TYPES.REMOVE_SEQUENCE, trackId: id })
+    // console.log(' - - - TRACKS', tracks)
+    },
+    [],
   )
 
 
@@ -196,8 +205,8 @@ const useDrumr = () => {
     currentKitId,
     currentVerbId,
     tracks,
-    addTrack
-    // setTracks
+    addTrack,
+    removeTrack
   }
 }
 

@@ -5,23 +5,33 @@ const initialState = {
     sequence: []
 }
 
-const getSequence = (steps, bars) => {
-    return Array.apply(null, {length: bars}).map(() => {
-         return   Array.apply(null, {length: steps}).map(() => 0)
-    })  
-}
+const getSteps = (steps) => Array.apply(null, {length: steps}).map(() => 0)
+
+
+const getSequence = (steps, bars) => Array.apply(null, {length: bars}).map(() => getSteps(steps))  
+
 
 export default function(state = initialState, action) {
     console.log('sequence Reducer action', action)
     switch (action.type){
-        case TYPES.ADD_TRACK:
+        case TYPES.ADD_SEQUENCE:
+            console.log('ADD_SEQUENCE',getSequence(action.value.numSteps, action.value.numBars))
             return {
                 ...state,
-                id: action.value.track.id(),
+                id: action.value.trackId,
                 sequence: getSequence(action.value.numSteps, action.value.numBars)
             }
+        case TYPES.ADD_BAR:
+            return {
+                ...state,
+                sequence: [...state.sequence, getSteps(action.value.numSteps)]
+            }
+        case TYPES.REMOVE_BAR:
+            return {
+                ...state,
+                sequence: state.sequence.filter((b,i) => i !== state.sequence.length-1)
+            }
         case TYPES.UPDATE_NUMSTEPS:
-        case TYPES.UPDATE_NUMBARS:
             return {
                 ...state,
                 sequence: getSequence(action.value.numSteps, action.value.numBars)

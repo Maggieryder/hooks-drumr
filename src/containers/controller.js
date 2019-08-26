@@ -3,6 +3,8 @@ import Select from '../components/ui/select'
 import InputRange from '../components/ui/inputRange'
 import Label from '../components/ui/label'
 import CurrentValue from '../components/ui/currentValue'
+import IncreaseBtn from '../components/ui/increaseBtn'
+import DecreaseBtn from '../components/ui/decreaseBtn'
 import Tracks from '../components/tracks'
 import Control from '../components/control'
 import Processors from '../components/processors'
@@ -35,27 +37,19 @@ const Controller = () => {
     setNumBeats, 
     numSteps, 
     setNumSteps,
-    bar,
     sequences,
-    setSequences,
     togglePlay,
+    addBar,
+    removeBar,
     signature,
     setSignature } = useSequencer()
 
 
-  const numBarsOptions = [
-    {label:'1', value:1},
-    {label:'2', value:2},
-    {label:'4', value:4}
-  ]
   const numStepsOptions = [
     {label:'12', value:12},
     {label:'16', value:16}
   ]
-  const numBeatsOptions = [
-    {label:'3', value:3},
-    {label:'4', value:4}
-  ]
+
   useEffect(() => {
     loadData('./resources')
     return (() => {
@@ -116,20 +110,12 @@ const Controller = () => {
         <CurrentValue>{swing +'%'}</CurrentValue>
       </Control>
       <Control>
-        <Select
-          options={numBarsOptions}
-          onValueChange={ value => setNumBars(value) }
-          initialValue={numBars.toString()}
-        />
-        <Label>Number of bars</Label>
+        <IncreaseBtn clickHandler={addBar} />
+        <Label>Add Bar</Label>
       </Control>
       <Control>
-        <Select
-          options={numBeatsOptions}
-          onValueChange={ value => setNumBeats(value) }
-          initialValue={numBeats.toString()}
-        />
-        <Label>Number of beats</Label>
+        <DecreaseBtn clickHandler={removeBar} style={{opacity: numBars <= 1  ? .5 : 1}}/>
+        <Label>Remove Bar</Label>
       </Control>
       <Control>
         <Select
@@ -137,17 +123,15 @@ const Controller = () => {
           onValueChange={ value => setNumSteps(value) }
           initialValue={numSteps.toString()}
         />
-        <Label>Number of steps</Label>
+        <Label>Resolution</Label>
       </Control>
       <Control>
-        <button
-          onClick={ value => addTrack(tracks.all.length) }
-        >+</button>
+        <IncreaseBtn clickHandler={() => addTrack(tracks.all.length)} />
         <Label>Add Track</Label>
       </Control>
       <Control>
         <button
-          onClick={ value => togglePlay() }
+          onClick={() => togglePlay()}
         >></button>
       </Control>
         
