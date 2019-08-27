@@ -21,6 +21,75 @@ input[type=range]:-moz-focusring {
       outline: none;
 }
 
+.toggle-play-btn,
+.increase-btn,
+.decrease-btn {
+    -webkit-appearance: none;
+    width: 50px;
+    height: 50px;
+    border: none;
+    padding: 0;  
+    background: transparent;
+    &:before {
+        position: relative;
+        margin: 2px auto;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 1px solid $green;
+        box-sizing: border-box;
+        color: $green;
+        line-height: 1px;
+        background: $gray;
+    }
+    &:hover {
+        &:before {
+            background: rgba($green, .5);
+            color: $gray;
+        }
+    }
+}
+
+.btn-group {
+    position: relative;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    vertical-align: middle;
+    .btn {
+        position: relative;
+        -webkit-box-flex: 0;
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+    }
+}
+
+.toggle-play-btn {
+    &:before {
+        content:'>';
+    }
+}
+
+.increase-btn {
+    &:before {
+        content:'+';
+    }
+}
+
+.decrease-btn {
+    &:before {
+        content:'-';
+    }
+}
+
+
+
+
+
+
 .input-range {
     appearance: none;
     box-sizing: border-box;

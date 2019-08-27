@@ -75,11 +75,8 @@ const Controls = ( { track } ) => {
   return (
     <div className={classes.controls}> 
       <Control>
-        {/* <button
-          onClick={() => removeTrack(track.id())}
-        >-</button> */}
         <DecreaseBtn clickHandler={() => removeTrack(track.id())} />
-        <Label>Remove Track</Label>
+        {/* <Label>Remove Track</Label> */}
       </Control> 
       <Control>
         <Select

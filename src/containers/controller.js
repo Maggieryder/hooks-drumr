@@ -5,6 +5,8 @@ import Label from '../components/ui/label'
 import CurrentValue from '../components/ui/currentValue'
 import IncreaseBtn from '../components/ui/increaseBtn'
 import DecreaseBtn from '../components/ui/decreaseBtn'
+import TogglePlayBtn from '../components/ui/togglePlayBtn'
+import BtnGroup from '../components/ui/btnGroup'
 import Tracks from '../components/tracks'
 import Control from '../components/control'
 import Processors from '../components/processors'
@@ -111,11 +113,14 @@ const Controller = () => {
       </Control>
       <Control>
         <IncreaseBtn clickHandler={addBar} />
-        <Label>Add Bar</Label>
+        {/* <Label>Add Bar</Label> */}
       </Control>
       <Control>
-        <DecreaseBtn clickHandler={removeBar} style={{opacity: numBars <= 1  ? .5 : 1}}/>
-        <Label>Remove Bar</Label>
+        <BtnGroup items={Array.from(Array(numBars).keys())} clickHandler={()=>{}} />
+      </Control>
+      <Control>
+        <DecreaseBtn clickHandler={removeBar} style={{opacity: numBars <= 1  ? .1 : 1}}/>
+        {/* <Label>Remove Bar</Label> */}
       </Control>
       <Control>
         <Select
@@ -130,9 +135,10 @@ const Controller = () => {
         <Label>Add Track</Label>
       </Control>
       <Control>
-        <button
+        {/* <button
           onClick={() => togglePlay()}
-        >></button>
+        >></button> */}
+        <TogglePlayBtn clickHandler={togglePlay} isPlaying={isPlaying} />
       </Control>
         
       </div>

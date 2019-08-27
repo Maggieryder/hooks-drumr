@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Bars from './bars'
 import Controls from './controls'
@@ -8,13 +8,6 @@ import { TrackProvider } from "../context/TrackContext";
 import classes from './track.module.scss'
 
 const Track = ( { track } ) => {
-
-  useEffect(() => {
-    // console.log('[ Track ] trackId', track.id())
-    return (() => {
-      
-    })
-  }, []);
 
   return (
     <TrackProvider>
