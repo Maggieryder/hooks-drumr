@@ -9,7 +9,9 @@ const initialState = {
   numBars: 1,
   numBeats: 4,
   numSteps: 16,
-  sequences: []
+  sequences: [],
+  currentBar: 0,
+  currentStep: 0
 }
 
 
@@ -35,6 +37,8 @@ export default function(state = initialState, action) {
     case TYPES.UPDATE_SEQUENCES:
         return {
           ...state,
+          currentBar: action.value.barId,
+          currentStep: action.value.stepId,
           sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
     case TYPES.UPDATE_TEMPO:
@@ -63,11 +67,13 @@ export default function(state = initialState, action) {
         return {
             ...state,
             numBars: state.numBars - 1,
+            currentBar: state.numBars - 2,
             sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
     case TYPES.UPDATE_CURRENT_BAR:
         return {
             ...state,
+            // currentStep: 0,
             currentBar: action.value
         }
     case TYPES.UPDATE_NUMBEATS:

@@ -2,13 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classes from './step.module.scss'
 
-const Step = ({ onTap, step, isBeat, isOne, velocity, sustain }) => {
+const Step = ({ onTap, step, isBeat, isOne, isCurrentBar, isCurrentStep, velocity }) => {
 
   const style = {
-    width: isBeat ? '30px' : '20px',
-    height: isBeat ? '30px' : '20px',
+    // width: isBeat ? '30px' : isCurrentBar ? '20px' :'10px',
+    // height: isBeat ? '30px' : isCurrentBar ? '20px' :'10px',
+    '--size': isBeat ? '30px' : isCurrentBar ? '20px' :'10px',
+    // '--viz': isCurrentBar && isCurrentStep ? 0 : 1,
+    '--scale': isCurrentBar && isCurrentStep ? 1.5 : 1,
+    '--bgcolor': isOne ? 'red' : '#505258',
     color: isBeat ? '#202020' : 'transparent',
-    background: isOne ? 'red' : '#505258'
+    // background:  isOne ? 'red' : '#505258'
   }
 
   const handleClick = event => {
@@ -20,7 +24,7 @@ const Step = ({ onTap, step, isBeat, isOne, velocity, sustain }) => {
   return (
     <div onClick={handleClick}
       className={classes.step} >
-        <div style={style} >{(step)}</div>
+        <div style={style} >{step}</div>
     </div>
   );
 }

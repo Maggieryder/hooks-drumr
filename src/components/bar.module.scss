@@ -1,14 +1,17 @@
 @import '../scss/vars';
 
 .bar {
+  box-sizing: border-box;
   position: relative;
   display: grid;
+  // grid-template-columns: auto;
   // grid-template-columns: repeat(12, 1fr);
   // grid-template-columns: repeat(16, 1fr);
   height: 100%;
-  width: 100%;
+  // width: calc(100% - 1px);
+  width: 25%;
   border-right: 1px solid $white-01;
- 
+  transition: width 1s;
 
   &:before {
     content: '';
@@ -19,5 +22,19 @@
     height: 1px;
     // background: $white-01;
     border-top: 1px dotted $white-01;
+    
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    transform-origin: 0 0;
+    transform: scaleX(var(--progress));
+    transition: transform .2s;
+    height: 1px;
+    background: $green;   
   }
 }

@@ -52,8 +52,7 @@ const useSequencer = () => {
   const onNoteTap = useCallback(
     (trackId, barId, stepId, isOn) => {
       console.log('NOTE TAP trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
-      const track = tracks.all[trackId]
-      
+      const track = tracks.all[trackId]      
       // console.log('Sequencer.running', Sequencer.running());
       if (!isPlaying){
         track.triggerSample(AUDIO_CONTEXT.currentTime);
@@ -65,8 +64,7 @@ const useSequencer = () => {
   )
 
   const updateCurrentBar = useCallback(
-    value => {
-      
+    value => {   
       dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value })
     },
     [],

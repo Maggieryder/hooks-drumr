@@ -9,11 +9,15 @@ import useSequencer from '../hooks/useSequencer'
 
 const Bar = ( { trackId, barId, sequence } ) => {
 
-  const { onNoteTap, numBeats, numSteps, currentBar } = useSequencer();
+  const { onNoteTap, numBeats, numSteps, currentBar, currentStep } = useSequencer();
+
+  const isCurrentBar = currentBar === barId
 
   const style = {
     gridTemplateColumns: 'repeat('+numSteps+', 1fr)',
-    borderBottom: (currentBar - 1) === barId ? '1px solid rgb(21, 255, 0)' : ''
+    // borderBottom: isCurrentBar ? '1px solid rgb(21, 255, 0)' : '',
+    width: isCurrentBar ? '50%' : '25%',
+    '--progress': isCurrentBar ? ((currentStep+1) / numSteps) : 0
   }
 
   return (
@@ -22,10 +26,11 @@ const Bar = ( { trackId, barId, sequence } ) => {
       style={style}>
         {sequence.map((s,i) => {
           return <Step key={i}
-                      id={barId}
                       step={Math.floor(i/numBeats) + 1} 
                       isBeat={i % numBeats === 0} 
                       isOne={s}
+                      isCurrentBar={isCurrentBar}
+                      isCurrentStep={i===currentStep}
                       onTap={(isOn) => onNoteTap(trackId, barId, i, isOn)} 
                       velocity={.5} />
         })}

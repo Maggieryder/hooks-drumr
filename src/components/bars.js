@@ -20,8 +20,8 @@ const Bars = ( { track } ) => {
   }, [sequences, numSteps, numBars])
 
   const style = {
-    width: 'calc(100% * '+numBars/2+')',
-    gridTemplateColumns: 'repeat('+numBars+', 1fr)'
+    // width: 'calc(100% * '+numBars/2+')',
+    // gridTemplateColumns: 'repeat('+numBars+', 1fr)'
   }
 
   return (

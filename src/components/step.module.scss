@@ -1,3 +1,5 @@
+@import '../scss/vars';
+
 .step {
   z-index:2;
   display: grid;
@@ -7,16 +9,28 @@
   height: 100%;
 
   > div {
+    position: relative;
     display: grid;
     justify-content: center;
     align-items: center;
-    // width: 20px;
-    // height: 20px;
+    width: var(--size);
+    height: var(--size);
     border-radius: 50%;
     transform-origin: center;
     font-size: .7rem;
     line-height: 30px;
-    // color: transparent;
+    background: var(--bgcolor);
     user-select: none;
+    &:before {
+      content: '';
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      border: 1px solid var(--bgcolor);
+      border-radius: 50%;
+      transform: scale(var(--scale));
+      opacity: .5;
+      transition: all .25s;   
+    }
   } 
 }
