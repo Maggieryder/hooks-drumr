@@ -1,8 +1,12 @@
+import * as Types from '../actions/types'
+
+const kMaxSwing = .08;
 
 class Sequencer {
   constructor(ctx){
     this.context = ctx;
     this.isPlaying = false;
+    this.barIndex = 0;
     this.stepIndex = 0;
     this.nextNoteTime = 0.0;
     this.lookahead = 25.0;
@@ -14,9 +18,13 @@ class Sequencer {
     this.noteResolution = 16; //options.noteResolution ||
     this.swingFactor = 0;
     //this.updateParams(options);
+    this.store;
   }
 
   init(){
+    // this.store = store;
+    // this.store.subscribe(this.updateState.bind(this))
+    // this.updateState()
     let self = this;
     this.timeWorker = new Worker('./time-worker.js');
     this.timeWorker.onmessage = function(e) {
@@ -30,33 +38,82 @@ class Sequencer {
     }
   }
   
-  nextNote(){
-    let kMaxSwing = .08;
-    //let secondsPerBeat = 60.0 / this.tempo; // length of beat
-    // this.nextNoteTime += this.secondsPerBeat() * .25; // without swing
-    if (this.stepIndex % 2) {
-      this.nextNoteTime += (0.25 - kMaxSwing * this.swingFactor) * this.secondsPerBeat();
-    } else {
-      this.nextNoteTime += (0.25 + kMaxSwing * this.swingFactor) * this.secondsPerBeat();
-    }
-    this.stepIndex = this.stepIndex === (this.noteResolution -1) ? 0 : ++this.stepIndex;
-  }
+  // nextNote(){
+  //   // let kMaxSwing = .08;
+  //   //let secondsPerBeat = 60.0 / this.tempo; // length of beat
+  //   // this.nextNoteTime += this.secondsPerBeat() * .25; // without swing
+  //   if (this.stepIndex % 2) {
+  //     this.nextNoteTime += (0.25 - kMaxSwing * this.swingFactor) * this.secondsPerBeat();
+  //   } else {
+  //     this.nextNoteTime += (0.25 + kMaxSwing * this.swingFactor) * this.secondsPerBeat();
+  //   }
+  //   this.stepIndex = this.stepIndex === (this.noteResolution -1) ? 0 : ++this.stepIndex;
+  // }
 
-  scheduleNote(step, time){
-    let bars = document.querySelectorAll('.bar');
-    // 	console.log(step)
-    for (let i=0;i<this.sequences.length; i++){
-      let noteClear = bars[i].querySelectorAll('.now')[0];
-      //console.log('scheduleNote',noteClear);
-      if (noteClear) noteClear.classList.toggle('now');
-      let notes = bars[i].querySelectorAll('.note'),
-      note = notes[step];
-      if (this.sequences[i].steps[step]===1){
-        this.tracks[i].triggerSample(time);
-        note.classList.toggle('now');
-        //console.log('scheduleNote',bars[i], notes);
-      }
+  // scheduleNote(step, time){
+  //   // let bars = document.querySelectorAll('.bar');
+  //   // 	console.log(step)
+  //   for (let i=0;i<this.sequences.length; i++){
+  //     // let noteClear = bars[i].querySelectorAll('.now')[0];
+  //     //console.log('scheduleNote',noteClear);
+  //     // if (noteClear) noteClear.classList.toggle('now');
+  //     // let notes = bars[i].querySelectorAll('.note'),
+  //     // note = notes[step];
+  //     if (this.sequences[i].steps[step]===1){
+  //       this.tracks[i].triggerSample(time);
+  //       // note.classList.toggle('now');
+  //       //console.log('scheduleNote',bars[i], notes);
+  //     }
+  //   }
+  // }
+  nextNote(){
+    let { controller } = this.store.getState();
+    let { swing, resolution, numBars, barId, stepId } = controller;
+    let swingFactor = kMaxSwing * swing/100;
+    if (this.stepIndex % 2) {
+      this.nextNoteTime += (0.25 - swingFactor) * this.secondsPerBeat();
+    } else {
+      this.nextNoteTime += (0.25 + swingFactor) * this.secondsPerBeat();
     }
+    if (this.stepIndex === (resolution -1)){
+      // console.log('nextNote', this.barIndex, this.stepIndex)
+      this.barIndex = this.barIndex === (numBars - 1) ? 0 : ++this.barIndex;
+      this.store.dispatch({type:Types.UPDATE_BAR_ID, value: this.barIndex })
+      this.stepIndex = 0;
+    } else {
+      this.stepIndex++;
+    }
+  }
+  scheduleNote(step, time){
+    let { controller } = this.store.getState();
+    let { resolution, barId } = controller;
+    let myObj = this.sequences;
+    // console.log(myObj)
+    // for (let i=0;i<this.sequences.length; i++){
+    //   let bars = this.sequences[i].sequence
+    //   console.log(bars)
+    //   for (let j=0;j<bars.length;j++){
+    //     console.log(j, barId)
+    //     if (j===barId && bars[j][step]===1){
+    //       console.log('schedule note this.tracks[i]', this.tracks[i])
+    //       this.tracks[i].triggerSample(time);
+    //     }
+    //   }
+    // }
+    let i = 0;
+    for (let id in myObj){
+      let bars = myObj[id];
+      console.log(bars)
+      for (let j=0;j<bars.length;j++){
+        // console.log(j, barId)
+        if (j===barId && bars[j][step]===1){
+          // console.log('schedule note this.tracks[id]', this.tracks[id])
+          this.tracks[id].triggerSample(time);
+        }
+      }
+      i++;
+    }
+    this.store.dispatch({type:Types.UPDATE_STEP_ID, value: (barId*resolution) + step})
   }
 
   startScheduler(){
