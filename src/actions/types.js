@@ -10,6 +10,8 @@ export const ADD_BAR = 'ADD_BAR'
 
 export const REMOVE_BAR = 'REMOVE_BAR'
 
+export const UPDATE_CURRENT_BAR = 'UPDATE_CURRENT_BAR'
+
 export const UPDATE_TEMPO = 'UPDATE_TEMPO'
 
 export const UPDATE_SWING = 'UPDATE_SWING'

@@ -65,6 +65,11 @@ export default function(state = initialState, action) {
             numBars: state.numBars - 1,
             sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
+    case TYPES.UPDATE_CURRENT_BAR:
+        return {
+            ...state,
+            currentBar: action.value
+        }
     case TYPES.UPDATE_NUMBEATS:
         return {
           ...state,

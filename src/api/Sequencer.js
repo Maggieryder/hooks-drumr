@@ -1,6 +1,4 @@
 
-// import $ from "jquery";
-
 class Sequencer {
   constructor(ctx){
     this.context = ctx;
@@ -18,17 +16,6 @@ class Sequencer {
     //this.updateParams(options);
   }
 
-  updateSequences(sequences){
-    this.sequences = sequences
-    console.log('[ api ] this.sequences', this.sequences)
-  }
-
-  sequenceNote(trackIndex, barIndex, stepIndex) {
-    this.sequences[trackIndex].steps[stepIndex] = this.sequences[trackIndex].steps[stepIndex]===0 ? 1 : 0;
-    this.updateParams(this.sequences);
-    console.log(trackIndex, 'seq', this.sequences[trackIndex].steps);
-  }
-
   init(){
     let self = this;
     this.timeWorker = new Worker('./time-worker.js');
@@ -42,15 +29,6 @@ class Sequencer {
       }
     }
   }
-
-  updateParams(obj){
-    for (let prop in obj){
-      //console.log( prop + ' :: ' + obj[prop]);
-      this[prop]= obj[prop];
-    }
-  }
-
-  
   
   nextNote(){
     let kMaxSwing = .08;
@@ -101,23 +79,37 @@ class Sequencer {
   //   sequenceNote(trackIndex,step);
   // }
 
+  // sequenceNote(trackIndex, barIndex, stepIndex) {
+  //   this.sequences[trackIndex].steps[stepIndex] = this.sequences[trackIndex].steps[stepIndex]===0 ? 1 : 0;
+  //   this.updateParams(this.sequences);
+  //   console.log(trackIndex, 'seq', this.sequences[trackIndex].steps);
+  // }
+
+  updateSequences(sequences){
+    this.sequences = sequences
+    console.log('[ api ] this.sequences', this.sequences)
+  }
+
+  updateParams(obj){
+    for (let prop in obj){
+      //console.log( prop + ' :: ' + obj[prop]);
+      this[prop]= obj[prop];
+    }
+  }
+
   updateSwingFactor(val){
     // let val = e.target.value;
-    // updateInputStyle('swing', val);
     //sheet.textContent = getTrackStyle('swing', val);
     this.updateParams({swingFactor:val/100});
-    // $('#swingMeter').html(val+'%');
   }
 
   updateTempo(val){
     // let val = e.target.value
     // tot = e.target.max - e.target.min,
     // perc = (val-e.target.min)/tot;
-    // updateInputStyle('tempo', perc*100);
     //sheet.textContent = getTrackStyle('tempo', perc*100);
     this.updateParams({tempo:val});
     // DELAY.updateDelayTime(this.secondsPerBeat()*.5);
-    // $('#tempoMeter').html(val+' bpm');
   }
 
   togglePlay() {
@@ -135,11 +127,9 @@ class Sequencer {
     return message;
   }
   
-
   secondsPerBeat(){
     return 60.0 / this.tempo;
   }
-
 
   running(){
     return this.isPlaying;

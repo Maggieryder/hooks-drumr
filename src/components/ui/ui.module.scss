@@ -28,8 +28,12 @@ input[type=range]:-moz-focusring {
     width: 50px;
     height: 50px;
     border: none;
+    outline: none;
     padding: 0;  
     background: transparent;
+    color: $green;
+    border-color: $green;
+    
     &:before {
         position: relative;
         margin: 2px auto;
@@ -41,14 +45,16 @@ input[type=range]:-moz-focusring {
         border-radius: 50%;
         border: 1px solid $green;
         box-sizing: border-box;
-        color: $green;
-        line-height: 1px;
-        background: $gray;
+        color: inherit;
+        border-color: inherit;
+        background-color: $black-02;
     }
     &:hover {
+        // color: $black-02;
+        // border-color: $white;
         &:before {
-            background: rgba($green, .5);
-            color: $gray;
+            background-color: $gray;
+            // color: $gray;
         }
     }
 }
@@ -59,11 +65,32 @@ input[type=range]:-moz-focusring {
     display: -ms-inline-flexbox;
     display: inline-flex;
     vertical-align: middle;
+    background: transparent;
+    height: 30px;
     .btn {
+        width: 30px;
+        height: 100%;
+        -webkit-appearance: none;
         position: relative;
         -webkit-box-flex: 0;
         -ms-flex: 0 1 auto;
         flex: 0 1 auto;
+        color: $green;
+        background: $black-02;
+        border-radius: none;
+        border: 2px solid $gray;
+        border-right: none;
+        &:hover {
+            background: $gray;
+            // color: $gray;
+        }
+        &:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+        &:last-child {
+            border-right: 2px solid $gray;
+            border-radius: 0 8px 8px 0;
+        }
     }
 }
 

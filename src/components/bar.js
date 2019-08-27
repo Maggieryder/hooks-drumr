@@ -9,14 +9,11 @@ import useSequencer from '../hooks/useSequencer'
 
 const Bar = ( { trackId, barId, sequence } ) => {
 
-  const { onNoteTap, numBeats, numSteps } = useSequencer();
-
-  // useEffect(() => {
-
-  // }, [numBeats, numSteps])
+  const { onNoteTap, numBeats, numSteps, currentBar } = useSequencer();
 
   const style = {
-    gridTemplateColumns: 'repeat('+numSteps+', 1fr)'
+    gridTemplateColumns: 'repeat('+numSteps+', 1fr)',
+    borderBottom: (currentBar - 1) === barId ? '1px solid rgb(21, 255, 0)' : ''
   }
 
   return (

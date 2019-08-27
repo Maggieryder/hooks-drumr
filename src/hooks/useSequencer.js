@@ -19,7 +19,9 @@ const useSequencer = () => {
     numBars,
     numSteps,
     numBeats,
-    sequences
+    sequences,
+    currentBar,
+    currentStep
      } = sequencer
 
   // const [bar, setBar] = useState([])
@@ -58,6 +60,14 @@ const useSequencer = () => {
       //   SEQUENCER.sequenceNote(trackId, barId, stepId);
       }
       dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })
+    },
+    [],
+  )
+
+  const updateCurrentBar = useCallback(
+    value => {
+      
+      dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value })
     },
     [],
   )
@@ -152,10 +162,13 @@ const useSequencer = () => {
     setNumBeats,
     setNumSteps,
     sequences,
+    currentBar,
+    currentStep,
     togglePlay,
     addBar,
     removeBar,
-    onNoteTap
+    onNoteTap,
+    updateCurrentBar
   }
 }
 

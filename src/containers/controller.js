@@ -6,7 +6,7 @@ import CurrentValue from '../components/ui/currentValue'
 import IncreaseBtn from '../components/ui/increaseBtn'
 import DecreaseBtn from '../components/ui/decreaseBtn'
 import TogglePlayBtn from '../components/ui/togglePlayBtn'
-import BtnGroup from '../components/ui/btnGroup'
+import BarIndicator from '../components/ui/barIndicator'
 import Tracks from '../components/tracks'
 import Control from '../components/control'
 import Processors from '../components/processors'
@@ -35,14 +35,15 @@ const Controller = () => {
     setSwing, 
     numBars, 
     setNumBars, 
-    numBeats, 
-    setNumBeats, 
     numSteps, 
     setNumSteps,
     sequences,
+    currentBar,
+    currentStep,
     togglePlay,
     addBar,
     removeBar,
+    updateCurrentBar,
     signature,
     setSignature } = useSequencer()
 
@@ -112,15 +113,13 @@ const Controller = () => {
         <CurrentValue>{swing +'%'}</CurrentValue>
       </Control>
       <Control>
-        <IncreaseBtn clickHandler={addBar} />
-        {/* <Label>Add Bar</Label> */}
-      </Control>
-      <Control>
-        <BtnGroup items={Array.from(Array(numBars).keys())} clickHandler={()=>{}} />
-      </Control>
-      <Control>
-        <DecreaseBtn clickHandler={removeBar} style={{opacity: numBars <= 1  ? .1 : 1}}/>
-        {/* <Label>Remove Bar</Label> */}
+        <BarIndicator items={Array.from(Array(numBars).keys())} 
+                  barClickHandler={updateCurrentBar} 
+                  addClickHandler={addBar} 
+                  removeClickHandler={removeBar} 
+                  numBars={numBars} 
+                  currentBar={currentBar} />
+        <Label>Bars</Label>
       </Control>
       <Control>
         <Select
@@ -135,10 +134,8 @@ const Controller = () => {
         <Label>Add Track</Label>
       </Control>
       <Control>
-        {/* <button
-          onClick={() => togglePlay()}
-        >></button> */}
         <TogglePlayBtn clickHandler={togglePlay} isPlaying={isPlaying} />
+        <Label>{ isPlaying ? 'Pause' : 'Play'}</Label>
       </Control>
         
       </div>

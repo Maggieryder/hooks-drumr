@@ -23,7 +23,9 @@ const initialSequencerState = {
   numBars: 1,
   numBeats: 4,
   numSteps: 16,
-  sequences: []
+  sequences: [],
+  currentBar: 1,
+  currentStep: 1
 }
 
 // sequences: { // as objects

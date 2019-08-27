@@ -75,8 +75,7 @@ const Controls = ( { track } ) => {
   return (
     <div className={classes.controls}> 
       <Control>
-        <DecreaseBtn clickHandler={() => removeTrack(track.id())} />
-        {/* <Label>Remove Track</Label> */}
+        <DecreaseBtn clickHandler={() => removeTrack(track.id())} style={{ borderColor: 'red', color: 'red'}}/>
       </Control> 
       <Control>
         <Select
