@@ -18,10 +18,6 @@ export const UPDATE_TEMPO = 'UPDATE_TEMPO'
 
 export const UPDATE_SWING = 'UPDATE_SWING'
 
-export const UPDATE_NUMBARS = 'UPDATE_NUMBARS'
-
-export const UPDATE_NUMBEATS = 'UPDATE_NUMBEATS'
-
 export const UPDATE_NUMSTEPS = 'UPDATE_NUMSTEPS'
 
 export const UPDATE_KIT_ID = 'UPDATE_KIT_ID'

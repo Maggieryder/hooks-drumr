@@ -78,6 +78,7 @@ const useDrumr = () => {
     //   ...state, 
     //   tracks: [...state.tracks, track] 
     // }))
+    
       dispatch({ type: TYPES.ADD_SEQUENCE, value: { trackId:track.id(), numSteps, numBars } })
       dispatch({ type: TYPES.ADD_TRACK, value: { track: track } })
     // console.log(' - - - TRACKS', tracks)

@@ -20,24 +20,9 @@ export const updateSwing = ( num ) => ({
   value: num
 })
 
-export const updateNumBars = ( num ) => ({
-  type: TYPES.UPDATE_NUMBARS,
-  value: num
-})
-
-export const updateNumBeats = ( num ) => ({
-  type: TYPES.UPDATE_NUMBEATS,
-  value: num
-})
-
 export const updateNumSteps = ( num ) => ({
   type: TYPES.UPDATE_NUMSTEPS,
   value: num
-})
-
-export const updateSignature = ( arr ) => ({
-  type: TYPES.UPDATE_NUMSTEPS,
-  value: arr
 })
 
 export const dataLoaded = ( data ) => ({

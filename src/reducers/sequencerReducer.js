@@ -52,12 +52,6 @@ export default function(state = initialState, action) {
           ...state,
           swing: action.value
         }
-    case TYPES.UPDATE_NUMBARS:
-        return {
-          ...state,
-          numBars: action.value.numBars,
-          sequences: state.sequences.map(t => sequenceReducer(t, action))
-        }
     case TYPES.ADD_BAR:
         return {
             ...state,
@@ -81,11 +75,6 @@ export default function(state = initialState, action) {
         return {
             ...state,
             currentStep: action.value
-        }
-    case TYPES.UPDATE_NUMBEATS:
-        return {
-          ...state,
-          numBeats: action.value
         }
     case TYPES.UPDATE_NUMSTEPS:
         return {

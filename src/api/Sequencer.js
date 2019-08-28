@@ -8,17 +8,24 @@ const kSwingOffset = .25;
 class Sequencer {
   constructor(ctx){
     this.context = ctx
-    // this.barIndex = 0
-    // this.stepIndex = 0
-    this.nextNoteTime = 0.0
+    this.dispatch = null
     this.timeWorker = null
-    this.store;
+    this.nextNoteTime = 0.0
+
+    this.sequences = []
+    this.tracks = []
+    this.isPlaying = false
+    this.tempo = 120
+    this.swing = 0
+    this.numBars = 1
+    this.numSteps = 16
+
+    this.currentBar = 0
+    this.currentStep = 0
   }
 
-  init(){
-    // this.store = store;
-    // this.store.subscribe(this.updateState.bind(this))
-    // this.updateState()
+  init(dispatch){
+    this.dispatch = dispatch
     let self = this;
     this.timeWorker = new Worker('./time-worker.js');
     this.timeWorker.onmessage = function(e) {
@@ -33,31 +40,32 @@ class Sequencer {
   }  
 
   nextNote(){
-    const { sequencer: { tempo, swing, numSteps, numBars, currentBar, currentStep } } = this.store.getState();
-    if (currentStep % 2) {
-      this.nextNoteTime += (kSwingOffset - this.swingFactor(swing)) * this.secondsPerBeat(tempo);
+    if (this.currentStep % 2) {
+      this.nextNoteTime += (kSwingOffset - this.swing) * this.secondsPerBeat(this.tempo);
     } else {
-      this.nextNoteTime += (kSwingOffset + this.swingFactor(swing)) * this.secondsPerBeat(tempo);
+      this.nextNoteTime += (kSwingOffset + this.swing) * this.secondsPerBeat(this.tempo);
     }
-    if (currentStep === (numSteps - 1)){
-      // console.log('nextNote', currentBar, currentStep)
-      const barIndex = currentBar === (numBars - 1) ? 0 : currentBar + 1
-      this.store.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: barIndex })
-      this.store.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: 0 })
+    if (this.currentStep === (this.numSteps - 1)){
+      // console.log('nextNote', this.currentBar, this.currentStep)
+      this.currentBar = this.currentBar === (this.numBars - 1) ? 0 : this.currentBar + 1
+      this.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: this.currentBar })
+      this.currentStep = 0
+      this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: this.currentStep })
     } else {
-      this.store.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: currentStep + 1 })
+      this.currentStep = this.currentStep + 1 
+      this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: this.currentStep })
     }
   }
   scheduleNote(time){
-    let { sequencer: { currentBar, currentStep, sequences }, tracks: { all } } = this.store.getState();
-    sequences.map((s, i) => {
+    this.sequences.map((s) => {
       const { id, sequence } = s
-      const track = all.filter(t => t.id() === id)
-      sequence.map((bar, j) => {
-        if ( j !== currentBar) return
-        bar.map((step,k) => {
-          if ( k !== currentStep ) return
-          track.triggerSample(time)
+      const track = this.tracks.filter(t => t.id() === id)
+      console.log('scheduleNote track', track)
+      sequence.map((bar, i) => {
+        if ( i !== this.currentBar) return
+        bar.map((step,j) => {
+          if ( j !== this.currentStep ) return
+          if (step === 1) track.triggerSample(time)
         })
       })
     })
@@ -65,31 +73,64 @@ class Sequencer {
 
   startScheduler(){
     while (this.nextNoteTime < this.context.currentTime + kScheduleAhead){
-      this.scheduleNote(this.nextNoteTime);
-      this.nextNote();
+      this.scheduleNote(this.nextNoteTime)
+      this.nextNote()
     }
   }
 
   togglePlay(isPlaying) {
     let message;
+    this.isPlaying = isPlaying
     if (isPlaying){
-      // this.stepIndex = 0;
-      this.nextNoteTime = this.context.currentTime;
-      this.timeWorker.postMessage('start');
-      message = 'stop';
+      // this.currentBar = 0
+      this.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: this.currentBar })
+      this.currentStep = 0
+      this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: this.currentStep })
+      this.nextNoteTime = this.context.currentTime
+      this.timeWorker.postMessage('start')
+      message = 'stop'
     } else {
-      this.timeWorker.postMessage('stop');
-      message = 'play';
+      this.timeWorker.postMessage('stop')
+      message = 'play'
     }
-    return message;
+    return message
   }
 
-  swingFactor(s) {
-    return kMaxSwing * s/100;
+  updateSequences(sequences) {
+    this.sequences = sequences
+  }
+
+  updateTracks(tracks) {
+    console.log('%%%%%%%%%%%%%%%% tracks', tracks)
+    this.tracks = tracks
+  }
+
+  updateTempo(tempo) {
+    this.tempo = tempo
+  }
+
+  updateSwing(swing) {
+    this.swing = kMaxSwing * swing/100
+  }
+
+  updateNumSteps(numSteps) {
+    this.numSteps = numSteps
+  }
+
+  updateNumBars(numBars) {
+    this.numBars = numBars
+  }
+
+  updateCurrentBar(index) {
+    this.currentBar = index
   }
   
   secondsPerBeat(t){
-    return 60.0 / t;
+    return 60.0 / t
+  }
+
+  running(){
+    return this.isPlaying;
   }
 
 }

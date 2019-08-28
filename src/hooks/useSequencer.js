@@ -11,6 +11,8 @@ const useSequencer = () => {
 
   const {state:{ sequencer, tracks }, dispatch} = useContext(DrumrContext)
 
+  const { all } = tracks
+
   const { 
     isPlaying,
     tempo,
@@ -34,9 +36,14 @@ const useSequencer = () => {
   //   // console.log('[useSequencer] numSteps update', numSteps)
   // }, [numSteps])
 
-  // useEffect(() => {
-  //   // console.log('[useSequencer] bar update', bar)
-  // }, [bar])
+  useEffect(() => {
+    console.log('[useSequencer] INIT')
+    SEQUENCER.init(dispatch)
+  }, [])
+
+  useEffect(()=> {
+    SEQUENCER.updateTracks(all)
+  }, [all])
 
   // const setSequences = ({ trackId, barId, stepId }) => {
   //   console.log('[useTrack] setSequence', { trackId, barId, stepId })
@@ -56,13 +63,6 @@ const useSequencer = () => {
         track.triggerSample(AUDIO_CONTEXT.currentTime);
       }
       dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })
-    },
-    [],
-  )
-
-  const updateCurrentBar = useCallback(
-    value => {   
-      dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value })
     },
     [],
   )
@@ -88,7 +88,7 @@ const useSequencer = () => {
   const setSwing = useCallback(
     value => {
     // console.log('setSwing', value)
-    SEQUENCER.updateSwingFactor(value)
+    SEQUENCER.updateSwing(value)
     dispatch({ type: TYPES.UPDATE_SWING, value })
     },
     [],
@@ -96,6 +96,7 @@ const useSequencer = () => {
 
   const addBar = useCallback(
     () => {
+      SEQUENCER.updateNumBars( numBars + 1 )
       dispatch({ type: TYPES.ADD_BAR, value: { numSteps } })
     },
     [numSteps],
@@ -104,34 +105,28 @@ const useSequencer = () => {
   const removeBar = useCallback(
     () => {
       if (numBars > 1) {
+        SEQUENCER.updateNumBars( numBars - 1 )
         dispatch({ type: TYPES.REMOVE_BAR })
       }
     },
     [numBars],
   )
 
-  const setNumBars = useCallback(
-    value => {
-      // console.log('setNumBars', value)
-      dispatch({ type: TYPES.UPDATE_NUMBARS, value: { numSteps, numBars: Number(value) } })
-    },
-    [numSteps],
-  )
-
-  const setNumBeats = useCallback(
-    value => {
-      // console.log('setNumBars', value)
-      dispatch({ type: TYPES.UPDATE_NUMBEATS, value })
-    },
-    [],
-  )
-
   const setNumSteps = useCallback(
     value => {
-      console.log('setNumSteps', value)
+      console.log('updateNumSteps', value)
+      SEQUENCER.updateNumSteps( value )
       dispatch({ type: TYPES.UPDATE_NUMSTEPS, value: { numSteps: Number(value), numBars } })
     },
     [numBars],
+  )
+
+  const updateCurrentBar = useCallback(
+    value => { 
+      SEQUENCER.updateCurrentBar(value)  
+      dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value })
+    },
+    [],
   )
 
   return {
@@ -143,8 +138,6 @@ const useSequencer = () => {
     numBeats,
     setTempo,
     setSwing,
-    setNumBars,
-    setNumBeats,
     setNumSteps,
     sequences,
     currentBar,
