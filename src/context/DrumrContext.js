@@ -17,7 +17,6 @@ const initialState = {
 
 const initialSequencerState = {
   isPlaying: false,
-  signature:'4/4',
   tempo: 96,
   swing: 0,
   numBars: 1,

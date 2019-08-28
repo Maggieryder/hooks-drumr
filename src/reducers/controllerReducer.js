@@ -45,11 +45,6 @@ export default function(state = initialState, action) {
               ...state,
               numSteps: action.value
             }
-        case TYPES.UPDATE_SIGNATURE:
-            return {
-              ...state,
-              signature: action.value
-            }
         case TYPES.UPDATE_KIT_ID:
             return {
               ...state,

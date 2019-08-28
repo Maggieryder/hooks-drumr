@@ -15,7 +15,6 @@ const useSequencer = () => {
     isPlaying,
     tempo,
     swing,
-    signature,
     numBars,
     numSteps,
     numBeats,
@@ -53,10 +52,8 @@ const useSequencer = () => {
     (trackId, barId, stepId, isOn) => {
       console.log('NOTE TAP trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
       const track = tracks.all[trackId]      
-      // console.log('Sequencer.running', Sequencer.running());
       if (!isPlaying){
         track.triggerSample(AUDIO_CONTEXT.currentTime);
-      //   SEQUENCER.sequenceNote(trackId, barId, stepId);
       }
       dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })
     },
@@ -73,7 +70,7 @@ const useSequencer = () => {
   const togglePlay = useCallback(
     () => {
       // console.log('togglePlay', isPlaying)
-      SEQUENCER.togglePlay()
+      SEQUENCER.togglePlay(!isPlaying)
       dispatch({ type: TYPES.IS_PLAYING })
     },
     [],
@@ -137,25 +134,15 @@ const useSequencer = () => {
     [numBars],
   )
 
-  const setSignature = useCallback(
-    value => {
-      // console.log('setSignature', value)
-      dispatch({ type: TYPES.UPDATE_SIGNATURE, value })
-    },
-    [],
-  )
-
   return {
     isPlaying,
     tempo,
     swing,
-    signature,
     numBars,
     numSteps,
     numBeats,
     setTempo,
     setSwing,
-    setSignature,
     setNumBars,
     setNumBeats,
     setNumSteps,

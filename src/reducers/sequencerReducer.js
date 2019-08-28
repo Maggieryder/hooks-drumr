@@ -3,7 +3,6 @@ import sequenceReducer from './sequenceReducer'
 
 const initialState = {
   isPlaying: false,
-  signature:'4/4',
   tempo: 96,
   swing: 0,
   numBars: 1,
@@ -32,6 +31,8 @@ export default function(state = initialState, action) {
     case TYPES.IS_PLAYING:
         return {
           ...state,
+          currentBar: 0,
+          currentStep: 0,
           isPlaying: !state.isPlaying
         }
     case TYPES.UPDATE_SEQUENCES:
@@ -76,6 +77,11 @@ export default function(state = initialState, action) {
             // currentStep: 0,
             currentBar: action.value
         }
+    case TYPES.UPDATE_CURRENT_STEP:
+        return {
+            ...state,
+            currentStep: action.value
+        }
     case TYPES.UPDATE_NUMBEATS:
         return {
           ...state,
@@ -87,11 +93,6 @@ export default function(state = initialState, action) {
           numSteps: action.value.numSteps,
           numBeats: action.value.numSteps === 12 ? 3 : 4,
           sequences: state.sequences.map(t => sequenceReducer(t, action))
-        }
-    case TYPES.UPDATE_SIGNATURE:
-        return {
-          ...state,
-          signature: action.value
         }
     default:
         return state
