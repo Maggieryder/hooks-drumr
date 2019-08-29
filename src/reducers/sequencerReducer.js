@@ -38,8 +38,8 @@ export default function(state = initialState, action) {
     case TYPES.UPDATE_SEQUENCES:
         return {
           ...state,
-          currentBar: action.value.barId,
-          currentStep: action.value.stepId,
+          // currentBar: action.value.barId,
+          // currentStep: action.value.stepId,
           sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
     case TYPES.UPDATE_TEMPO:

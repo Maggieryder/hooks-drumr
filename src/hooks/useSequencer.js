@@ -64,7 +64,7 @@ const useSequencer = () => {
       }
       dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })
     },
-    [],
+    [isPlaying],
   )
 
   const togglePlay = useCallback(
@@ -73,7 +73,7 @@ const useSequencer = () => {
       SEQUENCER.togglePlay(!isPlaying)
       dispatch({ type: TYPES.IS_PLAYING })
     },
-    [],
+    [isPlaying],
   )
 
   const setTempo = useCallback(
@@ -99,7 +99,7 @@ const useSequencer = () => {
       SEQUENCER.updateNumBars( numBars + 1 )
       dispatch({ type: TYPES.ADD_BAR, value: { numSteps } })
     },
-    [numSteps],
+    [numBars, numSteps],
   )
 
   const removeBar = useCallback(
@@ -123,10 +123,12 @@ const useSequencer = () => {
 
   const updateCurrentBar = useCallback(
     value => { 
-      SEQUENCER.updateCurrentBar(value)  
-      dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value })
+      if (!isPlaying) {
+        SEQUENCER.updateCurrentBar(value)  
+        dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value })
+      } 
     },
-    [],
+    [isPlaying],
   )
 
   return {

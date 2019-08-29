@@ -12,6 +12,7 @@
   width: 25%;
   border-right: 1px solid $white-01;
   transition: width 1s;
+  will-change: width;
 
   &:before {
     content: '';

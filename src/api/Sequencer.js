@@ -45,10 +45,13 @@ class Sequencer {
     } else {
       this.nextNoteTime += (kSwingOffset + this.swing) * this.secondsPerBeat(this.tempo);
     }
+    console.log('nextNote', this.currentBar, this.currentStep, this.numBars)
     if (this.currentStep === (this.numSteps - 1)){
-      // console.log('nextNote', this.currentBar, this.currentStep)
-      this.currentBar = this.currentBar === (this.numBars - 1) ? 0 : this.currentBar + 1
-      this.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: this.currentBar })
+      
+      const barIndex = this.currentBar < (this.numBars - 1) ? this.currentBar + 1 : 0
+      console.log('barIndex', barIndex)
+      this.currentBar = barIndex
+      this.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: barIndex })
       this.currentStep = 0
       this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: this.currentStep })
     } else {
@@ -57,14 +60,16 @@ class Sequencer {
     }
   }
   scheduleNote(time){
-    this.sequences.map((s) => {
+    this.sequences.map((s, x) => {
       const { id, sequence } = s
-      const track = this.tracks.filter(t => t.id() === id)
-      console.log('scheduleNote track', track)
+      // const track = this.tracks.filter(t => t.id() === id)
+      const track = this.tracks[x]
+      console.log('scheduleNote track', track.id())
       sequence.map((bar, i) => {
         if ( i !== this.currentBar) return
         bar.map((step,j) => {
           if ( j !== this.currentStep ) return
+          // console.log('bar/step', i, step)
           if (step === 1) track.triggerSample(time)
         })
       })
@@ -78,14 +83,14 @@ class Sequencer {
     }
   }
 
-  togglePlay(isPlaying) {
+  togglePlay() {
     let message;
-    this.isPlaying = isPlaying
-    if (isPlaying){
-      // this.currentBar = 0
-      this.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: this.currentBar })
+    this.isPlaying = !this.isPlaying
+    if (this.isPlaying){
+      this.currentBar = 0
+      this.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: 0 })
       this.currentStep = 0
-      this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: this.currentStep })
+      this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: 0 })
       this.nextNoteTime = this.context.currentTime
       this.timeWorker.postMessage('start')
       message = 'stop'
