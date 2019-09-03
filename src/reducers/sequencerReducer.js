@@ -16,7 +16,7 @@ const initialState = {
 
 
 export default function(state = initialState, action) {
-  console.log('sequencerReducer action', action)
+  // console.log('sequencerReducer action', action)
   switch (action.type){
     case TYPES.ADD_SEQUENCE: 
         return {
@@ -29,10 +29,11 @@ export default function(state = initialState, action) {
           sequences: state.sequences.filter(s => s.id !== action.trackId)
         }
     case TYPES.IS_PLAYING:
+        console.log('sequencerReducer IS_PLAYING', action.value)
         return {
           ...state,
-          currentBar: 0,
-          currentStep: 0,
+          // currentBar: 0,
+          // currentStep: 0,
           isPlaying: !state.isPlaying
         }
     case TYPES.UPDATE_SEQUENCES:

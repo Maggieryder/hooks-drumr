@@ -87,10 +87,10 @@ class Sequencer {
     let message;
     this.isPlaying = !this.isPlaying
     if (this.isPlaying){
-      this.currentBar = 0
-      this.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: 0 })
-      this.currentStep = 0
-      this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: 0 })
+      // this.currentBar = 0
+      // this.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: 0 })
+      // this.currentStep = 0
+      // this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: 0 })
       this.nextNoteTime = this.context.currentTime
       this.timeWorker.postMessage('start')
       message = 'stop'
@@ -106,7 +106,7 @@ class Sequencer {
   }
 
   updateTracks(tracks) {
-    console.log('%%%%%%%%%%%%%%%% tracks', tracks)
+    // console.log('%%%%%%%%%%%%%%%% tracks', tracks)
     this.tracks = tracks
   }
 
@@ -123,10 +123,12 @@ class Sequencer {
   }
 
   updateNumBars(numBars) {
+    console.log('%%%%%%%%%%%%%%%% updateNumBars', numBars)
     this.numBars = numBars
   }
 
   updateCurrentBar(index) {
+    console.log('########## updateCurrentBar', index)
     this.currentBar = index
   }
   

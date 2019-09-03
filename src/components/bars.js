@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Bar from './bar'
 
 import { SEQUENCER } from '../api'
 
-import useSequencer from '../hooks/useSequencer'
+// import useSequencer from '../hooks/useSequencer'
+import { DrumrContext } from '../context/DrumrContext'
 
 import classes from './bars.module.scss'
 
 const Bars = ( { track } ) => {
 
-  const { sequences, numSteps, numBars } = useSequencer()
+  // const { sequences, numSteps, numBars } = useSequencer()
+
+  const {state:{ sequencer }} = useContext(DrumrContext)
+
+  const { sequences, numSteps, numBars } = sequencer
 
   const barSequence = sequences.filter(s => s.id === track.id())[0].sequence
 

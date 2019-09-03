@@ -4,7 +4,7 @@ import InputRange from '../components/ui/inputRange'
 import Label from '../components/ui/label'
 import CurrentValue from '../components/ui/currentValue'
 import IncreaseBtn from '../components/ui/increaseBtn'
-import DecreaseBtn from '../components/ui/decreaseBtn'
+// import DecreaseBtn from '../components/ui/decreaseBtn'
 import TogglePlayBtn from '../components/ui/togglePlayBtn'
 import BarIndicator from '../components/ui/barIndicator'
 import Tracks from '../components/tracks'
@@ -15,6 +15,8 @@ import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
 
 import classes from './controller.module.scss'
+
+import { SEQUENCER } from '../api'
 
 const Controller = () => {
   const { 
@@ -28,6 +30,7 @@ const Controller = () => {
     addTrack } = useDrumr()
 
   const {
+    dispatch,
     isPlaying,
     tempo, 
     setTempo, 
@@ -51,7 +54,9 @@ const Controller = () => {
   ]
 
   useEffect(() => {
+    console.log('[controller] INIT')
     loadData('./resources')
+    SEQUENCER.init(dispatch)
     return (() => {
       
     })
@@ -67,7 +72,7 @@ const Controller = () => {
 
   useEffect(() => {
     if (kits) {
-      console.log('kits', kits, currentKitId)
+      // console.log('kits', kits, currentKitId)
       loadBuffers(kits[currentKitId], 'kitBuffers')
     }  
     return (() => {
@@ -140,4 +145,4 @@ const Controller = () => {
   )
 }
 
-export default Controller
+export default React.memo(Controller)
