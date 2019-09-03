@@ -48,9 +48,6 @@ const useDrumr = () => {
     currentVerbId
      } = controller
 
-
- 
-
   // const [tracks, dispatch] = useReducer(tracksReducer, initialState)
 
   // console.log('tracks',tracks)
@@ -65,11 +62,6 @@ const useDrumr = () => {
   //       return tracks;
   //   }
   // }, []);
-
-  // const setTracks = () => {
-  //   console.log('setTracks >>>>>')
-  //   [0,1,2,3].map(i => addTrack(i)) 
-  // }
 
   const addTrack = useCallback((id) => {
     const track = new Track(id, AUDIO_CONTEXT, MIXER)
@@ -93,7 +85,6 @@ const useDrumr = () => {
     },
     [],
   )
-
 
   const loadData = async (url) => {  
     dispatch({ type: TYPES.IS_LOADING, value: true })
@@ -126,7 +117,7 @@ const useDrumr = () => {
     voices = obj.voices
     let buffersToLoad = voices.length,
     buffers = [] 
-    // console.log('loadBuffers voices', voices.length) 
+    // console.log('loadBuffers voices', voices) 
     dispatch({ type: TYPES.IS_LOADING, value: true })
     for (let i = 0;i<voices.length;i++){
       buffers[i] = { label:voices[i].label, buffer:{}, value: voices[i].value }
@@ -134,7 +125,7 @@ const useDrumr = () => {
           //console.log(buffer);
           buffers[i].buffer = buffer
           buffersToLoad --
-          // console.log('samplesToLoad', buffersToLoad)
+          // console.log('buffersToLoad', buffersToLoad)
           if (buffersToLoad < 1) {
             // setState(state => ({ 
             //   ...state, 
@@ -149,37 +140,10 @@ const useDrumr = () => {
     }
   }
 
-
-
   const setCurrentKitId = index => {
     console.log('setCurrentKit', index)
     dispatch({ type: TYPES.UPDATE_KIT_ID, value: index })
   }
-
-  // const onNoteTap = (trackId, barId, stepId) => {
-  //   console.log(tracks.all)
-  //   console.log('trackIndex', trackId, 'bar', barId, 'step', stepId);
-  //   const track = tracks.all[trackId]
-  //   console.log('track', track)
-  //   track.triggerSample(0)
-    // console.log('Sequencer.running', Sequencer.running());
-    // if (!Sequencer.running()){
-    //   // MIXER.tracks[trackIndex].triggerSample(CTX.currentTime);
-    //   // Sequencer.sequenceNote(trackId, barId, stepId);
-    // }  
-  // }
-
-
-  // function playTrack(index) {
-  //   if (index === state.currentTrackIndex) {
-  //     togglePlay();
-  //   } else {
-  //     state.audioPlayer.pause();
-  //     state.audioPlayer = new Audio(state.tracks[index].file);
-  //     state.audioPlayer.play();
-  //     setState(state => ({ ...state, currentTrackIndex: index, isPlaying: true }));
-  //   }
-  // }
 
   // function togglePlay() {
   //   if (state.isPlaying) {
@@ -191,9 +155,6 @@ const useDrumr = () => {
   // }
 
   return {
-    // togglePlay,
-    // isPlaying: state.isPlaying,
-
     loadData,
     loadBuffers,
     setCurrentKitId,

@@ -34,7 +34,6 @@ const Controller = () => {
     swing, 
     setSwing, 
     numBars, 
-    setNumBars, 
     numSteps, 
     setNumSteps,
     sequences,
@@ -43,9 +42,7 @@ const Controller = () => {
     togglePlay,
     addBar,
     removeBar,
-    updateCurrentBar,
-    signature,
-    setSignature } = useSequencer()
+    updateCurrentBar } = useSequencer()
 
 
   const numStepsOptions = [
@@ -70,10 +67,8 @@ const Controller = () => {
 
   useEffect(() => {
     if (kits) {
-      // console.log('kits', kits, currentKit)
+      console.log('kits', kits, currentKitId)
       loadBuffers(kits[currentKitId], 'kitBuffers')
-      
-      //if (all.length<1) setTracks()
     }  
     return (() => {
       
@@ -145,4 +140,4 @@ const Controller = () => {
   )
 }
 
-export default React.memo(Controller)
+export default Controller

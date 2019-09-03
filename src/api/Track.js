@@ -137,7 +137,7 @@ export default class Track {
     // this._meter.disconnect();
   }
   assignTrackBuffer(buffer){
-    // console.log('[Track Api] assignTrackBuffer', buffer)
+    console.log('[Track Api] assignTrackBuffer', buffer)
     this._buffer = buffer
   }
   triggerSample(time) {

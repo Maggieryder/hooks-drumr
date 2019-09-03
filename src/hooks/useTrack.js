@@ -4,7 +4,6 @@ import { DrumrContext } from '../context/DrumrContext'
 import { TrackContext } from '../context/TrackContext'
 
 import useDrumr from '../hooks/useDrumr'
-import { DELAY } from '../api';
 
 const useTrack = () => {
 
@@ -21,11 +20,8 @@ const useTrack = () => {
     reverbSend,
     delaySend,
     solo,
-    mute,
-    sequence
+    mute
      } = state
-
-  
 
   const setVoiceId = ({ trackId, value }) => {
     console.log('[useTrack] setVoiceId', { trackId, value })
@@ -73,8 +69,7 @@ const useTrack = () => {
   }
 
   const setSolo = ({ trackId, value }) => {
-    console.log('[useTrack] setSolo', { trackId, value })
-    
+    console.log('[useTrack] setSolo', { trackId, value }) 
     setState(state => ({ 
       ...state, 
       solo: value 
@@ -90,13 +85,13 @@ const useTrack = () => {
     }));
   }
 
-  const setSequence = ({ trackId, value }) => {
-    console.log('[useTrack] setSequence', { trackId, value })
-    setState(state => ({ 
-      ...state, 
-      sequence: value 
-    }));
-  }
+  // const setSequence = ({ trackId, value }) => {
+  //   console.log('[useTrack] setSequence', { trackId, value })
+  //   setState(state => ({ 
+  //     ...state, 
+  //     sequence: value 
+  //   }));
+  // }
 
   return {
     trackId,
@@ -108,15 +103,13 @@ const useTrack = () => {
     delaySend,
     solo,
     mute,
-    sequence,
     setVoiceId,
     setGain,
     setPan,
     setReverbSend,
     setDelaySend,
     setSolo,
-    setMute,
-    setSequence
+    setMute
   }
 }
 

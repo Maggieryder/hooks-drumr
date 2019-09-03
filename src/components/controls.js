@@ -17,6 +17,8 @@ const Controls = ( { track } ) => {
 
   const { tracks, kitBuffers, removeTrack } = useDrumr()
 
+  const { all, muted, soloed } = tracks
+
   const { 
     voiceId, setVoiceId,
     gain, setGain,
@@ -28,21 +30,14 @@ const Controls = ( { track } ) => {
   } = useTrack();
 
   useEffect(() => {
-    if (kitBuffers) {
-      // console.log('[ Controls ] kitBuffers', kitBuffers)
-    }  
-    return (() => {
-      
-    })
-  }, [kitBuffers]);
-
-  useEffect(() => {
     console.log('[Controls] track.id voiceId', track.id(), voiceId)
-    tracks.all[track.id()].assignTrackBuffer(kitBuffers[voiceId].buffer)
+    // console.log('[ Controls ] kitBuffers', kitBuffers)
+    // console.log('[ Controls ] all', all)
+    all[track.id()].assignTrackBuffer(kitBuffers[voiceId].buffer)
     return (() => {
       
     })
-  }, [voiceId])
+  }, [voiceId, kitBuffers, all])
 
   // useEffect(() => {
   //   console.log('[Controls] track.id reverbSend', track.id(), reverbSend)

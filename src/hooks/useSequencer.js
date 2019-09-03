@@ -25,16 +25,9 @@ const useSequencer = () => {
     currentStep
      } = sequencer
 
-  // const [bar, setBar] = useState([])
-
   // useEffect(() => {
   //   console.log('[useSequencer] sequence update', sequences)
   // }, [sequences, numSteps, numBars])
-
-  // useEffect(() => {
-  //   setBar(Array.apply(null, {length: numSteps}).map(() => 0))
-  //   // console.log('[useSequencer] numSteps update', numSteps)
-  // }, [numSteps])
 
   useEffect(() => {
     console.log('[useSequencer] INIT')
@@ -45,26 +38,17 @@ const useSequencer = () => {
     SEQUENCER.updateTracks(all)
   }, [all])
 
-  // const setSequences = ({ trackId, barId, stepId }) => {
-  //   console.log('[useTrack] setSequence', { trackId, barId, stepId })
-  //   // sequences[trackId][barId][stepId]
-  //   // setState(state => ({ 
-  //   //   ...state, 
-  //   //   sequence: value 
-  //   // }));
-  //   dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, trackId, barId, stepId } })
-  // }
-
   const onNoteTap = useCallback(
     (trackId, barId, stepId, isOn) => {
       console.log('NOTE TAP trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
-      const track = tracks.all[trackId]      
+      const track = all[trackId]      
       if (!isPlaying){
+        dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value: barId })
         track.triggerSample(AUDIO_CONTEXT.currentTime);
       }
       dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })
     },
-    [isPlaying],
+    [isPlaying, all],
   )
 
   const togglePlay = useCallback(
