@@ -75,7 +75,7 @@ const useDrumr = () => {
       dispatch({ type: TYPES.ADD_TRACK, value: { track: track } })
     // console.log(' - - - TRACKS', tracks)
     },
-    [ numSteps, numBars ],
+    [ numSteps, numBars ]
   )
 
   const removeTrack = useCallback((id) => {
@@ -83,8 +83,20 @@ const useDrumr = () => {
       dispatch({ type: TYPES.REMOVE_SEQUENCE, trackId: id })
     // console.log(' - - - TRACKS', tracks)
     },
-    [],
+    []
   )
+
+  // const soloTrack = useCallback((id) => {
+  //     dispatch({ type: TYPES.SOLO_TRACK, trackId: id })
+  //   },
+  //   []
+  // )
+
+  // const unSoloTrack = useCallback((id) => {
+  //     dispatch({ type: TYPES.UNSOLO_TRACK, trackId: id })
+  //   },
+  //   []
+  // )
 
   const loadData = async (url) => {  
     dispatch({ type: TYPES.IS_LOADING, value: true })
@@ -112,7 +124,6 @@ const useDrumr = () => {
   }
 
   const loadBuffers = async (obj, type) => {
-    // setState(state => ({ ...state, isLoading: true }))
     const directory = obj.directory,
     voices = obj.voices
     let buffersToLoad = voices.length,
@@ -127,11 +138,6 @@ const useDrumr = () => {
           buffersToLoad --
           // console.log('buffersToLoad', buffersToLoad)
           if (buffersToLoad < 1) {
-            // setState(state => ({ 
-            //   ...state, 
-            //   [type]: buffers,
-            //   isLoading: false 
-            // }))
             const bufferType = type === 'verbBuffers' ? TYPES.UPDATE_VERB_BUFFERS : TYPES.UPDATE_KIT_BUFFERS
             dispatch({ type: bufferType, value: buffers })
           } 
@@ -144,15 +150,6 @@ const useDrumr = () => {
     console.log('setCurrentKit', index)
     dispatch({ type: TYPES.UPDATE_KIT_ID, value: index })
   }
-
-  // function togglePlay() {
-  //   if (state.isPlaying) {
-  //     state.audioPlayer.pause();
-  //   } else {
-  //     state.audioPlayer.play();
-  //   }
-  //   setState(state => ({ ...state, isPlaying: !state.isPlaying }));
-  // }
 
   return {
     loadData,

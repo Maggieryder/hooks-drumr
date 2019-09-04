@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import Step from './step'
@@ -12,6 +12,8 @@ const Bar = ( { trackId, barId, sequence } ) => {
   const { onNoteTap, numBeats, numSteps, currentBar, currentStep } = useSequencer();
 
   const isCurrentBar = currentBar === barId
+
+  // console.log('[ bar ] barId / currentBar', barId, currentBar)
 
   const style = {
     gridTemplateColumns: 'repeat('+numSteps+', 1fr)',
@@ -46,4 +48,4 @@ Bar.propTypes = {
   numSteps: PropTypes.number
 }
 
-export default Bar
+export default React.memo(Bar)

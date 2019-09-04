@@ -27,9 +27,6 @@ const useCompressor = () => {
     useEffect(() => {
         // console.log('[useCompressor] compOn', compOn)
         COMPRESSOR.toggleOn(compOn)
-        return (() => {
-
-        })
       }, [compOn])
 
     useEffect(() => {      

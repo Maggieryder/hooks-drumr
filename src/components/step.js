@@ -4,6 +4,8 @@ import classes from './step.module.scss'
 
 const Step = ({ onTap, step, isBeat, isOne, isCurrentBar, isCurrentStep, velocity }) => {
 
+  // console.log('[ step ] update id / isOne', step, isOne)
+
   const style = {
     // width: isBeat ? '30px' : isCurrentBar ? '20px' :'10px',
     // height: isBeat ? '30px' : isCurrentBar ? '20px' :'10px',
@@ -36,4 +38,4 @@ Step.propTypes = {
   isOne: PropTypes.number
 }
 
-export default Step
+export default React.memo(Step)

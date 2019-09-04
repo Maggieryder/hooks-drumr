@@ -1,6 +1,4 @@
 import React from 'react'
-import IncreaseBtn from './increaseBtn'
-import DecreaseBtn from './decreaseBtn'
 
 import classes from './ui.module.scss'
 

@@ -24,14 +24,21 @@ export default function(state = initialState, action) {
           all: state.all.filter(t => t.id() !== action.trackId)
         }
     case TYPES.SOLO_TRACK:
+        console.log('tracksReducer SOLO_TRACK', action.value)
         return {
           ...state,
           soloed: [...state.soloed, action.value]
         }
     case TYPES.UNSOLO_TRACK:
+        console.log('tracksReducer UNSOLO_TRACK', action.value)
         return {
           ...state,
-          soloed: state.soloed.filter(t => t.id !== action.value)
+          soloed: state.soloed.filter(t => t.id() !== action.value)
+        }
+    case TYPES.TOGGLE_SOLO_TRACK:
+        console.log('tracksReducer TOGGLE_SOLO_TRACK', action.value)
+        return {
+          ...state
         }
     case TYPES.MUTE_TRACK:
         return {

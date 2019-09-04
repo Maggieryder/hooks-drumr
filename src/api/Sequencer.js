@@ -61,18 +61,21 @@ class Sequencer {
   }
   scheduleNote(time){
     this.sequences.map((s, x) => {
-      const { id, sequence } = s
+      const { sequence } = s
       // const track = this.tracks.filter(t => t.id() === id)
       const track = this.tracks[x]
       console.log('scheduleNote track', track.id())
       sequence.map((bar, i) => {
-        if ( i !== this.currentBar) return
+        if ( i !== this.currentBar) return false
         bar.map((step,j) => {
-          if ( j !== this.currentStep ) return
+          if ( j !== this.currentStep ) return false
           // console.log('bar/step', i, step)
           if (step === 1) track.triggerSample(time)
+          return true
         })
+        return true
       })
+      return true
     })
   }
 

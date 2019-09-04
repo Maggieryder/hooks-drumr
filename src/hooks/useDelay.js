@@ -25,9 +25,6 @@ const useDelay = () => {
     useEffect(() => {
         // console.log('[useDelay] delayOn', delayOn)
         DELAY.toggleOn(delayOn)
-        return (() => {
-
-        })
       }, [delayOn])
 
     useEffect(() => {      

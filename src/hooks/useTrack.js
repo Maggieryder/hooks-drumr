@@ -3,11 +3,13 @@ import { useContext } from 'react'
 import { DrumrContext } from '../context/DrumrContext'
 import { TrackContext } from '../context/TrackContext'
 
+import * as TYPES from '../actions/types'
+
 import useDrumr from '../hooks/useDrumr'
 
 const useTrack = () => {
 
-  const { tracks } = useDrumr(DrumrContext)
+  const {state: { tracks: { all, soloed, muted } }, dispatch } = useContext(DrumrContext)
 
   const [state, setState] = useContext(TrackContext)
 
@@ -34,7 +36,7 @@ const useTrack = () => {
 
   const setGain = ({ trackId, value }) => {
     console.log('[useTrack] setGain', { trackId, value })
-    tracks.all[trackId].updateVolume(value)
+    all[trackId].updateVolume(value)
     setState(state => ({ 
       ...state, 
       gain: value 
@@ -43,7 +45,7 @@ const useTrack = () => {
 
   const setPan = ({ trackId, value }) => {
     console.log('[useTrack] setPan', { trackId, value })
-    tracks.all[trackId].updatePan(value)
+    all[trackId].updatePan(value)
     setState(state => ({ 
       ...state, 
       pan: value 
@@ -52,7 +54,7 @@ const useTrack = () => {
 
   const setReverbSend = ({ trackId, value }) => {
     console.log('[useTrack] setReverbSend', { trackId, value })
-    tracks.all[trackId].updateReverbSend(value)
+    all[trackId].updateReverbSend(value)
     setState(state => ({ 
       ...state, 
       reverbSend: value 
@@ -61,7 +63,7 @@ const useTrack = () => {
 
   const setDelaySend = ({ trackId, value }) => {
     console.log('[useTrack] setDelaySend', { trackId, value })
-    tracks.all[trackId].updateDelaySend(value)
+    all[trackId].updateDelaySend(value)
     setState(state => ({ 
       ...state, 
       delaySend: value 
@@ -70,6 +72,7 @@ const useTrack = () => {
 
   const setSolo = ({ trackId, value }) => {
     console.log('[useTrack] setSolo', { trackId, value }) 
+    value ? dispatch({ type: TYPES.SOLO_TRACK, value: all[trackId] }) : dispatch({ type: TYPES.UNSOLO_TRACK, value: trackId  })
     setState(state => ({ 
       ...state, 
       solo: value 
@@ -78,20 +81,12 @@ const useTrack = () => {
 
   const setMute = ({ trackId, value }) => {
     console.log('[useTrack] setMute', { trackId, value })
-    tracks.all[trackId].toggleMute()
+    all[trackId].toggleMute()
     setState(state => ({ 
       ...state, 
       mute: value 
     }));
   }
-
-  // const setSequence = ({ trackId, value }) => {
-  //   console.log('[useTrack] setSequence', { trackId, value })
-  //   setState(state => ({ 
-  //     ...state, 
-  //     sequence: value 
-  //   }));
-  // }
 
   return {
     trackId,

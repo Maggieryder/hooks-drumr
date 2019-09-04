@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react'
+import { useContext, useCallback } from 'react'
 import { DrumrContext } from '../context/DrumrContext'
 
 import * as TYPES from '../actions/types'
 
 import { AUDIO_CONTEXT, SEQUENCER } from '../api'
-
-// SEQUENCER.init()
 
 const useSequencer = () => {
 
@@ -25,16 +23,6 @@ const useSequencer = () => {
     currentStep
      } = sequencer
 
-
-  // useEffect(() => {
-  //   console.log('[useSequencer] INIT')
-  //   SEQUENCER.init(dispatch)
-  // }, [])
-
-  useEffect(()=> {
-    SEQUENCER.updateTracks(all)
-  }, [all])
-
   const onNoteTap = useCallback(
     (trackId, barId, stepId, isOn) => {
       console.log('NOTE TAP trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
@@ -42,7 +30,7 @@ const useSequencer = () => {
       if (!isPlaying){
         dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value: barId })
         dispatch({ type: TYPES.UPDATE_CURRENT_STEP, value: stepId })
-        track.triggerSample(AUDIO_CONTEXT.currentTime);
+        track.triggerSample(AUDIO_CONTEXT.currentTime)
       }
       dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })
     },

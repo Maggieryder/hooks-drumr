@@ -47,6 +47,8 @@ const Controller = () => {
     removeBar,
     updateCurrentBar } = useSequencer()
 
+    const { all, soloed, muted } = tracks
+
 
   const numStepsOptions = [
     {label:'12', value:12},
@@ -62,13 +64,21 @@ const Controller = () => {
     })
   }, [])
 
-  // useEffect(() => {
-  //   const { all } = tracks
-  //   console.log('[ controller ] all length', all.length)
-  //   return (() => {
+  useEffect(() => {
+    console.log('[ controller ] all length', all.length)
+    SEQUENCER.updateTracks(all)
+    return (() => {
       
-  //   })
-  // }, [tracks])
+    })
+  }, [all])
+
+  useEffect(() => {
+    console.log('[ controller ] soloed', soloed)
+    console.log('[ controller ] muted', muted)
+    return (() => {
+      
+    })
+  }, [soloed, muted])
 
   useEffect(() => {
     if (kits) {

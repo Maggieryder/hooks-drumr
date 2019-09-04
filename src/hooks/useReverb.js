@@ -22,36 +22,25 @@ const useReverb = () => {
       }, [])
 
 
-    useEffect(() => {
-        
+    useEffect(() => {     
         if (verbBuffers) {
-            console.log('[useReverb] reverbOn', reverbOn)
+            // console.log('[useReverb] reverbOn', reverbOn)
             REVERB.toggleOn(reverbOn)
         }
-        return (() => {
-
-        })
       }, [reverbOn])
 
-    useEffect(() => {
-        
+    useEffect(() => { 
         if (verbBuffers) {
             // console.log('[useReverb] verbBuffers', verbBuffers[reverbId].buffer)
             REVERB.setImpulse(verbBuffers[reverbId].buffer)
         }
-        return (() => {
-
-        })
     }, [verbBuffers])
 
     useEffect(() => {  
         if (verbBuffers) {
-            console.log('[useReverb] REVERB ID CHANGE', verbBuffers[reverbId].buffer)
+            // console.log('[useReverb] REVERB ID CHANGE', verbBuffers[reverbId].buffer)
             REVERB.setImpulse(verbBuffers[reverbId].buffer)
         }
-        return (() => {
-
-        })
     }, [reverbId])
 
     return {
