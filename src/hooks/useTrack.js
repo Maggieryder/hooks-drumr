@@ -1,11 +1,11 @@
-import { useContext } from 'react'
+import { useContext, useCallback } from 'react'
 
 import { DrumrContext } from '../context/DrumrContext'
 import { TrackContext } from '../context/TrackContext'
 
 import * as TYPES from '../actions/types'
 
-import useDrumr from '../hooks/useDrumr'
+// import useDrumr from '../hooks/useDrumr'
 
 const useTrack = () => {
 
@@ -25,68 +25,91 @@ const useTrack = () => {
     mute
      } = state
 
-  const setVoiceId = ({ trackId, value }) => {
-    console.log('[useTrack] setVoiceId', { trackId, value })
-    // tracks.all[trackId].assignTrackBuffer(kitBuffers[voiceId].buffer)
-    setState(state => ({ 
-      ...state, 
-      voiceId: value 
-    }));
-  }
+  const setVoiceId = useCallback(
+    ({ trackId, value }) => {
+      console.log('[useTrack] setVoiceId', { trackId, value })
+      // tracks.all[trackId].assignTrackBuffer(kitBuffers[voiceId].buffer)
+      setState(state => ({ 
+        ...state, 
+        voiceId: value 
+      }))
+    },
+    [all]
+  )
 
-  const setGain = ({ trackId, value }) => {
-    console.log('[useTrack] setGain', { trackId, value })
-    all[trackId].updateVolume(value)
-    setState(state => ({ 
-      ...state, 
-      gain: value 
-    }));
-  }
+  const setGain = useCallback(
+    ({ trackId, value }) => {
+      console.log('[useTrack] setGain', { trackId, value })
+      all[trackId].updateVolume(value)
+      setState(state => ({ 
+        ...state, 
+        gain: value 
+      }))
+    },
+    [all]
+  )
 
-  const setPan = ({ trackId, value }) => {
-    console.log('[useTrack] setPan', { trackId, value })
-    all[trackId].updatePan(value)
-    setState(state => ({ 
-      ...state, 
-      pan: value 
-    }));
-  }
+  const setPan = useCallback(
+    ({ trackId, value }) => {
+      console.log('[useTrack] setPan', { trackId, value })
+      all[trackId].updatePan(value)
+      setState(state => ({ 
+        ...state, 
+        pan: value 
+      }))
+    },
+    [all]
+  )
 
-  const setReverbSend = ({ trackId, value }) => {
-    console.log('[useTrack] setReverbSend', { trackId, value })
-    all[trackId].updateReverbSend(value)
-    setState(state => ({ 
-      ...state, 
-      reverbSend: value 
-    }));
-  }
+  const setReverbSend = useCallback(
+    ({ trackId, value }) => {
+      console.log('[useTrack] setReverbSend', { trackId, value })
+      all[trackId].updateReverbSend(value)
+      setState(state => ({ 
+        ...state, 
+        reverbSend: value 
+      }));
+    },
+    [all]
+  )
 
-  const setDelaySend = ({ trackId, value }) => {
-    console.log('[useTrack] setDelaySend', { trackId, value })
-    all[trackId].updateDelaySend(value)
-    setState(state => ({ 
-      ...state, 
-      delaySend: value 
-    }));
-  }
+  const setDelaySend = useCallback(
+    ({ trackId, value }) => {
+      console.log('[useTrack] setDelaySend', { trackId, value })
+      all[trackId].updateDelaySend(value)
+      setState(state => ({ 
+        ...state, 
+        delaySend: value 
+      }));
+    },
+    [all]
+  )
 
-  const setSolo = ({ trackId, value }) => {
-    console.log('[useTrack] setSolo', { trackId, value }) 
-    value ? dispatch({ type: TYPES.SOLO_TRACK, value: all[trackId] }) : dispatch({ type: TYPES.UNSOLO_TRACK, value: trackId  })
-    setState(state => ({ 
-      ...state, 
-      solo: value 
-    }));
-  }
+  const setSolo = useCallback(
+    ({ trackId, value }) => {
+      console.log('[useTrack] setSolo', { trackId, value }) 
+      value ? dispatch({ type: TYPES.SOLO_TRACK, value: all[trackId] }) : dispatch({ type: TYPES.UNSOLO_TRACK, value: trackId  })
+      all[trackId].toggleSolo()
+      setState(state => ({ 
+        ...state, 
+        solo: value 
+      }));
+    },
+    [all]
+  )
 
-  const setMute = ({ trackId, value }) => {
-    console.log('[useTrack] setMute', { trackId, value })
-    all[trackId].toggleMute()
-    setState(state => ({ 
-      ...state, 
-      mute: value 
-    }));
-  }
+  const setMute = useCallback(
+    ({ trackId, value }) => {
+      console.log('[useTrack] setMute', { trackId, value })
+      value ? dispatch({ type: TYPES.MUTE_TRACK, value: all[trackId] }) : dispatch({ type: TYPES.UNMUTE_TRACK, value: trackId  })
+      all[trackId].toggleMute()
+      setState(state => ({ 
+        ...state, 
+        mute: value 
+      }));
+    },
+    [all]
+  )
 
   return {
     trackId,

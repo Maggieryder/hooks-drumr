@@ -27,4 +27,4 @@ Track.propTypes = {
   track: PropTypes.object.isRequired
 }
 
-export default Track
+export default React.memo(Track)

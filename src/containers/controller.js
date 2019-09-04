@@ -16,7 +16,7 @@ import useSequencer from '../hooks/useSequencer'
 
 import classes from './controller.module.scss'
 
-import { SEQUENCER } from '../api'
+import { MIXER, SEQUENCER } from '../api'
 
 const Controller = () => {
   const { 
@@ -39,9 +39,7 @@ const Controller = () => {
     numBars, 
     numSteps, 
     setNumSteps,
-    sequences,
     currentBar,
-    currentStep,
     togglePlay,
     addBar,
     removeBar,
@@ -75,10 +73,8 @@ const Controller = () => {
   useEffect(() => {
     console.log('[ controller ] soloed', soloed)
     console.log('[ controller ] muted', muted)
-    return (() => {
-      
-    })
-  }, [soloed, muted])
+    soloed.length >= 1  ? MIXER.soloTracks(all, soloed) : MIXER.unSoloTracks(all, muted)
+  }, [all, soloed, muted])
 
   useEffect(() => {
     if (kits) {

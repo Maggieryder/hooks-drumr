@@ -68,6 +68,17 @@ class Mixer {
   dryMix(){
     return this._dryMix
   }
+  soloTracks( all, soloed ){
+    const notSoloed = all.filter(track => !soloed.includes(track))
+    const tracksToMute = notSoloed.filter(track => !track.isMute())
+    tracksToMute.map(track => track.toggleMute())
+  }
+
+  unSoloTracks( all, muted ){
+    const notMuted = all.filter(track => !muted.includes(track))
+    const tracksToUnmute = notMuted.filter(track => track.isMute())
+    tracksToUnmute.map(track => track.toggleMute())
+  }
 }
 
 export default Mixer
