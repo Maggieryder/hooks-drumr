@@ -30,6 +30,15 @@ const Controls = ( { track } ) => {
   } = useTrack();
 
   useEffect(() => {
+    console.log('[track] INIT', track.id())
+    setGain({trackId: track.id(), value: 5})
+    setPan({trackId: track.id(), value: 0})
+    return (() => {
+        
+    })
+}, [])
+
+  useEffect(() => {
     console.log('[Controls] track.id voiceId', track.id(), voiceId)
     // console.log('[ Controls ] kitBuffers', kitBuffers)
     // console.log('[ Controls ] all', all)

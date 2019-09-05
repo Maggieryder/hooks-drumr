@@ -68,16 +68,26 @@ class Mixer {
   dryMix(){
     return this._dryMix
   }
-  soloTracks( all, soloed ){
-    const notSoloed = all.filter(track => !soloed.includes(track))
+  updateTracks(tracks) {
+    this._tracks = tracks
+  }
+  updateMutedTracks(mutedTracks){
+    this._mutedTracks = mutedTracks
+  }
+  soloTracks( soloed ){
+    const notSoloed = this._tracks.filter(track => !soloed.includes(track))
     const tracksToMute = notSoloed.filter(track => !track.isMute())
+    const tracksToUnMute = soloed.filter(track => track.isMute())
+    tracksToUnMute.map(track => track.toggleMute())
     tracksToMute.map(track => track.toggleMute())
   }
 
-  unSoloTracks( all, muted ){
-    const notMuted = all.filter(track => !muted.includes(track))
+  unSoloTracks(){
+    const notMuted = this._tracks.filter(track => !this._mutedTracks.includes(track))
     const tracksToUnmute = notMuted.filter(track => track.isMute())
+    const tracksToMute = this._mutedTracks.filter(track => !track.isMute())
     tracksToUnmute.map(track => track.toggleMute())
+    tracksToMute.map(track => track.toggleMute())
   }
 }
 

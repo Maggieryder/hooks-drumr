@@ -89,6 +89,7 @@ const useTrack = () => {
     ({ trackId, value }) => {
       console.log('[useTrack] setSolo', { trackId, value }) 
       value ? dispatch({ type: TYPES.SOLO_TRACK, value: all[trackId] }) : dispatch({ type: TYPES.UNSOLO_TRACK, value: trackId  })
+      // dispatch({ type: TYPES.SOLO_TRACK, value: all[trackId] })
       all[trackId].toggleSolo()
       setState(state => ({ 
         ...state, 
@@ -102,6 +103,7 @@ const useTrack = () => {
     ({ trackId, value }) => {
       console.log('[useTrack] setMute', { trackId, value })
       value ? dispatch({ type: TYPES.MUTE_TRACK, value: all[trackId] }) : dispatch({ type: TYPES.UNMUTE_TRACK, value: trackId  })
+      // dispatch({ type: TYPES.MUTE_TRACK, value: all[trackId] })
       all[trackId].toggleMute()
       setState(state => ({ 
         ...state, 

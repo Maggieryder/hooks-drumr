@@ -37,7 +37,8 @@ export default class Track {
     // this.buffer;
     this._mute = false
     this._solo = false
-    this.updateVolume(0)
+    this.updateVolume(5)
+    this.updatePan(0)
     this.updateReverbSend(0)
     this.updateDelaySend(0)
     this.connect()

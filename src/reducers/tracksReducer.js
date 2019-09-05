@@ -41,14 +41,16 @@ export default function(state = initialState, action) {
           ...state
         }
     case TYPES.MUTE_TRACK:
+        console.log('tracksReducer MUTE_TRACK', action.value)
         return {
           ...state,
           muted: [...state.muted, action.value]
         }
     case TYPES.UNMUTE_TRACK:
+        console.log('tracksReducer UNMUTE_TRACK', action.value)
         return {
           ...state,
-          muted: state.muted.filter(t => t.id !== action.value)
+          muted: state.muted.filter(t => t.id() !== action.value)
         }
     default:
         return state

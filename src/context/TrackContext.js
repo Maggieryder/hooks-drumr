@@ -9,8 +9,7 @@ const initialState = {
   reverbSend: 0,
   delaySend: 0,
   solo: false,
-  mute: false,
-  sequence: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+  mute: false
 };
 
 const TrackContext =  React.createContext([{}, () => {}])

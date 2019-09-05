@@ -65,6 +65,7 @@ const Controller = () => {
   useEffect(() => {
     console.log('[ controller ] all length', all.length)
     SEQUENCER.updateTracks(all)
+    MIXER.updateTracks(all)
     return (() => {
       
     })
@@ -72,9 +73,14 @@ const Controller = () => {
 
   useEffect(() => {
     console.log('[ controller ] soloed', soloed)
+    // const mutedTracks = all.filter(t => t.isMute())
+    soloed.length >= 1  ?  MIXER.soloTracks(soloed) : MIXER.unSoloTracks()
+  }, [soloed])
+
+  useEffect(() => {
     console.log('[ controller ] muted', muted)
-    soloed.length >= 1  ? MIXER.soloTracks(all, soloed) : MIXER.unSoloTracks(all, muted)
-  }, [all, soloed, muted])
+    MIXER.updateMutedTracks(muted)
+  }, [muted])
 
   useEffect(() => {
     if (kits) {

@@ -19,7 +19,7 @@ const useDelay = () => {
         return (() => {
             DELAY.destroy()
         })
-      }, [])
+    }, [])
 
 
     useEffect(() => {
