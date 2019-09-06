@@ -78,16 +78,14 @@ class Mixer {
     const notSoloed = this._tracks.filter(track => !soloed.includes(track))
     const tracksToMute = notSoloed.filter(track => !track.isMute())
     const tracksToUnMute = soloed.filter(track => track.isMute())
-    tracksToUnMute.map(track => track.toggleMute())
-    tracksToMute.map(track => track.toggleMute())
+    tracksToUnMute.concat(tracksToMute).map(track => track.toggleMute())
   }
 
   unSoloTracks(){
     const notMuted = this._tracks.filter(track => !this._mutedTracks.includes(track))
-    const tracksToUnmute = notMuted.filter(track => track.isMute())
+    const tracksToUnMute = notMuted.filter(track => track.isMute())
     const tracksToMute = this._mutedTracks.filter(track => !track.isMute())
-    tracksToUnmute.map(track => track.toggleMute())
-    tracksToMute.map(track => track.toggleMute())
+    tracksToUnMute.concat(tracksToMute).map(track => track.toggleMute())
   }
 }
 
