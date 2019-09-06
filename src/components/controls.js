@@ -17,7 +17,7 @@ const Controls = ( { track } ) => {
 
   const { tracks, kitBuffers, removeTrack } = useDrumr()
 
-  const { all, muted, soloed } = tracks
+  const { all, soloed } = tracks
 
   const { 
     voiceId, setVoiceId,
@@ -47,22 +47,6 @@ const Controls = ( { track } ) => {
       
     })
   }, [voiceId, kitBuffers, all])
-
-  // useEffect(() => {
-  //   console.log('[Controls] track.id reverbSend', track.id(), reverbSend)
-  //   tracks.all[track.id()].updateReverbSend(reverbSend/100)
-  //   return (() => {
-      
-  //   })
-  // }, [reverbSend])
-
-  // useEffect(() => {
-  //   console.log('[Controls] track.id delaySend', track.id(), delaySend)
-  //   tracks.all[track.id()].updateDelaySend(delaySend/100)
-  //   return (() => {
-      
-  //   })
-  // }, [delaySend])
 
   useEffect(() => {
     // console.log('[Controls] reverbSend', reverbSend)
@@ -108,7 +92,7 @@ const Controls = ( { track } ) => {
         <CurrentValue>{Math.round(pan/10).toString()}</CurrentValue>
       </Control>
       <Control>
-        <Switch isOn={mute} onClick={() => setMute({ trackId: track.id(), value: !mute })} activeClass='red' />
+        <Switch isOn={(mute && !solo) || (soloed.length >= 1 && !track.isSolo()) } onClick={() => setMute({ trackId: track.id(), value: !mute })} activeClass='red' />
         <Label>Mute</Label>
       </Control>
       <Control>
