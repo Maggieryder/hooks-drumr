@@ -29,7 +29,7 @@ export default function(state = initialState, action) {
           sequences: state.sequences.filter(s => s.id !== action.trackId)
         }
     case TYPES.IS_PLAYING:
-        console.log('sequencerReducer IS_PLAYING', action.value)
+        // console.log('sequencerReducer IS_PLAYING', state.isPlaying)
         return {
           ...state,
           // currentBar: 0,

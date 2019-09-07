@@ -48,7 +48,7 @@ const useSequencer = () => {
 
   const setTempo = useCallback(
     value => {
-    // console.log('setTempo', value)
+    console.log('setTempo', value)
     SEQUENCER.updateTempo(value)
     dispatch({ type: TYPES.UPDATE_TEMPO, value })
     },
@@ -84,7 +84,7 @@ const useSequencer = () => {
 
   const setNumSteps = useCallback(
     value => {
-      console.log('updateNumSteps', value)
+      // console.log('updateNumSteps', value)
       SEQUENCER.updateNumSteps( value )
       dispatch({ type: TYPES.UPDATE_NUMSTEPS, value: { numSteps: Number(value), numBars } })
     },

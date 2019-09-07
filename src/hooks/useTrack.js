@@ -9,7 +9,7 @@ import * as TYPES from '../actions/types'
 
 const useTrack = () => {
 
-  const {state: { tracks: { all, soloed, muted } }, dispatch } = useContext(DrumrContext)
+  const {state: { tracks: { all } }, dispatch } = useContext(DrumrContext)
 
   const [state, setState] = useContext(TrackContext)
 

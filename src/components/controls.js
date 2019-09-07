@@ -15,9 +15,7 @@ import classes from './controls.module.scss'
 
 const Controls = ( { track } ) => {
 
-  const { tracks, kitBuffers, removeTrack } = useDrumr()
-
-  const { all, soloed } = tracks
+  const { tracks: { all, soloed }, kitBuffers, removeTrack } = useDrumr()
 
   const { 
     voiceId, setVoiceId,
@@ -39,26 +37,13 @@ const Controls = ( { track } ) => {
 }, [])
 
   useEffect(() => {
-    console.log('[Controls] track.id voiceId', track.id(), voiceId)
+    // console.log('[Controls] track.id voiceId', track.id(), voiceId)
     // console.log('[ Controls ] kitBuffers', kitBuffers)
-    // console.log('[ Controls ] all', all)
     all[track.id()].assignTrackBuffer(kitBuffers[voiceId].buffer)
     return (() => {
       
     })
-  }, [voiceId, kitBuffers, all])
-
-  useEffect(() => {
-    // console.log('[Controls] reverbSend', reverbSend)
-    // console.log('[Controls] delaySend', delaySend)
-    // console.log('[Controls] id gain', track.id(), gain)
-    // console.log('[Controls] pan', pan)
-    // console.log('[Controls] mute', mute)
-    // console.log('[Controls] solo', solo)
-    return (() => {
-      
-    })
-  }, [delaySend, gain, pan, mute, solo]);
+  }, [voiceId, kitBuffers])
 
   return (
     <div className={classes.controls}> 

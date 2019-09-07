@@ -4,14 +4,11 @@ import Bar from './bar'
 
 import { SEQUENCER } from '../api'
 
-// import useSequencer from '../hooks/useSequencer'
 import { DrumrContext } from '../context/DrumrContext'
 
 import classes from './bars.module.scss'
 
 const Bars = ( { track } ) => {
-
-  // const { sequences, numSteps, numBars } = useSequencer()
 
   const {state:{ sequencer }} = useContext(DrumrContext)
 

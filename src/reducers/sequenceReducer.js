@@ -12,10 +12,10 @@ const getSequence = (steps, bars) => Array.apply(null, {length: bars}).map(() =>
 
 
 export default function(state = initialState, action) {
-    console.log('sequence Reducer action', action)
+    // console.log('sequence Reducer action', action)
     switch (action.type){
         case TYPES.ADD_SEQUENCE:
-            console.log('ADD_SEQUENCE',getSequence(action.value.numSteps, action.value.numBars))
+            // console.log('ADD_SEQUENCE',getSequence(action.value.numSteps, action.value.numBars))
             return {
                 ...state,
                 id: action.value.trackId,

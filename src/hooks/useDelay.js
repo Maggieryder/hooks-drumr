@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
-// import { DrumrContext } from '../context/DrumrContext'
-// import * as TYPES from '../actions/types'
-
-// import useDrumr from './useDrumr'
+import { DrumrContext } from '../context/DrumrContext'
 
 import { DELAY } from '../api'
 
 const useDelay = () => {
+
+    const { state: { sequencer: {tempo} } } = useContext(DrumrContext)
 
     const [delayTime, setDelayTime] = useState(.5)
     const [delayFeedback, setDelayFeedback] = useState(.475)
@@ -28,7 +27,12 @@ const useDelay = () => {
       }, [delayOn])
 
     useEffect(() => {      
-        // console.log('[useDelay] delayTime', delayTime)
+        console.log('[useDelay] delayTime tempo change', tempo)
+        // setDelayTime(60.0 / tempo * time)
+    }, [tempo])
+
+    useEffect(() => {      
+        console.log('[useDelay] delayTime', delayTime)
         DELAY.updateDelayTime(delayTime)
     }, [delayTime])
 

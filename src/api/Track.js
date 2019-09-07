@@ -142,21 +142,9 @@ export default class Track {
     this._buffer = buffer
   }
   triggerSample(time) {
-    console.log('triggerSample')
-    // this._sample.start(time)
-    // const sample = new Sample( this._context, this._buffer ),
-    // pannedSample = new PannerNode( this._context, sample)
-    
-    // console.log('mixer.masterMix',mixer.reverb())
-    // connectGain(context, pannedSample, mixer.reverb())
-    // connectGain(context, pannedSample, mixer.delay())
-    // connectGain(context, pannedSample, mixer.masterMix())
+    // console.log('triggerSample')
     const sample = new Sample( AUDIO_CONTEXT, this._buffer )
-
     sample.connect(this._panner);
-    // this._panner.connect(this._reverbSendGain)
-    // this._panner.connect(this._delaySendGain)
-    // this._panner.connect(this._outputGain)
     trigger(sample, time);
   }
 }

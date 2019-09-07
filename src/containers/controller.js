@@ -4,7 +4,6 @@ import InputRange from '../components/ui/inputRange'
 import Label from '../components/ui/label'
 import CurrentValue from '../components/ui/currentValue'
 import IncreaseBtn from '../components/ui/increaseBtn'
-// import DecreaseBtn from '../components/ui/decreaseBtn'
 import TogglePlayBtn from '../components/ui/togglePlayBtn'
 import BarIndicator from '../components/ui/barIndicator'
 import Tracks from '../components/tracks'
@@ -63,7 +62,7 @@ const Controller = () => {
   }, [])
 
   useEffect(() => {
-    console.log('[ controller ] all length', all.length)
+    // console.log('[ controller ] all length', all.length)
     SEQUENCER.updateTracks(all)
     MIXER.updateTracks(all)
     return (() => {
@@ -72,19 +71,18 @@ const Controller = () => {
   }, [all])
 
   useEffect(() => {
-    console.log('[ controller ] soloed', soloed)
-    // const mutedTracks = all.filter(t => t.isMute())
+    // console.log('[ controller ] soloed', soloed)
     soloed.length >= 1  ?  MIXER.soloTracks(soloed) : MIXER.unSoloTracks()
   }, [soloed])
 
   useEffect(() => {
-    console.log('[ controller ] muted', muted)
+    // console.log('[ controller ] muted', muted)
     MIXER.updateMutedTracks(muted)
   }, [muted])
 
   useEffect(() => {
     if (kits) {
-      // console.log('kits', kits, currentKitId)
+      // console.log('loadBuffers kits', kits, currentKitId)
       loadBuffers(kits[currentKitId], 'kitBuffers')
     }  
     return (() => {
