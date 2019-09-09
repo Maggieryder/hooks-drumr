@@ -42,7 +42,7 @@ const Processors = () => {
         </Control>
         <Control>
           <Label>Time</Label>
-          <CurrentValue>{delayTime.toString()}</CurrentValue>
+          <CurrentValue>{Number(delayTime).toFixed(2).toString()}</CurrentValue>
           <InputRange id='delayTime' min={0} max={1} step={0.001} onChange={e => setDelayTime(e.target.value)} value={+delayTime} />
         </Control>
         <Control>

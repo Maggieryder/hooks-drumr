@@ -28,7 +28,10 @@ const useDelay = () => {
 
     useEffect(() => {      
         console.log('[useDelay] delayTime tempo change', tempo)
-        // setDelayTime(60.0 / tempo * time)
+        //SEQUENCER.secondsPerBeat()*.5
+        //this keeps delayTime in sync with tempo. 
+        //You will have to override it after adjstung tempo if that's what you want
+        setDelayTime(60.0 / tempo * .5)
     }, [tempo])
 
     useEffect(() => {      

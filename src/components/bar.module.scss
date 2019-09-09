@@ -9,9 +9,9 @@
   // grid-template-columns: repeat(16, 1fr);
   height: 100%;
   // width: calc(100% - 1px);
-  width: 25%;
+  width: 50%;
   border-right: 1px solid $white-01;
-  transition: width 1s;
+  transition: width .25s ease-in-out;
   will-change: width;
 
   &:before {
@@ -34,7 +34,7 @@
     width: 100%;
     transform-origin: 0 0;
     transform: scaleX(var(--progress));
-    transition: transform .2s;
+    transition: transform 0s;
     height: 1px;
     background: $green;   
   }

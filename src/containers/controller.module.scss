@@ -8,7 +8,7 @@
 
   .toppanel {
     display: grid;
-    grid-template-columns: repeat(3, 1fr) auto repeat(4, 82px);
+    grid-template-columns: repeat(3, 1fr) 184px repeat(4, 82px);
     grid-template-rows: 1fr auto;
     width: 100%;
     height: 70px;
