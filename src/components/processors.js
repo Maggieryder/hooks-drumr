@@ -19,7 +19,7 @@ const Processors = () => {
 
   const { verbBuffers, reverbOn, setReverbOn, reverbId, setReverbId } = useReverb()
 
-  const { delayOn, setDelayOn, delayTime, setDelayTime, delayFeedback, setDelayFeedback, delayFrequency, setDelayFrequency } = useDelay()
+  const { delayOn, setDelayOn, delayTime, setDelayTime, delayFeedback, setDelayFeedback, delayFrequency, setDelayFrequency, syncOn, setSyncOn } = useDelay()
 
   const { compOn, setCompOn, compThreshold, setCompThreshold, compKnee, setCompKnee, compRatio, setCompRatio, compAttack, setCompAttack, compRelease, setCompRelease } = useCompressor()
 
@@ -54,6 +54,10 @@ const Processors = () => {
           <Label>Frequency</Label>
           <CurrentValue>{delayFrequency.toString()}</CurrentValue>
           <InputRange id='delayFrequency' min={0} max={4000} step={4} onChange={e => setDelayFrequency(e.target.value)} value={+delayFrequency} />
+        </Control>
+        <Control>
+          <Label>Sync to Tempo</Label>
+          <Switch isOn={syncOn} onClick={ () => setSyncOn(!syncOn)} activeClass='red' />
         </Control>
         
       </Processor>

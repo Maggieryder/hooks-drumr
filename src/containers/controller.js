@@ -56,6 +56,7 @@ const Controller = () => {
     console.log('[controller] INIT')
     loadData('./resources')
     SEQUENCER.init(dispatch)
+    SEQUENCER.updateTempo(tempo)
     return (() => {
       
     })

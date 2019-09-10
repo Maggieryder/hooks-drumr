@@ -12,9 +12,14 @@ const useDelay = () => {
     const [delayFeedback, setDelayFeedback] = useState(.475)
     const [delayFrequency, setDelayFrequency] = useState(1000)
     const [delayOn, setDelayOn] = useState(false)
+    const [syncOn, setSyncOn] = useState(true)
 
     useEffect(() => {
-        // console.log('[useDelay] INIT')
+        console.log('[useDelay] INIT')
+        // setDelayTime(60.0 / tempo * .5)
+        // DELAY.updateDelayTime(delayTime)
+        DELAY.updateFeedbackGain(delayFeedback)
+        DELAY.updateFrequency(delayFrequency)
         return (() => {
             DELAY.destroy()
         })
@@ -31,8 +36,8 @@ const useDelay = () => {
         //SEQUENCER.secondsPerBeat()*.5
         //this keeps delayTime in sync with tempo. 
         //You will have to override it after adjstung tempo if that's what you want
-        setDelayTime(60.0 / tempo * .5)
-    }, [tempo])
+        if (syncOn) setDelayTime(60.0 / tempo * .5)
+    }, [tempo, syncOn])
 
     useEffect(() => {      
         console.log('[useDelay] delayTime', delayTime)
@@ -53,7 +58,8 @@ const useDelay = () => {
         delayOn, setDelayOn, 
         delayTime, setDelayTime,
         delayFeedback, setDelayFeedback,
-        delayFrequency, setDelayFrequency
+        delayFrequency, setDelayFrequency,
+        syncOn, setSyncOn
     }
 
 }
