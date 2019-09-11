@@ -34,8 +34,10 @@
     width: 100%;
     transform-origin: 0 0;
     transform: scaleX(var(--progress));
-    transition: transform 0s;
+    transition-property: transform;
+    transition-duration: var(--beat);
     height: 1px;
-    background: $green;   
+    background: $green;  
+    opacity: var(--visible); 
   }
 }

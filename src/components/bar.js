@@ -7,19 +7,21 @@ import classes from './bar.module.scss'
 
 import useSequencer from '../hooks/useSequencer'
 
-const Bar = ( { trackId, barId, sequence } ) => {
+const Bar = ( { trackId, barId, sequence, isMute } ) => {
 
-  const { onNoteTap, numBeats, numSteps, currentBar, currentStep } = useSequencer();
+  const { onNoteTap, numBeats, numSteps, currentBar, currentStep, tempo } = useSequencer();
 
   const isCurrentBar = currentBar === barId
 
-  // console.log('[ bar ] barId / currentBar', barId, currentBar)
+  console.log('[ bar ] --beat 60/tempo', barId, (60 / tempo) / numBeats)
 
   const style = {
     gridTemplateColumns: 'repeat('+numSteps+', 1fr)',
     // borderBottom: isCurrentBar ? '1px solid rgb(21, 255, 0)' : '',
     width: isCurrentBar ? '50%' : '25%',
-    '--progress': isCurrentBar ? ((currentStep+1) / numSteps) : 0
+    '--progress': isCurrentBar ? ((currentStep+1) / numSteps) : 0,
+    '--visible' : isMute ? 0 : 1,
+    '--beat'    : (60 / tempo) / numBeats
   }
 
   return (
