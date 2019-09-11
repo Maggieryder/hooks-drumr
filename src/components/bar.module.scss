@@ -35,7 +35,8 @@
     transform-origin: 0 0;
     transform: scaleX(var(--progress));
     transition-property: transform;
-    transition-duration: var(--beat);
+    transition-duration: var(--bartime);
+    transition-timing-function: linear;
     height: 1px;
     background: $green;  
     opacity: var(--visible); 
