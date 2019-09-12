@@ -58,6 +58,7 @@ const Controller = () => {
     loadData('./resources')
     SEQUENCER.init(dispatch)
     SEQUENCER.updateTempo(tempo)
+    addTrack(0)
     return (() => {
       
     })

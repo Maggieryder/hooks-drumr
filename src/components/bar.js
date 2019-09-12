@@ -17,7 +17,7 @@ const Bar = ( { trackId, barId, sequence, isMute } ) => {
 
   const style = {
     gridTemplateColumns: 'repeat('+numSteps+', 1fr)',
-    width: isCurrentBar ? '50%' : '25%',
+    width: isPlaying ?  '50%' : isCurrentBar ? '50%' : '25%',
     '--progress': isCurrentBar ? isPlaying ? (currentStep / (numSteps - 1)) : ((currentStep+1) / numSteps) : 0,
     '--visible' : isMute ? 0 : 1,
     '--bartime' : isPlaying ? currentStep===0 ? '0s' : (60 / tempo) / numBeats +'s' : '.25s'

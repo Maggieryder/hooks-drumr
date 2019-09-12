@@ -74,7 +74,7 @@ const Controls = ( { track } ) => {
       <Control>
         <InputRange id='pan' min={-5} max={5} step={.1} onChange={e => setPan({ trackId: track.id(), value: e.target.value })} value={+pan}></InputRange>
         <Label>Pan</Label>
-        <CurrentValue>{Math.round(pan/10).toString()}</CurrentValue>
+        <CurrentValue>{Math.round(pan).toString()}</CurrentValue>
       </Control>
       <Control>
         <Switch isOn={(mute && !solo) || (soloed.length >= 1 && !track.isSolo()) } onClick={() => setMute({ trackId: track.id(), value: !mute })} activeClass='red' />

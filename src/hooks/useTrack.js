@@ -52,7 +52,7 @@ const useTrack = () => {
   const setPan = useCallback(
     ({ trackId, value }) => {
       console.log('[useTrack] setPan', { trackId, value })
-      all[trackId].updatePan(value)
+      all[trackId].updatePan(value * .2)
       setState(state => ({ 
         ...state, 
         pan: value 

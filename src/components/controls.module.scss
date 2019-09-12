@@ -9,7 +9,7 @@
   grid-template-columns:  82px repeat(5, 1fr) repeat(2, 82px);
   height:61px;
   transition: transform .5s ease-out;
-  width: 50%;
+  width: 80%;
   // transform: translateY(-100%);
   &.show {
     transform: translateY(0);
