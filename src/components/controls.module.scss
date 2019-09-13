@@ -6,10 +6,10 @@
   // border-bottom: 1px solid $white-01;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns:  82px repeat(5, 1fr) repeat(2, 82px);
+  grid-template-columns:  82px repeat(5, 1fr) repeat(2, 82px) 25%;
   height:61px;
   transition: transform .5s ease-out;
-  width: 80%;
+  width:100%;
   // transform: translateY(-100%);
   &.show {
     transform: translateY(0);

@@ -13,7 +13,7 @@ const Bar = ( { trackId, barId, sequence, isMute } ) => {
 
   const isCurrentBar = currentBar === barId
 
-  console.log('[ bar ] --beat 60/tempo', Number((60 / tempo) / numBeats).toFixed(4))
+  // console.log('[ bar ] --beat 60/tempo', Number((60 / tempo) / numBeats).toFixed(4))
 
   const style = {
     gridTemplateColumns: 'repeat('+numSteps+', 1fr)',

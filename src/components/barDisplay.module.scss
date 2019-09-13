@@ -1,0 +1,31 @@
+@import '../scss/vars';
+
+.bar-display-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    margin: 0 -1rem;
+    height: 100%;
+    padding-left: 2px;
+    overflow:hidden;
+
+    .bar-display {
+        display: flex;
+        flex-direction: row;
+        justify-content: stretch;
+        height: 100%;
+        width: 25%;
+
+        .step-display {
+            height: 100%;
+            // width: calc(6.25% - 2px);
+            width: 6.25%;
+            // margin-right: 2px;
+            // background: $white-01;
+            border-left: 1px solid $white-01;
+            transform: translateY(80%);
+            transition: transform .25s ease-in-out;
+        }
+    }
+
+}

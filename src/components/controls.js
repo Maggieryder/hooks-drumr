@@ -7,6 +7,7 @@ import Label from './ui/label'
 import CurrentValue from './ui/currentValue'
 import Switch from './ui/switch'
 import DecreaseBtn from './ui/decreaseBtn'
+import BarDisplay from './barDisplay'
 
 import useDrumr from '../hooks/useDrumr'
 import useTrack from '../hooks/useTrack'
@@ -83,6 +84,9 @@ const Controls = ( { track } ) => {
       <Control>
         <Switch isOn={solo} onClick={() => setSolo({ trackId: track.id(), value: !solo })} activeClass='rgb(21, 255, 0)' />
         <Label>Solo</Label>
+      </Control>
+      <Control>
+        <BarDisplay />
       </Control>
     </div>
   )
