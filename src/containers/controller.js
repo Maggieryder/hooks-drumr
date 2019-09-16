@@ -10,6 +10,7 @@ import Tracks from '../components/tracks'
 import Control from '../components/control'
 import Processors from '../components/processors'
 import Transport from '../components/transport'
+import SignUp from '../components/ui/signUp'
 
 import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
@@ -150,6 +151,7 @@ const Controller = () => {
           <TogglePlayBtn clickHandler={togglePlay} isPlaying={isPlaying} />
           <Label>{ isPlaying ? 'Pause' : 'Play'}</Label>
         </Control> */}
+        <SignUp />
         
       </div>
       <div className={classes.trackspanel}>
