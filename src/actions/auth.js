@@ -1,7 +1,8 @@
 import axios from 'axios'
-import * as types from 'types';
+import * as types from 'types'
+import { firebaseConfig } from '../config/firebase.js'
 
-const API_KEY = 'AIzaSyCGtoEmtQgmyMWBbWuG0Incm4TDHjgiRRE'
+const API_KEY = firebaseConfig.apiKey
 
 export const auth = (email, password) => {
     return dispatch => {

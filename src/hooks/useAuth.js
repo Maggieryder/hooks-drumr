@@ -1,17 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import * as firebase from "firebase/app";
 import "firebase/auth";
-
-// Add your Firebase credentials
-const firebaseConfig = {
-  apiKey: 'AIzaSyCGtoEmtQgmyMWBbWuG0Incm4TDHjgiRRE',
-  authDomain: 'drumr-f68d2.firebaseapp.com',
-  databaseURL: 'https://drumr-f68d2.firebaseio.com',
-  projectId: 'drumr-f68d2',
-  storageBucket: '',
-  messagingSenderId: '1051264663719',
-  appID: '1:1051264663719:web:c4b706c4e22440a9439b82'
-}
+import { firebaseConfig } from '../config/firebase.js'
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
