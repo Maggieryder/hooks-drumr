@@ -25,6 +25,7 @@ export const useAuth = () => {
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
     const [user, setUser] = useState(null);
+    const [error, setError] = useState(null);
     
     // Wrap any Firebase methods we want to use making sure ...
     // ... to save the user to state.
@@ -34,7 +35,12 @@ function useProvideAuth() {
         .signInWithEmailAndPassword(email, password)
         .then(response => {
           setUser(response.user);
+          if (error) setError(null)
           return response.user;
+        })
+        .catch(err => {
+          setError(err)
+          // return err;
         });
     };
   
@@ -44,7 +50,12 @@ function useProvideAuth() {
         .createUserWithEmailAndPassword(email, password)
         .then(response => {
           setUser(response.user);
+          if (error) setError(null)
           return response.user;
+        })
+        .catch(err => {
+          setError(error);
+          // return err;
         });
     };
   
@@ -91,10 +102,15 @@ function useProvideAuth() {
       // Cleanup subscription on unmount
       return () => unsubscribe();
     }, []);
+
+    // useEffect(()=> {
+    //   console.log('ERROR', error)
+    // }, [error])
     
     // Return the user object and auth methods
     return {
       user,
+      error,
       signin,
       signup,
       signout,

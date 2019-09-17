@@ -1,10 +1,10 @@
 import * as TYPES from '../actions'
 
 const initialState = {
-  user: null,
-  error: null,
-  isAuthenticated: false,
-  inProgress: false
+    token: null,
+    userId: null,
+    error: null,
+    loading: false
 }
 
 export default function(state = initialState, action) {
@@ -13,23 +13,29 @@ export default function(state = initialState, action) {
         case TYPES.AUTH_START:
             return {
               ...state,
-              inProgress: true
+              error: null,
+              loading: true
             }
         case TYPES.AUTH_SUCCESS:
             return {
                 ...state,
-                user: action.user,
-                isAuthenticated: true,
-                inProgress: false
+                token: action.idToken,
+                userId: action.userId,
+                error: null,
+                loading: false
             }
         case TYPES.AUTH_FAIL:
             return {
                 ...state,
-                user: null,
-                isAuthenticated: false,
-                inProgress: false,
+                loading: false,
                 error: action.error
-            }   
+            }
+        case TYPES.AUTH_LOGOUT:
+            return {
+                ...state,
+                token: null,
+                userId: null
+            }    
         default:
             return state
     } 
