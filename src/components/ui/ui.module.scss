@@ -369,7 +369,7 @@ select:-webkit-autofill:focus {
 
 .btn {
     position:relative;
-    // padding: .5rem 1rem;
+    border: 2px solid $black-01;
     border-radius: .25rem;
     width: 100%;
     font-size: 1rem;
@@ -377,33 +377,20 @@ select:-webkit-autofill:focus {
     background: $black-05;
     color: $gray-light;
     transition: color .25s ease-out;
-    // border-top: 1px solid $white-02;
-    // border-bottom: none;
-    // &:before {
-    //     content: '';
-    //     position: absolute;
-    //     box-sizing: border-box;
-    //     top: 5px;
-    //     right: 10px;
-    //     width: 20px;
-    //     height: 24px;
-        
-    //     border-left: 18px solid $gray;
-    //     border-top: 12px solid transparent;
-    //     border-bottom: 12px solid transparent;
-    //     // border-bottom: 3px solid $gray;
-    //     transition: border .25s ease-out;
-    // }
-
-    // &:hover {
-    //     color: $green;
-    //     &:before {
-    //         border-left-color: $green;
-    //         // border-left: 10px solid transparent;
-    //         // border-right: 10px solid transparent;
-    //         // border-bottom: 3px solid $green;
-    //     }
-    // }
+    &:hover {
+        background: $black-02;
+        color: $green;
+    }
+}
+.btn-primary {
+    padding: .5rem 1rem;
+    border: 2px solid $black-01;
+}
+.btn-secondary {
+    box-sizing: border-box;
+    padding: .5rem 1rem;
+    background: transparent;
+    border: 2px solid $black-03;
 }
 .input {
     padding: .5rem 1rem;
@@ -412,16 +399,20 @@ select:-webkit-autofill:focus {
     font-size: 1rem;
     color: $gray-light;
     background: transparent;
-    border-bottom: 3px solid $green;
+    border-bottom: 2px solid $green;
     &.error {
         color: $red;
+        border-bottom: 2px solid $red;
     }
 }
 .error {
     color: $red;  
 }
 
-.small-txt {
+.smalltxt {
     font-size: .85rem;
     text-align: left;
+}
+.margintop {
+    margin-top: 1rem;
 }

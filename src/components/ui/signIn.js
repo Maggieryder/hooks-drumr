@@ -41,7 +41,7 @@ const SignIn = ({ modalClosed }) => {
 
         <form onSubmit={handleSubmit} style={{width: '300px'}}>
             <div>
-                <p className={classes.error} style={{display: error ? 'block' : 'none'}}>{error ? error.message : null}</p>
+                <p className={classes.error +' '+classes.smalltxt} style={{display: error ? 'block' : 'none'}}>{error ? error.message : null}</p>
                 {/* <div className={classes['form-control']}>
                     <input type='text' name='username' placeholder='User Name' onChange={handleInputChange} value={inputs.username} required />
                 </div> */}
@@ -57,17 +57,17 @@ const SignIn = ({ modalClosed }) => {
                     </div>
                 }
                 <hr/>
-                <div className={classes['form-control']}>
-                    <button className={classes.btn} type='submit'>{isSignup ? 'Sign Up' : 'Sign In'}</button>
+                <div className={classes['form-control']+' '+classes.margintop}>
+                    <button className={`${classes.btn} ${classes['btn-primary']}`} type='submit'>{isSignup ? 'Sign Up' : 'Sign In'}</button>
                 </div>
-                { !isSignup && 
+               
                     <>
-                        <p style={{marginTop: '1rem'}}>Don't have an account? </p>
+                        <p className={`${classes.smalltxt} ${classes.margintop}`}>{isSignup ? 'Already have an account?' : 'Don\'t have an account?'} </p>
                         <div className={classes['form-control']}>
-                            <button className={classes.btn} type='button' onClick={() => setIsSignup(true)}>Sign Up</button>
+                            <button className={`${classes.btn} ${classes['btn-secondary']}`} type='button' onClick={() => setIsSignup(!isSignup)}>{!isSignup ? 'Sign Up' : 'Sign In'}</button>
                         </div> 
                     </>
-                }
+                
             </div> 
         </form>
 
