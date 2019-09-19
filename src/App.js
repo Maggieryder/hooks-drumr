@@ -1,6 +1,8 @@
 import React from 'react';
 // import './App.scss';
 // import { loadData } from './store/actions'
+import { ProvideAuth } from "./hooks/useAuth.js";
+
 
 import { DrumrProvider } from "./context/DrumrContext";
 
@@ -9,11 +11,13 @@ import Controller from './containers/controller'
 const App = (props) => {
   // console.log(props)
   return ( 
-    <DrumrProvider>
+    <ProvideAuth>
       <div className="App">
-        <Controller/>
+        <DrumrProvider>
+          <Controller/>
+        </DrumrProvider>
       </div>
-    </DrumrProvider>
+    </ProvideAuth>
   );
 }
 

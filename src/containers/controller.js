@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+
+import Modal from '../components/ui/modal'
 import Select from '../components/ui/select'
 import InputRange from '../components/ui/inputRange'
 import Label from '../components/ui/label'
@@ -11,6 +13,12 @@ import Control from '../components/control'
 import Processors from '../components/processors'
 import Transport from '../components/transport'
 import SignUp from '../components/ui/signUp'
+import SignIn from '../components/ui/signIn'
+
+
+import { useAuth } from "../hooks/useAuth.js";
+
+// import { DrumrProvider } from "../context/DrumrContext";
 
 import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
@@ -20,6 +28,11 @@ import classes from './controller.module.scss'
 import { MIXER, SEQUENCER } from '../api'
 
 const Controller = () => {
+
+  const auth = useAuth();
+
+  const [ login, setLogin ] = useState(false)
+
   const { 
     loadData, 
     loadBuffers, 
@@ -151,7 +164,17 @@ const Controller = () => {
           <TogglePlayBtn clickHandler={togglePlay} isPlaying={isPlaying} />
           <Label>{ isPlaying ? 'Pause' : 'Play'}</Label>
         </Control> */}
-        <SignUp />
+        {/* <Control> */}
+          {auth.user ? (
+            <>
+              <p>Signed in as {auth.user.email}</p>
+              <button onClick={() => auth.signout()}>Logout</button>
+            </>
+          ) : (
+            <button onClick={() => { console.log('LOG IN', login); setLogin(true)}}>Login</button>
+          )}
+        {/* </Control> */}
+        
         
       </div>
       <div className={classes.trackspanel}>
@@ -161,8 +184,11 @@ const Controller = () => {
       <div className={classes.bottompanel}>
         <Processors />
         <Transport />
-      </div>
-      
+      </div>   
+
+      <Modal show={login} modalClosed={() => setLogin(false)}>
+        <SignIn modalClosed={() => setLogin(false)}/>
+      </Modal>
     </div>
   )
 }

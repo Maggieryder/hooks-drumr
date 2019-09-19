@@ -1,17 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import * as firebase from "firebase/app";
 import "firebase/auth";
-
-// Add your Firebase credentials
-const firebaseConfig = {
-  apiKey: 'AIzaSyCGtoEmtQgmyMWBbWuG0Incm4TDHjgiRRE',
-  authDomain: 'drumr-f68d2.firebaseapp.com',
-  databaseURL: 'https://drumr-f68d2.firebaseio.com',
-  projectId: 'drumr-f68d2',
-  storageBucket: '',
-  messagingSenderId: '1051264663719',
-  appID: '1:1051264663719:web:c4b706c4e22440a9439b82'
-}
+import { firebaseConfig } from '../config/firebase.js'
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
@@ -35,6 +25,7 @@ export const useAuth = () => {
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
     const [user, setUser] = useState(null);
+    const [error, setError] = useState(null);
     
     // Wrap any Firebase methods we want to use making sure ...
     // ... to save the user to state.
@@ -44,7 +35,12 @@ function useProvideAuth() {
         .signInWithEmailAndPassword(email, password)
         .then(response => {
           setUser(response.user);
+          if (error) setError(null)
           return response.user;
+        })
+        .catch(err => {
+          setError(err)
+          // return err;
         });
     };
   
@@ -54,7 +50,12 @@ function useProvideAuth() {
         .createUserWithEmailAndPassword(email, password)
         .then(response => {
           setUser(response.user);
+          if (error) setError(null)
           return response.user;
+        })
+        .catch(err => {
+          setError(error);
+          // return err;
         });
     };
   
@@ -101,10 +102,15 @@ function useProvideAuth() {
       // Cleanup subscription on unmount
       return () => unsubscribe();
     }, []);
+
+    // useEffect(()=> {
+    //   console.log('ERROR', error)
+    // }, [error])
     
     // Return the user object and auth methods
     return {
       user,
+      error,
       signin,
       signup,
       signout,

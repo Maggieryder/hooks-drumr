@@ -1,0 +1,39 @@
+@import '../../scss/vars';
+
+.overlay {
+    // width: 100%;
+    // height: 100%;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .backdrop {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background-color: $black-04;
+    }
+
+    .modal {
+        position: relative;
+        z-index: 200;
+        background-color: $gray-light;
+        width: auto;
+        border: 1px solid #ccc;
+        border-radius: .75rem;
+        box-shadow: 1px 1px 1px $black-04;
+        padding: 2rem 2.5rem;
+        box-sizing: border-box;
+        transition: all 0.3s ease-out;
+    }
+}
+

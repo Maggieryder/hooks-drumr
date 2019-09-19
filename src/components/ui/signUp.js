@@ -1,16 +1,27 @@
 import React from 'react'
-import useSignUpForm from '../../hooks/useSignupForm'
+import useLoginForm from '../../hooks/useLoginForm'
 
-const SignUp = () => {
+import { useAuth } from "../../hooks/useAuth.js";
+import { checkValidity } from '../../utils/validation'
 
-    const signupCallback = () => {
-        alert(`User Created!
-               Email: ${inputs.email}`);
+const SignUp = ( { modalClosed }) => {
+
+    const { signup } = useAuth()
+
+    const signupCallback = () => {    
+        if (inputs.password1 === inputs.password2){
+            alert(`User Created!
+             Email: ${inputs.email}`);
+             signup(inputs.email, inputs.password1)
+             modalClosed()
+        } else {
+            alert('Paswords dont match!')
+        }     
     }
 
     const feilds = {email: '', password1: '', password2: ''}
 
-    const {inputs, handleInputChange, handleSubmit} = useSignUpForm(feilds, signupCallback)
+    const {inputs, handleInputChange, handleSubmit} = useLoginForm(feilds, signupCallback)
 
     return (
         <form onSubmit={handleSubmit}>
