@@ -30,9 +30,10 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  border: 1px solid green;
-  -webkit-text-fill-color: green;
-  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  font-size: .9rem;
+  border-bottom: 3px solid $green;
+  -webkit-text-fill-color: $gray-light;
+  -webkit-box-shadow: 0 0 0px 1000px $gray inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -50,6 +51,7 @@ select:-webkit-autofill:focus {
     border-color: $green;
     
     &:before {
+        content: '';
         position: relative;
         margin: 2px auto;
         width: 25px;
@@ -110,8 +112,40 @@ select:-webkit-autofill:focus {
 }
 
 .toggle-play-btn {
+    position: relative;
     &:before {
-        content:'>';
+        width: 40px;
+        height: 40px;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        box-sizing: border-box;
+        top: 50%;
+        left: 50%;
+        width: 15px;
+        height: 12px;     
+        border-left: 15px solid $green;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        transform: translate(-33%, -50%);
+        transition: all .35s ease-out;
+    }
+
+    &:hover {
+        &:after {
+            // border-left-color: $white;
+        }
+    }
+    &.is-playing {
+        &:after {
+            border-left: 4px solid $green;
+            border-right: 4px solid $green;
+            border-top: none;
+            border-bottom: none;
+            transform: translate(-50%, -50%);
+        }
     }
 }
 
@@ -334,17 +368,60 @@ select:-webkit-autofill:focus {
 }
 
 .btn {
-    padding: .5rem 1rem;
+    position:relative;
+    // padding: .5rem 1rem;
     border-radius: .25rem;
     width: 100%;
-    font-size: .9rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: $black-05;
+    color: $gray-light;
+    transition: color .25s ease-out;
+    // border-top: 1px solid $white-02;
+    // border-bottom: none;
+    // &:before {
+    //     content: '';
+    //     position: absolute;
+    //     box-sizing: border-box;
+    //     top: 5px;
+    //     right: 10px;
+    //     width: 20px;
+    //     height: 24px;
+        
+    //     border-left: 18px solid $gray;
+    //     border-top: 12px solid transparent;
+    //     border-bottom: 12px solid transparent;
+    //     // border-bottom: 3px solid $gray;
+    //     transition: border .25s ease-out;
+    // }
+
+    // &:hover {
+    //     color: $green;
+    //     &:before {
+    //         border-left-color: $green;
+    //         // border-left: 10px solid transparent;
+    //         // border-right: 10px solid transparent;
+    //         // border-bottom: 3px solid $green;
+    //     }
+    // }
 }
 .input {
     padding: .5rem 1rem;
-    border-radius: .25rem;
+    border-radius: 0;
     width: 100%;
-    font-size: .9rem;
+    font-size: 1rem;
+    color: $gray-light;
+    background: transparent;
+    border-bottom: 3px solid $green;
+    &.error {
+        color: $red;
+    }
 }
 .error {
-    color: $red;
+    color: $red;  
+}
+
+.small-txt {
+    font-size: .85rem;
+    text-align: left;
 }

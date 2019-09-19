@@ -26,9 +26,10 @@
     .modal {
         position: relative;
         z-index: 200;
-        background-color: $gray-light;
+        background-color: $gray;
+        color: $gray-light;
         width: auto;
-        border: 1px solid #ccc;
+        // border: 1px solid $green;
         border-radius: .75rem;
         box-shadow: 1px 1px 1px $black-04;
         padding: 2rem 2.5rem;

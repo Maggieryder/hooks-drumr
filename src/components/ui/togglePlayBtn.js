@@ -1,12 +1,20 @@
-import React from 'react';
-import classes from './ui.module.scss';
+import React from 'react'
+import classNames from 'classnames'
+import classes from './ui.module.scss'
 
 
-const TogglePlayBtn = ({ clickHandler, isPlaying }) => (
-    <button className={classes['toggle-play-btn']}
+const TogglePlayBtn = ({ clickHandler, isPlaying }) => {
+    let btnClass = classes['toggle-play-btn']
+    if (isPlaying) btnClass += ` ${classes['is-playing']}`
+
+    return (
+        <button className={btnClass}
         onClick={clickHandler}>
-        {/* {isPlaying ? '||' : '>'} */}
-    </button>
-)
+            {/* {isPlaying ? '||' : '>'} */}
+        </button>
+    )
+}
+    
+
 
 export default TogglePlayBtn

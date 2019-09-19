@@ -18,7 +18,7 @@ const Transport = () => {
         <div className={classes.transport} >
             <Control>
                 <TogglePlayBtn clickHandler={togglePlay} isPlaying={isPlaying} />
-                <Label>{ isPlaying ? 'Pause' : 'Play'}</Label>
+                {/* <Label>{ isPlaying ? 'Pause' : 'Play'}</Label> */}
             </Control>
         </div>
     )
