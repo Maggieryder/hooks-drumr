@@ -12,8 +12,7 @@ import Tracks from '../components/tracks'
 import Control from '../components/control'
 import Processors from '../components/processors'
 import Transport from '../components/transport'
-import SignUp from '../components/ui/signUp'
-import SignIn from '../components/ui/signIn'
+import Login from '../components/ui/login'
 
 
 import { useAuth } from "../hooks/useAuth.js";
@@ -24,6 +23,7 @@ import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
 
 import classes from './controller.module.scss'
+import uiclasses from '../components/ui/ui.module.scss'
 
 import { MIXER, SEQUENCER } from '../api'
 
@@ -160,20 +160,16 @@ const Controller = () => {
           <IncreaseBtn clickHandler={() => addTrack(tracks.all.length)} />
           <Label>Add Track</Label>
         </Control>
-        {/* <Control>
-          <TogglePlayBtn clickHandler={togglePlay} isPlaying={isPlaying} />
-          <Label>{ isPlaying ? 'Pause' : 'Play'}</Label>
-        </Control> */}
-        {/* <Control> */}
+        <Control>
           {auth.user ? (
             <>
-              <p>Signed in as {auth.user.email}</p>
-              <button onClick={() => auth.signout()}>Logout</button>
+              <p className={uiclasses.smalltxt}>Logged in as {auth.user.email}</p>
+              <button className={`${uiclasses.btn} ${uiclasses['btn-secondary']}`} onClick={() => auth.signout()}>Logout</button>
             </>
           ) : (
-            <button onClick={() => { console.log('LOG IN', login); setLogin(true)}}>Login</button>
+            <button  className={`${uiclasses.btn} ${uiclasses['btn-primary']}`} onClick={() => { console.log('LOG IN', login); setLogin(true)}}>Login</button>
           )}
-        {/* </Control> */}
+        </Control>
         
         
       </div>
@@ -187,7 +183,7 @@ const Controller = () => {
       </div>   
 
       <Modal show={login} modalClosed={() => setLogin(false)}>
-        <SignIn modalClosed={() => setLogin(false)}/>
+        <Login modalClosed={() => setLogin(false)}/>
       </Modal>
     </div>
   )

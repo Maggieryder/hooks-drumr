@@ -1,4 +1,5 @@
 import React from 'react';
+import Layout from './components/layout'
 // import './App.scss';
 // import { loadData } from './store/actions'
 import { ProvideAuth } from "./hooks/useAuth.js";
@@ -12,11 +13,11 @@ const App = (props) => {
   // console.log(props)
   return ( 
     <ProvideAuth>
-      <div className="App">
+      <Layout>
         <DrumrProvider>
           <Controller/>
         </DrumrProvider>
-      </div>
+      </Layout>
     </ProvideAuth>
   );
 }
