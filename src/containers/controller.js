@@ -6,6 +6,8 @@ import InputRange from '../components/ui/inputRange'
 import Label from '../components/ui/label'
 import CurrentValue from '../components/ui/currentValue'
 import IncreaseBtn from '../components/ui/increaseBtn'
+import IconBtn from '../components/ui/iconBtn'
+import Icon from '../components/ui/icon'
 import TogglePlayBtn from '../components/ui/togglePlayBtn'
 import BarIndicator from '../components/ui/barIndicator'
 import Tracks from '../components/tracks'
@@ -157,18 +159,15 @@ const Controller = () => {
           <Label>Resolution</Label>
         </Control>
         <Control>
-          <IncreaseBtn clickHandler={() => addTrack(tracks.all.length)} />
+          {/* <IncreaseBtn clickHandler={() => addTrack(tracks.all.length)} /> */}
+          <IconBtn  clickHandler={() => addTrack(tracks.all.length)}>
+            <Icon color="rgb(21, 255, 0)" size={12} icon="plus"/>
+          </IconBtn>
           <Label>Add Track</Label>
         </Control>
         <Control>
-          {auth.user ? (
-            <>
-              <p className={uiclasses.smalltxt}>Logged in as {auth.user.email}</p>
-              <button className={`${uiclasses.btn} ${uiclasses['btn-secondary']}`} onClick={() => auth.signout()}>Logout</button>
-            </>
-          ) : (
-            <button  className={`${uiclasses.btn} ${uiclasses['btn-primary']}`} onClick={() => { console.log('LOG IN', login); setLogin(true)}}>Login</button>
-          )}
+          {auth.user ? <p className={uiclasses.smalltxt}>Logged in as {auth.user.email}</p> : <p className={uiclasses.smalltxt}>Sign in to access more features -></p>}
+          
         </Control>
         
         
@@ -182,9 +181,9 @@ const Controller = () => {
         <Transport />
       </div>   
 
-      <Modal show={login} modalClosed={() => setLogin(false)}>
+      {/* <Modal show={login} modalClosed={() => setLogin(false)}>
         <Login modalClosed={() => setLogin(false)}/>
-      </Modal>
+      </Modal> */}
     </div>
   )
 }

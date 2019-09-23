@@ -38,3 +38,13 @@ $bp-sm: 512px;
 $bp-md: 1024px;
 $bp-lg: 1536px;
 $bp-xl: 1848px;
+
+:export {
+    whitecolor: $white;
+    bluecolor: $blue;
+    greencolor: $green;
+    neoncolor: $neon;
+    alertcolor: $red;
+    graycolor: $gray;
+    lightgraycolor: $gray-light;
+  }

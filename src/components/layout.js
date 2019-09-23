@@ -1,5 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
+import ToolbarBtn from './ui/toolbarBtn';
+import Modal from './ui/modal'
+import Login from './ui/login'
 import styled from 'styled-components';
+
+import { useAuth } from "../hooks/useAuth.js";
+
+
+import vars from '../scss/_vars.scss';
+
 
 const Wrapper = styled.div`
     position: absolute;
@@ -28,29 +37,60 @@ const MainContent = styled.section`
     
 `
 
-const Tool = styled.li`
-    padding: 1rem 0;
-    font-size: .8rem;
-    border-bottom: 1px solid rgba(255,255,255,.1);
-    text-align: center;
-    color: rgba(255,255,255,.2);
-    font-variant: small-caps;
-    
-`
 
-const layout = ({children}) => (
-    <Wrapper>
-        <Toolbar>
-            <ul>
-                <Tool>home</Tool>
-                <Tool>mode</Tool>
-                <Tool>utils</Tool>
-            </ul>
-        </Toolbar>
-        <MainContent>
-            {children}
-        </MainContent>
-    </Wrapper>
-)
+const layout = ({children}) => {
+    const [hover, setHover] = useState(false)
+
+    const [ login, setLogin ] = useState(false)
+
+    const auth = useAuth();
+    
+    return (
+        <Wrapper>
+            <Toolbar>
+                <ul className='toolbar-nav'>
+                    <li>
+                        <ToolbarBtn 
+                            clickHandler={() => {auth.user ? auth.signout() : setLogin(true) }}
+                            colors={[vars.lightgraycolor,vars.greencolor]} 
+                            size={24} 
+                            icon={auth.user ? 'exit' : 'enter'} />
+                    </li>
+                    {auth.user ? 
+                    <>
+                        <li>
+                            <ToolbarBtn 
+                                clickHandler={()=>{}}
+                                colors={[vars.lightgraycolor,vars.greencolor]} 
+                                size={24} 
+                                icon="zoom-in"/>
+                        </li>
+                        <li>
+                            <ToolbarBtn 
+                                clickHandler={()=>{}} 
+                                colors={[vars.lightgraycolor,vars.greencolor]} 
+                                size={24} 
+                                icon="copy"/>
+                        </li>
+                        <li>
+                            <ToolbarBtn 
+                                clickHandler={()=>{}} 
+                                colors={[vars.lightgraycolor,vars.greencolor]} 
+                                size={24} 
+                                icon="folder-download"/>
+                        </li>
+                    </> : null }
+                </ul>
+            </Toolbar>
+            <MainContent>
+                {children}
+            </MainContent>
+            <Modal show={login} modalClosed={() => setLogin(false)}>
+                <Login modalClosed={() => setLogin(false)}/>
+            </Modal>
+        </Wrapper>
+    )
+}
+
 
 export default layout

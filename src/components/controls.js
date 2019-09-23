@@ -7,10 +7,14 @@ import Label from './ui/label'
 import CurrentValue from './ui/currentValue'
 import Switch from './ui/switch'
 import DecreaseBtn from './ui/decreaseBtn'
+import IconBtn from './ui/iconBtn'
+import Icon from './ui/icon'
 import BarDisplay from './barDisplay'
 
 import useDrumr from '../hooks/useDrumr'
 import useTrack from '../hooks/useTrack'
+
+import vars from '../scss/_vars.scss';
 
 import classes from './controls.module.scss'
 
@@ -49,7 +53,10 @@ const Controls = ( { track } ) => {
   return (
     <div className={classes.controls}> 
       <Control>
-        <DecreaseBtn clickHandler={() => removeTrack(track.id())} style={{ borderColor: 'red', color: 'red'}}/>
+        <IconBtn clickHandler={() => removeTrack(track.id())} style={{ borderColor: vars.red, color: vars.red}}>
+          <Icon color={vars.red} size={20} icon="minus"/>
+        </IconBtn>
+        
       </Control> 
       <Control>
         <Select
@@ -82,7 +89,7 @@ const Controls = ( { track } ) => {
         <Label>Mute</Label>
       </Control>
       <Control>
-        <Switch isOn={solo} onClick={() => setSolo({ trackId: track.id(), value: !solo })} activeClass='rgb(21, 255, 0)' />
+        <Switch isOn={solo} onClick={() => setSolo({ trackId: track.id(), value: !solo })} activeClass={'rgb(21, 255, 0)'} />
         <Label>Solo</Label>
       </Control>
       <Control>

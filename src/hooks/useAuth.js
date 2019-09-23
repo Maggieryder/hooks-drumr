@@ -98,14 +98,9 @@ function useProvideAuth() {
           setUser(false);
         }
       });
-  
       // Cleanup subscription on unmount
       return () => unsubscribe();
     }, []);
-
-    // useEffect(()=> {
-    //   console.log('ERROR', error)
-    // }, [error])
     
     // Return the user object and auth methods
     return {

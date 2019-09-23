@@ -39,7 +39,8 @@ select:-webkit-autofill:focus {
 
 .toggle-play-btn,
 .increase-btn,
-.decrease-btn {
+.decrease-btn,
+.boolean-btn {
     -webkit-appearance: none;
     width: 50px;
     height: 50px;
@@ -56,11 +57,9 @@ select:-webkit-autofill:focus {
         margin: 2px auto;
         width: 25px;
         height: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: block;
         border-radius: 50%;
-        border: 1px solid $green;
+        border: 2px solid $green;
         box-sizing: border-box;
         color: inherit;
         border-color: inherit;
@@ -158,6 +157,45 @@ select:-webkit-autofill:focus {
 .decrease-btn {
     &:before {
         content:'-';
+    }
+}
+.toolbar-nav {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: transparent;
+
+}
+.toolbar-btn {
+    -webkit-appearance: none;
+    background: transparent;
+    width: 100%;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    transition: all .5s;
+    svg {
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-48%, -48%);
+        // fill: inherit;
+        transition: fill .35s;
+    }
+}
+
+.icon-btn {
+    // fill: attr('data-default');
+    // transition: all .35s;
+    svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-48%, -48%);
+        // fill: inherit;
+        transition: fill .35s;
+    }
+    :hover {
+        fill: attr('data-over');
     }
 }
 
