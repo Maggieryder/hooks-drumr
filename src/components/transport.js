@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import Control from './control'
-import Label from './ui/label'
-import CurrentValue from './ui/currentValue'
-import Switch from './ui/switch'
+// import Label from './ui/label'
+// import CurrentValue from './ui/currentValue'
+// import Switch from './ui/switch'
 import TogglePlayBtn from './ui/togglePlayBtn'
 
 // import { DrumrContext } from '../context/DrumrContext'

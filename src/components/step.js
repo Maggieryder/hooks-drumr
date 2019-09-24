@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classes from './step.module.scss'
 
+import vars from '../scss/_vars.scss'
+
 const Step = ({ onTap, step, isBeat, isOne, isCurrentBar, isCurrentStep, velocity }) => {
 
   // console.log('[ step ] update id / isOne', step, isOne)
@@ -12,8 +14,8 @@ const Step = ({ onTap, step, isBeat, isOne, isCurrentBar, isCurrentStep, velocit
     '--size': isBeat ? '20px' : isCurrentBar ? '10px' :'5px',
     // '--viz': isCurrentBar && isCurrentStep ? 0 : 1,
     '--scale': isCurrentBar && isCurrentStep ? 1.5 : 1,
-    '--bgcolor': isOne ? 'red' : '#505258',
-    color: isBeat ? '#202020' : 'transparent',
+    '--bgcolor': isOne ? vars.activeStepBg : vars.defaultStepBg,
+    color: isBeat ? vars.beatTxtColor : 'transparent',
     // background:  isOne ? 'red' : '#505258'
   }
 

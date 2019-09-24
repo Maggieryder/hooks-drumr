@@ -7,10 +7,9 @@ import CurrentValue from './ui/currentValue'
 import Switch from './ui/switch'
 import Processor from './processor'
 
+import vars from '../scss/_vars.scss'
 import classes from './processors.module.scss'
 
-
-// import useDrumr from '../hooks/useDrumr'
 import useReverb from '../hooks/useReverb'
 import useDelay from '../hooks/useDelay'
 import useCompressor from '../hooks/useCompressor'
@@ -28,7 +27,7 @@ const Processors = () => {
       { verbBuffers && <Processor type='reverb'>
                           <Control>
                             <Label>Reverb</Label>
-                            <Switch isOn={reverbOn} onClick={ () => setReverbOn(!reverbOn)} activeClass='rgb(21, 255, 0)' />
+                            <Switch isOn={reverbOn} onClick={ () => setReverbOn(!reverbOn)} activeClass={vars.greencolor} />
                           </Control>
                           <Control>  
                             <Select options={verbBuffers} onValueChange={value => setReverbId(value)} initialValue={reverbId.toString()} />
@@ -38,7 +37,7 @@ const Processors = () => {
       <Processor type='delay'>
         <Control>
           <Label>Delay</Label>
-          <Switch isOn={delayOn} onClick={ () => setDelayOn(!delayOn)} activeClass='rgb(21, 255, 0)' />
+          <Switch isOn={delayOn} onClick={ () => setDelayOn(!delayOn)} activeClass={vars.greencolor} />
         </Control>
         <Control>
           <Label>Time</Label>
@@ -57,14 +56,14 @@ const Processors = () => {
         </Control>
         <Control>
           <Label>tempo sync {syncOff ? 'off' : 'on '} </Label>
-          <Switch isOn={syncOff} onClick={ () => setSyncOff(!syncOff)} activeClass='red' />
+          <Switch isOn={syncOff} onClick={ () => setSyncOff(!syncOff)} activeClass={vars.redcolor} />
         </Control>
         
       </Processor>
       <Processor type='compressor'>
         <Control>
           <Label>Compressor</Label>
-          <Switch isOn={compOn} onClick={ () => setCompOn(!compOn)} activeClass='rgb(21, 255, 0)' />
+          <Switch isOn={compOn} onClick={ () => setCompOn(!compOn)} activeClass={vars.greencolor} />
         </Control>
         <Control>
           <Label>Threshold</Label>

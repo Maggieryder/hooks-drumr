@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
-import Modal from '../components/ui/modal'
 import Select from '../components/ui/select'
 import InputRange from '../components/ui/inputRange'
 import Label from '../components/ui/label'
 import CurrentValue from '../components/ui/currentValue'
-import IncreaseBtn from '../components/ui/increaseBtn'
 import IconBtn from '../components/ui/iconBtn'
 import Icon from '../components/ui/icon'
-import TogglePlayBtn from '../components/ui/togglePlayBtn'
 import BarIndicator from '../components/ui/barIndicator'
 import Tracks from '../components/tracks'
 import Control from '../components/control'
 import Processors from '../components/processors'
 import Transport from '../components/transport'
-import Login from '../components/ui/login'
-
 
 import { useAuth } from "../hooks/useAuth.js";
 
@@ -35,8 +30,6 @@ const Controller = () => {
 
   const auth = useAuth();
 
-  const [ login, setLogin ] = useState(false)
-
   const { 
     loadData, 
     loadBuffers, 
@@ -49,7 +42,6 @@ const Controller = () => {
 
   const {
     dispatch,
-    isPlaying,
     tempo, 
     setTempo, 
     swing, 
@@ -58,7 +50,6 @@ const Controller = () => {
     numSteps, 
     setNumSteps,
     currentBar,
-    togglePlay,
     addBar,
     removeBar,
     updateCurrentBar } = useSequencer()
@@ -161,7 +152,6 @@ const Controller = () => {
           <Label>Bars</Label>
         </Control> 
         <Control>
-          {/* <IncreaseBtn clickHandler={() => addTrack(tracks.all.length)} /> */}
           <IconBtn  clickHandler={() => addTrack(tracks.all.length)} style={{ paddingLeft: '1px', borderColor: vars.mutedWhite, color: vars.greencolor}}>
             <Icon color={vars.greencolor} size={8} icon="plus"/>
           </IconBtn>

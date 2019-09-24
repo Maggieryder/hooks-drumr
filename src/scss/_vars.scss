@@ -21,6 +21,8 @@ $black-07: rgba($black, .7);
 $black-08: rgba($black, .8);
 $black-09: rgba($black, .9);
 
+$gray-dark: #202020;
+
 $gray: #373737;
 
 $gray-light: #dedede;
@@ -33,6 +35,9 @@ $orange: #ffa600;
 $purple: purple;
 $bgdark: #282c34;
 
+$default-step-bg: #505258;
+$active-step-bg: $red;
+
 //breakpoints
 $bp-xs: 320px;
 $bp-sm: 512px;
@@ -44,9 +49,13 @@ $bp-xl: 1848px;
   defaultWhite:$white-04;
   hiliteWhite: $white-05;
   mutedWhite: $white-01;
+  mutedBlack: $black-01;
   disabled: $white-01;
-  bluecolor: $blue;
+  defaultStepBg: $default-step-bg;
+  activeStepBg: $active-step-bg;
+  beatTxtColor: $black;
   greencolor: $green;
+  redcolor: $red;
   neoncolor: $neon;
   alertcolor: $red;
   graycolor: $gray;

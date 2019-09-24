@@ -6,7 +6,6 @@ import InputRange from './ui/inputRange'
 import Label from './ui/label'
 import CurrentValue from './ui/currentValue'
 import Switch from './ui/switch'
-import DecreaseBtn from './ui/decreaseBtn'
 import IconBtn from './ui/iconBtn'
 import Icon from './ui/icon'
 import BarDisplay from './barDisplay'
@@ -14,7 +13,7 @@ import BarDisplay from './barDisplay'
 import useDrumr from '../hooks/useDrumr'
 import useTrack from '../hooks/useTrack'
 
-import vars from '../scss/_vars.scss';
+import vars from '../scss/_vars.scss'
 
 import classes from './controls.module.scss'
 
@@ -53,10 +52,10 @@ const Controls = ( { track } ) => {
   return (
     <div className={classes.controls}> 
       <Control>
-        <IconBtn clickHandler={() => removeTrack(track.id())} style={{ borderColor: vars.mutedWhite, color: vars.alertcolor}}>
+        <IconBtn clickHandler={() => removeTrack(track.id())} style={{ borderColor: vars.mutedWhite}}>
           <Icon color={vars.alertcolor} size={8} icon="minus"/>
         </IconBtn>
-        
+        {/* <Label>Delete Track</Label> */}
       </Control> 
       <Control>
         <Select
@@ -85,11 +84,11 @@ const Controls = ( { track } ) => {
         <CurrentValue>{Math.round(pan).toString()}</CurrentValue>
       </Control>
       <Control>
-        <Switch isOn={(mute && !solo) || (soloed.length >= 1 && !track.isSolo()) } onClick={() => setMute({ trackId: track.id(), value: !mute })} activeClass='red' />
+        <Switch isOn={(mute && !solo) || (soloed.length >= 1 && !track.isSolo()) } onClick={() => setMute({ trackId: track.id(), value: !mute })} activeClass={vars.redcolor} />
         <Label>Mute</Label>
       </Control>
       <Control>
-        <Switch isOn={solo} onClick={() => setSolo({ trackId: track.id(), value: !solo })} activeClass={'rgb(21, 255, 0)'} />
+        <Switch isOn={solo} onClick={() => setSolo({ trackId: track.id(), value: !solo })} activeClass={vars.greencolor} />
         <Label>Solo</Label>
       </Control>
       <Control>

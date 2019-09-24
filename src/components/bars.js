@@ -21,13 +21,8 @@ const Bars = ( { track } ) => {
     SEQUENCER.updateSequences(sequences)
   }, [sequences, numSteps, numBars])
 
-  const style = {
-    // width: 'calc(100% * '+numBars/2+')',
-    // gridTemplateColumns: 'repeat('+numBars+', 1fr)'
-  }
-
   return (
-    <div className={classes.bars} style={style}>
+    <div className={classes.bars}>
       {barSequence && barSequence.map((s,i) => {
         return <Bar key={i} trackId={track.id()} barId={i} sequence={s} isMute={track.isMute() && !track.isSolo()}/>
       })}
