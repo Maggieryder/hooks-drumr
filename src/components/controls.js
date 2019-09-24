@@ -53,8 +53,8 @@ const Controls = ( { track } ) => {
   return (
     <div className={classes.controls}> 
       <Control>
-        <IconBtn clickHandler={() => removeTrack(track.id())} style={{ borderColor: vars.red, color: vars.red}}>
-          <Icon color={vars.red} size={20} icon="minus"/>
+        <IconBtn clickHandler={() => removeTrack(track.id())} style={{ borderColor: vars.mutedWhite, color: vars.alertcolor}}>
+          <Icon color={vars.alertcolor} size={8} icon="minus"/>
         </IconBtn>
         
       </Control> 

@@ -24,6 +24,8 @@ import { useAuth } from "../hooks/useAuth.js";
 import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
 
+import vars from '../scss/_vars.scss';
+
 import classes from './controller.module.scss'
 import uiclasses from '../components/ui/ui.module.scss'
 
@@ -142,15 +144,6 @@ const Controller = () => {
           <CurrentValue>{swing +'%'}</CurrentValue>
         </Control>
         <Control>
-          <BarIndicator items={Array.from(Array(numBars).keys())} 
-                    barClickHandler={updateCurrentBar} 
-                    addClickHandler={addBar} 
-                    removeClickHandler={removeBar} 
-                    numBars={numBars} 
-                    currentBar={currentBar} />
-          <Label>Bars</Label>
-        </Control>
-        <Control>
           <Select
             options={numStepsOptions}
             onValueChange={ value => setNumSteps(value) }
@@ -159,31 +152,34 @@ const Controller = () => {
           <Label>Resolution</Label>
         </Control>
         <Control>
+          <BarIndicator items={Array.from(Array(numBars).keys())} 
+                    barClickHandler={updateCurrentBar} 
+                    addClickHandler={addBar} 
+                    removeClickHandler={removeBar} 
+                    numBars={numBars} 
+                    currentBar={currentBar} />
+          <Label>Bars</Label>
+        </Control> 
+        <Control>
           {/* <IncreaseBtn clickHandler={() => addTrack(tracks.all.length)} /> */}
-          <IconBtn  clickHandler={() => addTrack(tracks.all.length)}>
-            <Icon color="rgb(21, 255, 0)" size={12} icon="plus"/>
+          <IconBtn  clickHandler={() => addTrack(tracks.all.length)} style={{ paddingLeft: '1px', borderColor: vars.mutedWhite, color: vars.greencolor}}>
+            <Icon color={vars.greencolor} size={8} icon="plus"/>
           </IconBtn>
           <Label>Add Track</Label>
         </Control>
         <Control>
-          {auth.user ? <p className={uiclasses.smalltxt}>Logged in as {auth.user.email}</p> : <p className={uiclasses.smalltxt}>Sign in to access more features -></p>}
-          
+          {auth.user ? <p className={uiclasses.smalltxt}>Logged in as {auth.user.email}</p> : <p className={uiclasses.smalltxt}>Sign in to access more features -></p>}        
         </Control>
-        
-        
       </div>
       <div className={classes.trackspanel}>
         <Tracks />
       </div>
       
       <div className={classes.bottompanel}>
+      
         <Processors />
         <Transport />
       </div>   
-
-      {/* <Modal show={login} modalClosed={() => setLogin(false)}>
-        <Login modalClosed={() => setLogin(false)}/>
-      </Modal> */}
     </div>
   )
 }

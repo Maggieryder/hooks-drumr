@@ -40,7 +40,7 @@ select:-webkit-autofill:focus {
 .toggle-play-btn,
 .increase-btn,
 .decrease-btn,
-.boolean-btn {
+.icon-btn {
     -webkit-appearance: none;
     width: 50px;
     height: 50px;
@@ -55,8 +55,8 @@ select:-webkit-autofill:focus {
         content: '';
         position: relative;
         margin: 2px auto;
-        width: 25px;
-        height: 25px;
+        width: 24px;
+        height: 24px;
         display: block;
         border-radius: 50%;
         border: 2px solid $green;
@@ -82,22 +82,28 @@ select:-webkit-autofill:focus {
     display: inline-flex;
     vertical-align: middle;
     background: transparent;
-    height: 30px;
+    height: 26px;
     .btn {
-        width: 30px;
+        width: 26px;
         height: 100%;
         -webkit-appearance: none;
         position: relative;
         -webkit-box-flex: 0;
         -ms-flex: 0 1 auto;
         flex: 0 1 auto;
-        color: $green;
+        color: $white-03;
         background: $black-02;
         border-radius: none;
         border: 2px solid $gray;
         border-right: none;
+        option {
+            min-height: 26px;
+            max-height: 26px;
+        }
+
         &:hover {
             background: $gray;
+            color: $green;
             // color: $gray;
         }
         &:first-child {
@@ -159,6 +165,18 @@ select:-webkit-autofill:focus {
         content:'-';
     }
 }
+
+.toolbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 100%;
+    background: #282c34;
+    border-left: 1px solid $white-01;
+    z-index: 10;
+}
+
 .toolbar-nav {
     position: relative;
     width: 100%;
@@ -170,8 +188,8 @@ select:-webkit-autofill:focus {
     -webkit-appearance: none;
     background: transparent;
     width: 100%;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(255,255,255,.1);
+    padding: .75rem 0;
+    border-bottom: 1px solid $white-01;
     transition: all .5s;
     svg {
         // position: absolute;
@@ -324,7 +342,7 @@ select:-webkit-autofill:focus {
 
 .select {
     width:100%;
-    height: 30px;
+    height: 26px;
     padding:0 20px 0 10px;
     background-color: $black-02;
     // background-repeat:no-repeat;
@@ -333,7 +351,7 @@ select:-webkit-autofill:focus {
     border-radius: 0px;
     border: 2px solid $gray;
     color: $green;
-    font-size: .8rem;
+    font-size: .75rem;
     text-transform: uppercase;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -371,8 +389,8 @@ select:-webkit-autofill:focus {
     z-index: 2;
     cursor: pointer;
     div {
-        width: 50%;
-        height: 50%;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
         border: 2px solid $gray;
         background: $black-02;
@@ -448,7 +466,8 @@ select:-webkit-autofill:focus {
 }
 
 .smalltxt {
-    font-size: .85rem;
+    font-size: .75rem;
+    font-variant: small-caps;
     text-align: left;
 }
 .margintop {

@@ -31,6 +31,7 @@ $green: rgb(21, 255, 0);
 $neon: #CBE86B;
 $orange: #ffa600;
 $purple: purple;
+$bgdark: #282c34;
 
 //breakpoints
 $bp-xs: 320px;
@@ -40,11 +41,15 @@ $bp-lg: 1536px;
 $bp-xl: 1848px;
 
 :export {
-    whitecolor: $white;
-    bluecolor: $blue;
-    greencolor: $green;
-    neoncolor: $neon;
-    alertcolor: $red;
-    graycolor: $gray;
-    lightgraycolor: $gray-light;
-  }
+  defaultWhite:$white-04;
+  hiliteWhite: $white-05;
+  mutedWhite: $white-01;
+  disabled: $white-01;
+  bluecolor: $blue;
+  greencolor: $green;
+  neoncolor: $neon;
+  alertcolor: $red;
+  graycolor: $gray;
+  lightgraycolor: $gray-light;
+  bgcolor: $bgdark;
+}

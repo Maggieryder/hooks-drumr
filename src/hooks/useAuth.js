@@ -24,8 +24,9 @@ export const useAuth = () => {
 
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
-    const [user, setUser] = useState(null);
-    const [error, setError] = useState(null);
+    const [user, setUser] = useState(null)
+    const [error, setError] = useState(null)
+    const [login, setLogin] = useState(false)
     
     // Wrap any Firebase methods we want to use making sure ...
     // ... to save the user to state.
@@ -106,6 +107,8 @@ function useProvideAuth() {
     return {
       user,
       error,
+      login,
+      setLogin,
       signin,
       signup,
       signout,
