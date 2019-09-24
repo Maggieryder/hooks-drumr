@@ -2,9 +2,18 @@
 
 .transport {
     display: grid;
-    grid-template-rows: repeat(auto, 1fr);
+    // grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     width: 100%;
     height: auto;
-    border-top: 1px solid $white-01;
+    
+
+    .transport-controls {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(5, 1fr);
+        border-top: 1px solid $white-01;
+    }
+    
     // border-right: 1px solid $white-01;
 }
