@@ -2,8 +2,8 @@
 
 .status {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    
+    grid-template-columns: 2fr 1fr 2fr;
+    align-items: center;
     
     // display: flex;
     // flex-direction: row;
@@ -17,8 +17,8 @@
     .barbeatstep {
         display: grid;
         grid-template-columns: 2.5fr 1.5fr 2fr;
-        width: 40%;
-        height: 100%;
+        width: 100%;
+        height: auto;
         justify-self: end;
 
         .statusbar,
@@ -34,10 +34,14 @@
     }
 
     .ctxtime {
-        width: 40%;
-        height: 100%;
+        padding: .5rem;
+        border-radius: .5rem;
+        text-align: right;
+        width: 100%;
+        height: auto;
         justify-self: start;
         background: $black;
+        color: $white-03;
     }
     
 
