@@ -34,7 +34,9 @@ const PannerNode = (context) => {
   pannerNode.distanceModel = 'linear';
   pannerNode.rolloffFactor = 0;
   pannerNode.coneOuterAngle = 0;
-  pannerNode.positionX.value = -6; // hack to force first time refresh
+  // pannerNode.setPosition(0, 0, 1);
+  //panner.setPosition(pan, 0, 1 - Math.abs(pan))
+  // pannerNode.positionX.value = -6; // hack to force first time refresh
     /*this.panner.refDistance = 1;
     this.panner.maxDistance = 10000;
     this.panner.rolloffFactor = 0;

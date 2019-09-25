@@ -7,7 +7,7 @@ class Mixer {
     this.init()
   }
   init(){
-    this._context.listener.setOrientation(0, 0, -1, 0, 1, 0);
+    // this._context.listener.setOrientation(0, 0, -1, 0, 1, 0);
     this._wetMix = this._context.createGain()
     this._dryMix = this._context.createGain()
     this._masterMix = this._context.createGain()

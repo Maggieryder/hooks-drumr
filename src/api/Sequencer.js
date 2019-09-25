@@ -19,7 +19,6 @@ class Sequencer {
     this.swing = 0
     this.numBars = 1
     this.numSteps = 16
-
     this.currentBar = 0
     this.currentStep = 0
   }
@@ -95,8 +94,10 @@ class Sequencer {
       // this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: 0 })
       this.nextNoteTime = this.context.currentTime
       this.timeWorker.postMessage('start')
+      this.context.resume()
       message = 'stop'
     } else {
+      this.context.suspend()
       this.timeWorker.postMessage('stop')
       message = 'play'
     }

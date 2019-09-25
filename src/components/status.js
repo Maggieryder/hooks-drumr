@@ -7,6 +7,7 @@ import Control from './control'
 // import CurrentValue from './ui/currentValue'
 // import Switch from './ui/switch'
 
+import { AUDIO_CONTEXT } from '../api'
 
 import { DrumrContext } from '../context/DrumrContext'
 
@@ -17,9 +18,15 @@ const Status = () => {
     const {state:{ sequencer: { currentBar, currentStep, numBeats } }} = useContext(DrumrContext)
     return (
         <div className={classes.status} >
-            <div className={classes.statusbar}>{currentBar < 99 ? currentBar < 9 ? `00${currentBar + 1}` : `0${currentBar + 1}` : currentBar + 1 }</div>
-            <div className={classes.statusbeat}>{ Math.floor(currentStep / numBeats) + 1 }</div>
-            <div className={classes.statusstep}>{currentStep < 9 ? `0${currentStep + 1}` : currentStep + 1 }</div>
+            <div className={classes.ctxtime}>
+                {AUDIO_CONTEXT.currentTime.toFixed(3)}
+            </div>
+            <div className={classes.barbeatstep} >
+                <div className={classes.statusbar}>{currentBar < 99 ? currentBar < 9 ? `00${currentBar + 1}` : `0${currentBar + 1}` : currentBar + 1 }</div>
+                <div className={classes.statusbeat}>{ Math.floor(currentStep / numBeats) + 1 }</div>
+                <div className={classes.statusstep}>{currentStep < 9 ? `0${currentStep + 1}` : currentStep + 1 }</div>
+            </div>
+            
         </div>
     )
 }

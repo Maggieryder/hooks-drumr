@@ -1,5 +1,7 @@
 // import * as Types from '../actions/types'
-import { Sample, PannerNode, trigger } from './Sample'
+import { Sample, trigger } from './Sample'
+
+import PannerNode from './Panner'
 // import Panner from './Panner'
 // import AudioProcessor from './AudioProcessor'
 
@@ -104,10 +106,18 @@ export default class Track {
     return this._outputGain.gain.value;
   }
   updatePan(value){
-    // console.log('[Track Api] updatePan id '+this.id()+' value', value )
-    let xpos = value,
-    zpos = 1 - Math.abs(xpos);
-    this._panner.setPosition(xpos, 0, zpos);
+    console.log('[Track Api] updatePan id '+this.id()+' value', value )
+    let xPos = value,
+      yPos = 0,
+      zPos = 1 - Math.abs(xPos);
+    // this._panner.setPosition(xpos, 0, zpos);
+    if(this._panner.positionX) {
+      this._panner.positionX.value = xPos;
+      this._panner.positionY.value = yPos;
+      this._panner.positionZ.value = zPos;
+    } else {
+      this._panner.setPosition(xPos,yPos,zPos);
+    }
   }
   updateReverbSend(value){
     // console.log('[Track Api] updateReverbSend id '+this.id()+' send', value )
