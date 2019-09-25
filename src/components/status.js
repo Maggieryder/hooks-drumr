@@ -21,6 +21,7 @@ const Status = () => {
             <div className={classes.ctxtime}>
                 {AUDIO_CONTEXT.currentTime.toFixed(3)}
             </div>
+            <div></div>
             <div className={classes.barbeatstep} >
                 <div className={classes.statusbar}>{currentBar < 99 ? currentBar < 9 ? `00${currentBar + 1}` : `0${currentBar + 1}` : currentBar + 1 }</div>
                 <div className={classes.statusbeat}>{ Math.floor(currentStep / numBeats) + 1 }</div>
