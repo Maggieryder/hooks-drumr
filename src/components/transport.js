@@ -2,11 +2,7 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import Control from './control'
 import IconBtn from './ui/iconBtn'
-import Icon from './ui/icon'
 import Status from './status'
-// import Label from './ui/label'
-// import CurrentValue from './ui/currentValue'
-// import Switch from './ui/switch'
 import TogglePlayBtn from './ui/togglePlayBtn'
 
 // import { DrumrContext } from '../context/DrumrContext'
@@ -22,27 +18,19 @@ const Transport = () => {
         <div className={classes.transport} >
             <div className={classes['transport-controls']}>
                 <Control>
-                    <IconBtn clickHandler={() => {}} style={{ borderColor: 'transparent'}}>
-                        <Icon color={vars.defaultWhite} size={24} icon="previous2"/>
-                    </IconBtn>
+                    <IconBtn clickHandler={() => {}} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='previous2' altClass={classes['transport-btn']} />
                 </Control>
                 <Control>
-                    <IconBtn clickHandler={() => {}} style={{ borderColor: 'transparent'}}>
-                        <Icon color={vars.defaultWhite} size={24} icon="backward2"/>
-                    </IconBtn>
+                    <IconBtn clickHandler={() => {}} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='backward2' altClass={classes['transport-btn']} />   
                 </Control>  
                 <Control>
                     <TogglePlayBtn clickHandler={togglePlay} isPlaying={isPlaying} />
                 </Control>
                 <Control>
-                    <IconBtn clickHandler={() => {}} style={{ borderColor: 'transparent'}}>
-                        <Icon color={vars.defaultWhite} size={24} icon="forward3"/>
-                    </IconBtn>
+                    <IconBtn clickHandler={() => {}} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='forward3' altClass={classes['transport-btn']} />  
                 </Control>
                 <Control>
-                    <IconBtn clickHandler={() => {}} style={{ borderColor: 'transparent'}}>
-                        <Icon color={vars.defaultWhite} size={24} icon="next2"/>
-                    </IconBtn>
+                    <IconBtn clickHandler={() => {}} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='next2' altClass={classes['transport-btn']} />  
                 </Control>
             </div>
             <Status />

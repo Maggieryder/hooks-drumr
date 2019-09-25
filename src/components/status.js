@@ -17,9 +17,9 @@ const Status = () => {
     const {state:{ sequencer: { currentBar, currentStep, numBeats } }} = useContext(DrumrContext)
     return (
         <div className={classes.status} >
-            <div className={classes.statusbar}>{currentBar < 100 ? currentBar < 10 ? `00${currentBar}` : `0${currentBar}` : currentBar }</div>
+            <div className={classes.statusbar}>{currentBar < 99 ? currentBar < 9 ? `00${currentBar + 1}` : `0${currentBar + 1}` : currentBar + 1 }</div>
             <div className={classes.statusbeat}>{ Math.floor(currentStep / numBeats) + 1 }</div>
-            <div className={classes.statusstep}>{currentStep < 10 ? `0${currentStep}` : currentStep }</div>
+            <div className={classes.statusstep}>{currentStep < 9 ? `0${currentStep + 1}` : currentStep + 1 }</div>
         </div>
     )
 }

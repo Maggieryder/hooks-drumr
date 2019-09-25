@@ -20,7 +20,7 @@ import { useAuth } from "../hooks/useAuth.js";
 import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
 
-import vars from '../scss/_vars.scss';
+import vars from '../scss/_vars.scss'
 
 import classes from './controller.module.scss'
 import uiclasses from '../components/ui/ui.module.scss'
@@ -152,10 +152,8 @@ const Controller = () => {
                     currentBar={currentBar} />
           <Label>Bars</Label>
         </Control> 
-        <Control>
-          <IconBtn  clickHandler={() => addTrack(tracks.all.length)} style={{ paddingLeft: '1px', borderColor: vars.mutedWhite, color: vars.greencolor}}>
-            <Icon color={vars.greencolor} size={8} icon="plus"/>
-          </IconBtn>
+        <Control style={{WebkitAlignItems:'flex-start', alignItems:'flex-start'}}>
+          <IconBtn clickHandler={() => addTrack(tracks.all.length)} colors={[vars.defaultWhite, vars.greencolor]} size={8} icon='plus' />
           <Label>Add Track</Label>
         </Control>
         <Control>
