@@ -17,6 +17,7 @@ import { useAuth } from "../hooks/useAuth.js";
 
 // import { DrumrProvider } from "../context/DrumrContext";
 
+
 import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
 
@@ -115,61 +116,63 @@ const Controller = () => {
 
 
   return (
-    <div className={classes.controller}>
-      <div className={classes.toppanel}>
-        {kits ? <Control>
-                  <Select
-                    options={kits}
-                    onValueChange={ value => setCurrentKitId(value) }
-                    initialValue={currentKitId.toString()}
-                  />
-                  <Label>Current kit</Label>
-                </Control> : null }
-        <Control>
-          <InputRange id='tempo' min={30} max={160} step={1} onChange={e => setTempo(e.target.value)} value={+tempo}></InputRange>
-          <Label>Tempo</Label>
-          <CurrentValue>{tempo+ ' bpm'}</CurrentValue>
-        </Control>
-        <Control>
-          <InputRange id='swing' min={0} max={100} step={1} onChange={e => setSwing(e.target.value)} value={+swing}></InputRange>
-          <Label>Swing</Label>
-          <CurrentValue>{swing +'%'}</CurrentValue>
-        </Control>
-        <Control>
-          <Select
-            options={numStepsOptions}
-            onValueChange={ value => setNumSteps(value) }
-            initialValue={numSteps.toString()}
-          />
-          <Label>Resolution</Label>
-        </Control>
-        <Control>
-          <BarIndicator items={Array.from(Array(numBars).keys())} 
-                    barClickHandler={updateCurrentBar} 
-                    addClickHandler={addBar} 
-                    removeClickHandler={removeBar} 
-                    numBars={numBars} 
-                    currentBar={currentBar} />
-          <Label>Bars</Label>
-        </Control> 
-        <Control style={{WebkitAlignItems:'flex-start', alignItems:'flex-start'}}>
-          <IconBtn clickHandler={() => addTrack(tracks.all.length)} colors={[vars.defaultWhite, vars.greencolor]} size={8} icon='plus' />
-          <Label>Add Track</Label>
-        </Control>
-        <Control>
-          {auth.user ? <p className={uiclasses.smalltxt}>Logged in as {auth.user.email}</p> : <p className={uiclasses.smalltxt}>Sign in to access more features -></p>}        
-        </Control>
+    
+      <div className={classes.controller}>
+        <div className={classes.toppanel}>
+          {kits ? <Control>
+                    <Select
+                      options={kits}
+                      onValueChange={ value => setCurrentKitId(value) }
+                      initialValue={currentKitId.toString()}
+                    />
+                    <Label>Current kit</Label>
+                  </Control> : null }
+          <Control>
+            <InputRange id='tempo' min={30} max={160} step={1} onChange={e => setTempo(e.target.value)} value={+tempo}></InputRange>
+            <Label>Tempo</Label>
+            <CurrentValue>{tempo+ ' bpm'}</CurrentValue>
+          </Control>
+          <Control>
+            <InputRange id='swing' min={0} max={100} step={1} onChange={e => setSwing(e.target.value)} value={+swing}></InputRange>
+            <Label>Swing</Label>
+            <CurrentValue>{swing +'%'}</CurrentValue>
+          </Control>
+          <Control>
+            <Select
+              options={numStepsOptions}
+              onValueChange={ value => setNumSteps(value) }
+              initialValue={numSteps.toString()}
+            />
+            <Label>Resolution</Label>
+          </Control>
+          <Control>
+            <BarIndicator items={Array.from(Array(numBars).keys())} 
+                      barClickHandler={updateCurrentBar} 
+                      addClickHandler={addBar} 
+                      removeClickHandler={removeBar} 
+                      numBars={numBars} 
+                      currentBar={currentBar} />
+            <Label>Bars</Label>
+          </Control> 
+          <Control style={{WebkitAlignItems:'flex-start', alignItems:'flex-start'}}>
+            <IconBtn clickHandler={() => addTrack(tracks.all.length)} colors={[vars.defaultWhite, vars.greencolor]} size={8} icon='plus' />
+            <Label>Add Track</Label>
+          </Control>
+          <Control>
+            {auth.user ? <p className={uiclasses.smalltxt}>Logged in as {auth.user.email}</p> : <p className={uiclasses.smalltxt}>Sign in to access more features -></p>}        
+          </Control>
+        </div>
+        <div className={classes.trackspanel}>
+          <Tracks />
+        </div>
+        
+        <div className={classes.bottompanel}>
+        
+          <Processors />
+          <Transport />
+        </div>   
       </div>
-      <div className={classes.trackspanel}>
-        <Tracks />
-      </div>
-      
-      <div className={classes.bottompanel}>
-      
-        <Processors />
-        <Transport />
-      </div>   
-    </div>
+    
   )
 }
 

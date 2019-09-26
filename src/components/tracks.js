@@ -6,6 +6,7 @@ import classes from './tracks.module.scss'
 
 import { DrumrContext } from '../context/DrumrContext'
 
+
 const Tracks = () => {
 
   const {state:{ tracks: { all } }} = useContext(DrumrContext)
@@ -25,8 +26,8 @@ const Tracks = () => {
   }, [ all ]);
 
   return (
-      <div className={classes.tracks}>    
-        { all.map((track, i ) => {
+      <div className={classes.tracks}>         
+          { all.map((track, i ) => {
             return <Track key={i} track={track} />
           }) }
       </div>

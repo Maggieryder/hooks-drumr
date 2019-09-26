@@ -45,6 +45,19 @@ $bp-md: 1024px;
 $bp-lg: 1536px;
 $bp-xl: 1848px;
 
+.gradient-01 {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+.gradient-02 {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+.gradient-03 {
+    background: linear-gradient(135deg, #5ee7df 0%, #b490ca 100%);
+}
+.gradient-04 {
+    background: linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%);
+}
+
 :export {
   defaultWhite:$white-03;
   hiliteWhite: $white-05;
