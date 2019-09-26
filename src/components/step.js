@@ -11,7 +11,8 @@ const Step = ({ onTap, step, isBeat, isOne, isCurrentBar, isCurrentStep, velocit
   const style = {
     // width: isBeat ? '30px' : isCurrentBar ? '20px' :'10px',
     // height: isBeat ? '30px' : isCurrentBar ? '20px' :'10px',
-    '--size': isBeat ? '20px' : isCurrentBar ? '10px' :'5px',
+    // '--size': isBeat ? '20px' : isCurrentBar ? '10px' :'5px',
+    '--size': isBeat ? '20px' : '5px',
     // '--viz': isCurrentBar && isCurrentStep ? 0 : 1,
     '--scale': isCurrentBar && isCurrentStep ? 1.5 : 1,
     '--bgcolor': isOne ? vars.activeStepBg : vars.defaultStepBg,

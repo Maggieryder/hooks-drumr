@@ -6,8 +6,9 @@
   // grid-template-columns: repeat(2, 1fr);
   // grid-template-rows: 50px;
   width: auto;
-  height: 50px;
+  height: 100%;
+  // border-top: 1px solid $white-01;
   border-top: 1px solid $white-01;
-  border-bottom: 1px solid $white-01;
   overflow: hidden;
+  transition: transform .25s;
 }
