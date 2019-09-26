@@ -49,6 +49,8 @@
     &:after {
       content: '';
       position: absolute;
+      top: 0;
+      left: 50%;
       width: var(--size);
       // height: var(--size);
       // width: 3px;

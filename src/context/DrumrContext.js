@@ -19,7 +19,7 @@ const initialSequencerState = {
   isPlaying: false,
   tempo: 96,
   swing: 0,
-  numBars: 1,
+  numBars: 2,
   numBeats: 4,
   numSteps: 16,
   sequences: [],
