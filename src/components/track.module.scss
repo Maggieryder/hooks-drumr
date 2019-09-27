@@ -12,14 +12,14 @@
     width: 100%;
     height:60px;
     overflow: hidden;
-    transition: height .5s ease-out;
+    transition: height .5s ease-in-out;
   }
 
   .bars-mask {
     width: 100%;
     height:40px;
     overflow: hidden;
-    transition: height .5s ease-out;
+    transition: height .5s ease-in-out;
   }
 }
 

@@ -12,4 +12,3 @@ export const REVERB = new Reverb(AUDIO_CONTEXT, MIXER.wetMix())
 export const DELAY = new Delay(AUDIO_CONTEXT, MIXER.wetMix())
 export const COMPRESSOR = new Compressor(AUDIO_CONTEXT, MIXER.masterMix(), AUDIO_CONTEXT.destination)
 export const SEQUENCER = new Sequencer(AUDIO_CONTEXT)
-

@@ -17,10 +17,12 @@ class Sequencer {
     this.isPlaying = false
     this.tempo = 120
     this.swing = 0
-    this.numBars = 1
+    this.numBars = 2
     this.numSteps = 16
     this.currentBar = 0
     this.currentStep = 0
+
+    this.startTime = null
   }
 
   init(dispatch){

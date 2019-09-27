@@ -15,7 +15,8 @@
     "react-select": "^2.4.4",
     "react-spring": "^8.0.27",
     "redux": "^4.0.4",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.3.2",
+    "use-measure": "^0.2.2"
   },
   "scripts": {
     "start": "react-scripts start",

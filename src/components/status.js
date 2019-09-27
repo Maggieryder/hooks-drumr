@@ -14,12 +14,46 @@ import { DrumrContext } from '../context/DrumrContext'
 import vars from '../scss/_vars.scss'
 import classes from './status.module.scss'
 
+function msToTime(ct) {
+    let h, m, s, secs, mins,
+    ms = ct.toString().split('.')[1]
+    s = Math.floor(ct)
+    m = Math.floor(s / 60);
+    secs = s % 60;
+    h = Math.floor(m / 60);
+    mins = m % 60;
+    h = h % 24;
+    if (secs < 10) secs = '0' +secs
+    if (mins < 10) mins = '0' +mins
+    if (h < 10) h = '0' +h
+    // return  h + ':' + mins + ':' + secs + ':' + ms
+    return [h,mins,secs,ms]
+}
+
+// function msToTime(duration) {
+//     var milliseconds = parseInt((duration % 1000) / 100),
+//       seconds = Math.floor((duration / 1000) % 60),
+//       minutes = Math.floor((duration / (1000 * 60)) % 60),
+//       hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+  
+//     hours = (hours < 10) ? "0" + hours : hours;
+//     minutes = (minutes < 10) ? "0" + minutes : minutes;
+//     seconds = (seconds < 10) ? "0" + seconds : seconds;
+  
+//     return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+//   }
+
 const Status = () => {
     const {state:{ sequencer: { currentBar, currentStep, numBeats } }} = useContext(DrumrContext)
+
+    const currentTimeArr = msToTime(AUDIO_CONTEXT.currentTime.toFixed(3))
     return (
         <div className={classes.status} >
             <div className={classes.ctxtime}>
-                {AUDIO_CONTEXT.currentTime.toFixed(3)}
+                <div>{currentTimeArr[0] +':'}</div>
+                <div>{currentTimeArr[1] +':'}</div>
+                <div>{currentTimeArr[2] +':'}</div>
+                <div>{currentTimeArr[3]}</div>
             </div>
             <div></div>
             <div className={classes.barbeatstep} >

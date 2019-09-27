@@ -11,7 +11,7 @@
     height: 61px;
     padding: 4px;
     border-top: 1px solid $white-01;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     color: $green;
 
     .barbeatstep {
@@ -34,14 +34,23 @@
     }
 
     .ctxtime {
-        padding: .5rem;
+        
         border-radius: .5rem;
-        text-align: right;
+        padding: .5rem;
         width: 100%;
         height: auto;
         justify-self: start;
         background: $black;
         color: $white-03;
+        > div {
+            float: left;
+            width: 22%;
+            height: auto;
+            text-align: center;
+            &:last-child {
+                width: 25%;
+            }
+        }
     }
     
 
