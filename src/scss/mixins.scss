@@ -1,0 +1,15 @@
+$drum-colors: ( // Define your colour map
+   'cyan': (#B2EBF2, #80DEEA, #4DD0E1, #26C6DA, #00BCD4, #00ACC1),
+   'blue': (#B2EBF2, #80DEEA, #4DD0E1, #26C6DA, #00BCD4, #00ACC1)
+);
+
+@each $map in $drum-colors {
+    $name: nth($map, 1);
+    $list: map-get($drum-colors, $name);
+
+    @for $i from 1 through length($list) {
+        .color-#{$name}-#{$i}00 {
+          color: nth($list, $i);
+        }
+    }
+}

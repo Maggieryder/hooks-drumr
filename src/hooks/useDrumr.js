@@ -11,6 +11,10 @@ import Track from '../api/Track'
 
 import { AUDIO_CONTEXT, MIXER } from '../api'
 
+import { magentacolor, purplecolor, orangecolor, cyancolor, neoncolor } from '../scss/_vars.scss'
+
+const DRUM_COLORS = [magentacolor, purplecolor, orangecolor, cyancolor, neoncolor ]
+
 // const initialTracksState = {
 //   all: [],
 //   soloed: [],
@@ -63,8 +67,8 @@ const useDrumr = () => {
   //   }
   // }, []);
 
-  const addTrack = useCallback((id) => {
-    const track = new Track(id, AUDIO_CONTEXT, MIXER)
+  const addTrack = useCallback((id, color) => {
+    const track = new Track(id, DRUM_COLORS[id], AUDIO_CONTEXT, MIXER)
     // console.log('addTrack', track)
     // setState(state => ({ 
     //   ...state, 

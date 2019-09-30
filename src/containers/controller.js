@@ -68,6 +68,8 @@ const Controller = () => {
     console.log('[controller] INIT')
     loadData('./resources')
     SEQUENCER.init(dispatch)
+    SEQUENCER.updateCurrentBar(currentBar)
+    SEQUENCER.updateNumBars(numBars)
     SEQUENCER.updateTempo(tempo)
     addTrack(0)
     return (() => {

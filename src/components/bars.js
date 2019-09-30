@@ -24,7 +24,7 @@ const Bars = ( { track } ) => {
   return (
     <div className={classes.bars}>
       {barSequence && barSequence.map((s,i) => {
-        return <Bar key={i} trackId={track.id()} barId={i} sequence={s} isMute={track.isMute() && !track.isSolo()}/>
+        return <Bar key={i} trackId={track.id()} barId={i} sequence={s} color={track.color()} isMute={track.isMute() && !track.isSolo()}/>
       })}
     </div>
   )

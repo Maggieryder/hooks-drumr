@@ -9,7 +9,7 @@ import { AUDIO_CONTEXT, MIXER, REVERB, DELAY } from './'
 
 
 export default class Track {
-  constructor(id, context, mixer){
+  constructor(id, color, context, mixer){
     this._trackId = id
     this._context = AUDIO_CONTEXT
     this._destination = MIXER.dryMix()
@@ -27,6 +27,8 @@ export default class Track {
     this._panner.connect(this._reverbSendGain)
     this._panner.connect(this._delaySendGain)
     this._panner.connect(this._outputGain)
+
+    this._color = color
     // this._reverbSendGain.connect(this._reverbNode)
     // this._delaySendGain.connect(this._delayNode)
     // this._outputGain.connect(this._destination)
@@ -76,6 +78,9 @@ export default class Track {
   }
   id(){
     return this._trackId;
+  }
+  color(){
+    return this._color;
   }
 //   assignSample(buffer){
 //     this.buffer = buffer;

@@ -15,6 +15,7 @@ const useTrack = () => {
 
   const { 
     trackId,
+    color,
     context, 
     voiceId,
     gain,
@@ -115,6 +116,7 @@ const useTrack = () => {
 
   return {
     trackId,
+    color,
     context,
     voiceId,
     gain,

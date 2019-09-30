@@ -27,12 +27,14 @@ $gray: #373737;
 
 $gray-light: #dedede;
 
-$red: rgb(255, 0, 128);
+$red: #FF0000;
+$magenta: rgb(255, 0, 128);
 $blue: blue;
 $green: rgb(21, 255, 0);
-$neon: #CBE86B;
-$orange: #ffa600;
-$purple: purple;
+$neon: rgb(204, 204, 0);
+$orange: rgb(255, 102, 0);
+$cyan: rgb(102, 255, 255);
+$purple: rgb(102, 102, 255);
 $bgdark: #282c34;
 
 $default-step-bg: #505258;
@@ -44,6 +46,15 @@ $bp-sm: 512px;
 $bp-md: 1024px;
 $bp-lg: 1536px;
 $bp-xl: 1848px;
+
+$colors: (
+  magenta: rgb(255, 0, 128),
+  neon: rgb(204, 255, 51),
+  cyan: rgb(102, 255, 255),
+  yellow: rgb(204, 204, 0),
+  orange:rgb(255, 102, 0),
+  purple: rgb(102, 102, 255)
+);
 
 .gradient-01 {
     background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
@@ -69,9 +80,14 @@ $bp-xl: 1848px;
   beatTxtColor: $black;
   greencolor: $green;
   redcolor: $red;
+  magentacolor: $magenta;
+  cyancolor: $cyan;
+  orangecolor: $orange;
+  purplecolor: $purple;
   neoncolor: $neon;
   alertcolor: $red;
   graycolor: $gray;
   lightgraycolor: $gray-light;
   bgcolor: $bgdark;
+  drumColors: colors;
 }

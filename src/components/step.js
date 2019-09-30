@@ -4,20 +4,18 @@ import classes from './step.module.scss'
 
 import vars from '../scss/_vars.scss'
 
-const Step = ({ onTap, step, isBeat, isOne, isCurrentBar, isCurrentStep, velocity }) => {
+const Step = ({ onTap, step, isBeat, isOne, color, isCurrentBar, isCurrentStep, velocity }) => {
 
   // console.log('[ step ] update id / isOne', step, isOne)
 
   const style = {
-    // width: isBeat ? '30px' : isCurrentBar ? '20px' :'10px',
-    // height: isBeat ? '30px' : isCurrentBar ? '20px' :'10px',
     // '--size': isBeat ? '20px' : isCurrentBar ? '10px' :'5px',
     // '--size': isBeat ? '20px' : '5px',
-    '--size': isBeat ? '4px' : '2px',
+    '--size': isBeat ? '4px' : isOne ? '4px' : '2px',
     // '--viz': isCurrentBar && isCurrentStep ? 0 : 1,
-    '--scale': isCurrentBar && isCurrentStep ? 1.5 : 1,
-    '--bgcolor': isOne ? vars.activeStepBg : vars.defaultStepBg,
-    color: isBeat ? vars.beatTxtColor : 'transparent',
+    // '--scale': isCurrentBar && isCurrentStep ? 1.5 : 1,
+    '--bgcolor': isOne ? color : vars.defaultStepBg,
+    // color: isBeat ? vars.beatTxtColor : 'transparent',
     // background:  isOne ? 'red' : '#505258'
   }
 

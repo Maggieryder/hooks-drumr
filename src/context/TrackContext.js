@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 const initialState = {
   trackId: null,
+  color: null,
   context: null,
   voiceId: 0,
   gain: 0,

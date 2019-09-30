@@ -7,7 +7,7 @@ import classes from './bar.module.scss'
 
 import useSequencer from '../hooks/useSequencer'
 
-const Bar = ( { trackId, barId, sequence, isMute } ) => {
+const Bar = ( { trackId, barId, sequence, color, isMute } ) => {
 
   const { onNoteTap, numBeats, numSteps, currentBar, currentStep, tempo, isPlaying } = useSequencer();
 
@@ -32,6 +32,7 @@ const Bar = ( { trackId, barId, sequence, isMute } ) => {
                       step={Math.floor(i/numBeats) + 1} 
                       isBeat={i % numBeats === 0} 
                       isOne={s}
+                      color={color}
                       isCurrentBar={isCurrentBar}
                       isCurrentStep={i===currentStep}
                       onTap={(isOn) => onNoteTap(trackId, barId, i, isOn)} 
