@@ -23,7 +23,8 @@ const useTrack = () => {
     reverbSend,
     delaySend,
     solo,
-    mute
+    mute,
+    isInPlay
      } = state
 
   const setVoiceId = useCallback(
@@ -131,7 +132,8 @@ const useTrack = () => {
     setReverbSend,
     setDelaySend,
     setSolo,
-    setMute
+    setMute,
+    isInPlay
   }
 }
 

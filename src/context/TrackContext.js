@@ -10,7 +10,8 @@ const initialState = {
   reverbSend: 0,
   delaySend: 0,
   solo: false,
-  mute: false
+  mute: false,
+  isInPlay: false
 };
 
 const TrackContext =  React.createContext([{}, () => {}])
