@@ -70,7 +70,10 @@ class Sequencer {
         bar.map((step,j) => {
           if ( j !== this.currentStep ) return false
           // console.log('bar/step', i, step)
-          if (step === 1) track.triggerSample(time)
+          if (step === 1) {
+            track.triggerSample(time)
+            // this.dispatch({type: TYPES.TRIGGERING, value: {id: track.id(), trigger: true} })
+          }
           return true
         })
         return true

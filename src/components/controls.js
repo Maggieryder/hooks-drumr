@@ -7,11 +7,13 @@ import Label from './ui/label'
 import CurrentValue from './ui/currentValue'
 import Switch from './ui/switch'
 import IconBtn from './ui/iconBtn'
-import Icon from './ui/icon'
+import Soundwave from './ui/soundwave'
 import BarDisplay from './barDisplay'
 
 import useDrumr from '../hooks/useDrumr'
 import useTrack from '../hooks/useTrack'
+
+// import { AUDIO_CONTEXT } from '../api'
 
 import vars from '../scss/_vars.scss'
 
@@ -44,6 +46,7 @@ const Controls = ( { track } ) => {
     // console.log('[Controls] track.id voiceId', track.id(), voiceId)
     // console.log('[ Controls ] kitBuffers', kitBuffers)
     all[track.id()].assignTrackBuffer(kitBuffers[voiceId].buffer)
+    // all[track.id()].triggerSample(AUDIO_CONTEXT.currentTime)
     return (() => {
       
     })
@@ -90,7 +93,8 @@ const Controls = ( { track } ) => {
         <Label>Solo</Label>
       </Control>
       <Control>
-        <BarDisplay />
+        {/* <BarDisplay /> */}
+        {track.buffer() && <Soundwave buffer={track.buffer()} id={track.id()} label={kitBuffers[voiceId].label} color={track.color()} onClick={() => {}} />}
       </Control>
     </div>
   )

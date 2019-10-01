@@ -52,6 +52,12 @@ export default function(state = initialState, action) {
           ...state,
           muted: state.muted.filter(t => t.id() !== action.value)
         }
+    // case TYPES.TRIGGERING:
+    //     // console.log('tracksReducer TRIGGERING', action.value)
+    //     return {
+    //       ...state,
+    //       trigger: state.all.filter(t => t.id() === action.value.id)
+    //     }
     default:
         return state
   } 

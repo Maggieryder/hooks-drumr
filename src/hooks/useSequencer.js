@@ -41,6 +41,7 @@ const useSequencer = () => {
     () => {
       // console.log('togglePlay', isPlaying)
       SEQUENCER.togglePlay(!isPlaying)
+      dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value: 0 })
       dispatch({ type: TYPES.UPDATE_CURRENT_STEP, value: 0 })
       dispatch({ type: TYPES.IS_PLAYING })
     },

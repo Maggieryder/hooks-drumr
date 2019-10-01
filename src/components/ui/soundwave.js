@@ -1,55 +1,84 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes  from 'prop-types'
 
-import useSequencer from '../hooks/useSequencer'
+import useSequencer from '../../hooks/useSequencer'
 
-const Soundwave = ({ buffer, id, color, index }) => {
+import classes from './soundwave.module.scss'
 
-    const { isPlaying } = useSequencer()
+const Soundwave = ({ buffer, id, color, label }) => {
+
+    const { numSteps, currentBar, currentStep, isPlaying } = useSequencer()
+
+    // const isCurrentBar = currentBar === barId
 
     const [ canvasWidth, setCanvasWidth ] = useState()
     const [ canvasHeight, setCanvasHeight ] = useState()
 
+    const style = { '--track-color': color }
+
     const canvas = useRef()  
 
     useEffect(() => {
-        console.log('[Soundwave] init this.canvas.clientWidth', this.canvas.clientWidth)
+        //console.log('[Soundwave] init canvas.current.clientWidth', canvas.current.clientWidth)
         window.addEventListener('resize', resizeHandler);
+        console.log('Canvas Height', canvasHeight)
         /* Allows CSS to determine size of canvas */
-        setCanvasWidth(this.canvas.clientWidth)
-        setCanvasHeight(this.canvas.clientHeight)
-        drawBuffer( canvasWidth , canvasHeight, this.canvas.getContext('2d'), buffer, color, 0 );
+        setCanvasWidth(canvas.current.parentNode.clientWidth)
+        setCanvasHeight(canvas.current.parentNode.clientHeight)
+
+        const dur = buffer.duration,
+            startTime = new Date();
+        console.log('[Soundwave] init buffer.duration', buffer.duration)
+
+        // sampleIntvlId = setInterval(() => {
+        //   console.log('auditionPlayer.state === "stopped"', auditionPlayer.state === "stopped")
+        //   if (auditionPlayer.state === "stopped") {
+        //     clearInterval(sampleIntvlId);
+        //     drawBuffer( canvasWidth , canvasHeight, canvas.current.getContext('2d'), buffer, color, 0 )
+        //   } else {
+        //     let nowTime = new Date();
+        //     let timeDiff = (nowTime - startTime)/1000;
+        //     let perc = (timeDiff/dur);
+        //     // perc = (perc > 95) ? 100 : perc;
+        //     // console.log('perc played', perc);
+        //     drawBuffer( canvasWidth , canvasHeight, canvas.current.getContext('2d'), buffer, color, perc);
+        //   }
+        // }, 100);
+
+        // const progress = isCurrentBar ? isPlaying ? (currentStep / (numSteps - 1)) : ((currentStep+1) / numSteps) : 0
+        drawBuffer( canvasWidth , canvasHeight, canvas.current.getContext('2d'), buffer, color, .25 )
         return(()=> {
             window.removeEventListener('resize', resizeHandler);
         })
-    }, [])
+    }, [buffer, canvasWidth, canvasHeight])
 
-    useEffect(() => {
-        console.log('[Soundwave] update this.canvas.clientWidth', this.canvas.clientWidth)
-        if (!isPlaying) {
-            drawBuffer( canvasWidth , canvasHeight, this.canvas.getContext('2d'), buffer, color, 0 );
-        return(()=> {
+    // useEffect(() => {
+    //     console.log('[Soundwave] update canvas.current.clientWidth', canvas.current.clientWidth)
+    //     if (!isPlaying) {
+    //         drawBuffer( canvasWidth , canvasHeight, canvas.current.getContext('2d'), buffer, color, 0 );
+    //     }
+    //     return(()=> {
             
-        })
-    }, [isPlaying])
+    //     })
+    // }, [isPlaying])
 
-    resizeHandler = () => {
+    const resizeHandler = () => {
         console.log('_resizeHandler')
         /* Allows CSS to determine size of canvas */
-        setCanvasWidth(this.canvas.clientWidth)
-        setCanvasHeight(this.canvas.clientHeight)
-        drawBuffer( canvasWidth , canvasHeight, this.canvas.getContext('2d'), buffer, color, 0 );
+        setCanvasWidth(canvas.current.parentNode.clientWidth)
+        setCanvasHeight(canvas.current.parentNode.clientHeight)
+        // drawBuffer( canvasWidth , canvasHeight, canvas.current.getContext('2d'), buffer, color, 0 );
     }
 
-    drawBuffer(width, height, context, buffer, color, progress) {
+    const drawBuffer = (width, height, context, buffer, color, progress) => {
         let data = buffer.getChannelData( 0 );
         let step = Math.ceil( data.length / width );
         let amp = height / 2;
         context.clearRect(0, 0, width, height);
-        context.fillStyle = "rgba(255,255,255,.1)";
-        context.fillRect(0,0,width,height);
-        context.fillStyle = isPlaying ? color : "rgba(255,255,255,.2)"; /*47AE32;*/
-        // context.fillStyle = "rgba(255,255,255,.2)";
+        // context.fillStyle = "rgba(255,255,255,.05)";
+        // context.fillRect(0,0,width,height);
+        // context.fillStyle = isPlaying ? color : "rgba(255,255,255,.2)"; /*47AE32;*/
+        context.fillStyle = 'rgba(255,255,255,.2)';
         for(let i=0; i < width; i++){
             let min = 1.0;
             let max = -1.0;
@@ -80,8 +109,8 @@ const Soundwave = ({ buffer, id, color, index }) => {
     }
 
     return (
-        <div id={id} data-index={index} className={isPlaying ? 'sound-wave playing' : 'sound-wave'} onClick={() => {}}>
-            <canvas ref={canvas => this.canvas = canvas} />
+        <div id={id} data-label={label} className={classes['sound-wave']} style={style} onClick={() => {}}>
+            <canvas ref={canvas} width={canvasWidth} height={canvasHeight} />
         </div>
     )
 
