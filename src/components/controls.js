@@ -13,7 +13,7 @@ import BarDisplay from './barDisplay'
 import useDrumr from '../hooks/useDrumr'
 import useTrack from '../hooks/useTrack'
 
-// import { AUDIO_CONTEXT } from '../api'
+import { AUDIO_CONTEXT } from '../api'
 
 import vars from '../scss/_vars.scss'
 
@@ -94,7 +94,7 @@ const Controls = ( { track } ) => {
       </Control>
       <Control>
         {/* <BarDisplay /> */}
-        {track.buffer() && <Soundwave buffer={track.buffer()} id={track.id()} label={kitBuffers[voiceId].label} color={track.color()} onClick={() => {}} />}
+        {track.buffer() && <Soundwave audioContext={AUDIO_CONTEXT} buffer={track.buffer()} id={track.id()} label={kitBuffers[voiceId].label} color={track.color()} onClick={() => {}} />}
       </Control>
     </div>
   )

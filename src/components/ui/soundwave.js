@@ -7,7 +7,7 @@ import useSequencer from '../../hooks/useSequencer'
 
 import classes from './soundwave.module.scss'
 
-const Soundwave = ({ buffer, id, color, label }) => {
+const Soundwave = ({ audioContext, buffer, id, color, label }) => {
 
     let requestId = null
 
@@ -40,22 +40,53 @@ const Soundwave = ({ buffer, id, color, label }) => {
     useEffect(() => {
         console.log('[Soundwave] Update on isPlaying', isPlaying)
         
-        if (isPlaying) {
-            const startTime = new Date()
-            const render = (timestamp) => {
-                // nowTime = new Date(),
-                const runtime = ( timestamp - startTime)/1000,
-                    progress = (runtime/buffer.duration)
-                drawBuffer( buffer, color, progress )
-                requestId = requestAnimationFrame(render)
-            }    
-        } else {   
-            drawBuffer( buffer, color, 0 ) 
-            if (!!requestId) {
+        // if (isPlaying) {
+        //     const startTime = new Date().getTime()
+        //     const render = (timestamp) => {
+                
+        //         const runtime = timestamp - (startTime/1000),
+        //             progress = runtime/buffer.duration
+        //         console.log('timestamp', timestamp, 'startTime', startTime)
+        //         drawBuffer( buffer, color, progress )
+        //         requestId = requestAnimationFrame((render))
+        //     }  
+        //     render()  
+        // } else {   
+        //     drawBuffer( buffer, color, 0 ) 
+        //     if (!!requestId) {
+        //         cancelAnimationFrame(requestId)
+        //         requestId = null
+        //     }
+        // }
+        let startTime, requestId
+        
+        const render = (timestamp) => {
+            console.log('timestamp', timestamp)
+            const now = timestamp / 1000
+            console.log('now', now)
+            const runtime = now - startTime
+            console.log('runtime', runtime)
+            const progress = Math.min(runtime / (buffer.duration * 10), 1)
+            // console.log('progress', progress)
+            drawBuffer( buffer, color, progress )
+            if ( runtime < (buffer.duration * 10)) {
+                requestId = requestAnimationFrame(function(timestamp){
+                    render(timestamp)
+                })
+            } else {
+                drawBuffer( buffer, color, 0 ) 
                 cancelAnimationFrame(requestId)
                 requestId = null
             }
         }
+        requestId = requestAnimationFrame(function(timestamp){
+            // startTime = timestamp || new Date().getTime()
+            startTime = timestamp / 1000
+            // startTime = audioContext.currentTime
+            console.log('START RAF', startTime)
+            console.log('BUFFER DUR', buffer.duration*10)
+            render(timestamp)
+        })
         return(()=> {
             if (!!requestId) {
                 cancelAnimationFrame(requestId)
@@ -71,7 +102,6 @@ const Soundwave = ({ buffer, id, color, label }) => {
     }
 
     const drawBuffer = useCallback((buffer, color, progress) => {
-        console.log(progress)
         if (!buffer) return
         const context = canvasRef.current.getContext('2d')
         const ratio = getPixelRatio(context)

@@ -46,7 +46,7 @@ class Sequencer {
     } else {
       this.nextNoteTime += (kSwingOffset + this.swing) * this.secondsPerBeat(this.tempo);
     }
-    console.log('nextNote', this.currentBar, this.currentStep)
+    // console.log('nextNote', this.currentBar, this.currentStep)
     if (this.currentStep === (this.numSteps - 1)){   
       const barIndex = this.currentBar < (this.numBars - 1) ? this.currentBar + 1 : 0
       console.log('barIndex', barIndex)
@@ -64,7 +64,7 @@ class Sequencer {
       const { sequence } = s
       // const track = this.tracks.filter(t => t.id() === id)
       const track = this.tracks[x]
-      console.log('scheduleNote track', track.id())
+      // console.log('scheduleNote track', track.id())
       sequence.map((bar, i) => {
         if ( i !== this.currentBar) return false
         bar.map((step,j) => {
