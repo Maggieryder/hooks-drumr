@@ -66,10 +66,10 @@ const Soundwave = ({ audioContext, buffer, id, color, label }) => {
             console.log('now', now)
             const runtime = now - startTime
             console.log('runtime', runtime)
-            const progress = Math.min(runtime / (buffer.duration * 10), 1)
+            const progress = Math.min(runtime / (buffer.duration * 2), 1)
             // console.log('progress', progress)
             drawBuffer( buffer, color, progress )
-            if ( runtime < (buffer.duration * 10)) {
+            if ( runtime < (buffer.duration * 2)) {
                 requestId = requestAnimationFrame(function(timestamp){
                     render(timestamp)
                 })
@@ -84,7 +84,7 @@ const Soundwave = ({ audioContext, buffer, id, color, label }) => {
             startTime = timestamp / 1000
             // startTime = audioContext.currentTime
             console.log('START RAF', startTime)
-            console.log('BUFFER DUR', buffer.duration*10)
+            console.log('BUFFER DUR', buffer.duration*2)
             render(timestamp)
         })
         return(()=> {
