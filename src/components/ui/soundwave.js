@@ -7,6 +7,8 @@ import useSequencer from '../../hooks/useSequencer'
 
 import classes from './soundwave.module.scss'
 
+const amp = 3;
+
 const Soundwave = ({ audioContext, buffer, id, color, label }) => {
 
     let requestId = null
@@ -61,15 +63,15 @@ const Soundwave = ({ audioContext, buffer, id, color, label }) => {
         let startTime, requestId
         
         const render = (timestamp) => {
-            console.log('timestamp', timestamp)
+            // console.log('timestamp', timestamp)
             const now = timestamp / 1000
             console.log('now', now)
             const runtime = now - startTime
             console.log('runtime', runtime)
-            const progress = Math.min(runtime / (buffer.duration * 2), 1)
+            const progress = Math.min(runtime / (buffer.duration * amp), 1)
             // console.log('progress', progress)
             drawBuffer( buffer, color, progress )
-            if ( runtime < (buffer.duration * 2)) {
+            if ( runtime < (buffer.duration * amp)) {
                 requestId = requestAnimationFrame(function(timestamp){
                     render(timestamp)
                 })
@@ -84,7 +86,7 @@ const Soundwave = ({ audioContext, buffer, id, color, label }) => {
             startTime = timestamp / 1000
             // startTime = audioContext.currentTime
             console.log('START RAF', startTime)
-            console.log('BUFFER DUR', buffer.duration*2)
+            console.log('BUFFER DUR', buffer.duration*amp)
             render(timestamp)
         })
         return(()=> {

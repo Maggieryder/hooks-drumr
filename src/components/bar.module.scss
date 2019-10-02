@@ -1,6 +1,7 @@
 @import '../scss/vars';
 
 .bar {
+  float: left;
   box-sizing: border-box;
   position: relative;
   display: grid;
@@ -9,10 +10,12 @@
   // grid-template-columns: repeat(16, 1fr);
   height: 100%;
   // width: calc(100% - 1px);
-  width: 50%;
+  width: 50vw;
   // border-left: 1px solid $white-01;
-  transition: width .25s ease-in-out;
-  will-change: width;
+  // transition: width .25s ease-in-out;
+  // will-change: width;
+  font-size: .875rem;
+  color: $white-03;
 
   // &:before {
   //   content: '';
@@ -40,5 +43,15 @@
     height: 100%;
     background: rgba($white, .03);  
     opacity: var(--visible); 
+  }
+
+  &:after {
+    content: attr(id);
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 5px;
+    // width: auto;
+    // height: auto;
   }
 }

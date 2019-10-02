@@ -25,7 +25,8 @@ const Bar = ( { trackId, barId, sequence, color, isMute } ) => {
 
   return (
     <div 
-      className={classes.bar} 
+      className={classes.bar}
+      id={ barId + 1 } 
       style={style}>
         {sequence.map((s,i) => {
           return <Step key={i}

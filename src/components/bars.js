@@ -21,8 +21,12 @@ const Bars = ( { track } ) => {
     SEQUENCER.updateSequences(sequences)
   }, [sequences, numSteps, numBars])
 
+  const style = {
+    width: `${100 * (numBars/2) }%`
+  }
+
   return (
-    <div className={classes.bars}>
+    <div className={classes.bars} style={style}>
       {barSequence && barSequence.map((s,i) => {
         return <Bar key={i} trackId={track.id()} barId={i} sequence={s} color={track.color()} isMute={track.isMute() && !track.isSolo()}/>
       })}
