@@ -1,8 +1,9 @@
 @import '../scss/vars';
 
 .bars {
-  display: flex;
-  flex-direction: row;
+  display: block;
+  // display: flex;
+  // flex-direction: row;
   // grid-template-columns: repeat(2, 1fr);
   // grid-template-rows: 50px;
   width: auto;
@@ -10,5 +11,5 @@
   // border-top: 1px solid $white-01;
   border-top: 1px solid $white-01;
   overflow: hidden;
-  transition: transform .25s;
+  transition: transform 1s ease-in-out;
 }

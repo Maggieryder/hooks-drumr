@@ -12,7 +12,7 @@ const Bars = ( { track } ) => {
 
   const {state:{ sequencer }} = useContext(DrumrContext)
 
-  const { sequences, numSteps, numBars } = sequencer
+  const { sequences, numSteps, numBars, currentBar } = sequencer
 
   const barSequence = sequences.filter(s => s.id === track.id())[0].sequence
 
@@ -22,7 +22,8 @@ const Bars = ( { track } ) => {
   }, [sequences, numSteps, numBars])
 
   const style = {
-    width: `${100 * (numBars/2) }%`
+    width: `${100 * (numBars/2) }%`,
+    transform: `translateX(${-currentBar * (100/numBars)}%)`
   }
 
   return (
