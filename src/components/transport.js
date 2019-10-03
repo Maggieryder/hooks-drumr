@@ -21,16 +21,16 @@ const Transport = () => {
                     <IconBtn clickHandler={() => updateCurrentBar(0)} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='previous2' altClass={classes['transport-btn']} />
                 </Control>
                 <Control>
-                    <IconBtn clickHandler={() => updateCurrentBar(currentBar - 1)} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='backward2' altClass={classes['transport-btn']} />   
+                    <IconBtn clickHandler={() => updateCurrentBar(Math.max(currentBar - 1, 0))} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='backward2' altClass={classes['transport-btn']} />   
                 </Control>  
                 <Control>
                     <TogglePlayBtn clickHandler={togglePlay} isPlaying={isPlaying} />
                 </Control>
                 <Control>
-                    <IconBtn clickHandler={() => updateCurrentBar(currentBar + 1)} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='forward3' altClass={classes['transport-btn']} />  
+                    <IconBtn clickHandler={() => updateCurrentBar(Math.min(currentBar + 1, numBars - 2))} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='forward3' altClass={classes['transport-btn']} />  
                 </Control>
                 <Control>
-                    <IconBtn clickHandler={() => updateCurrentBar(numBars - 1)} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='next2' altClass={classes['transport-btn']} />  
+                    <IconBtn clickHandler={() => updateCurrentBar(numBars - 2)} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='next2' altClass={classes['transport-btn']} />  
                 </Control>
             </div>
             <Status />
