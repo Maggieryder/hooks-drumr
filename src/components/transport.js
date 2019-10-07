@@ -27,10 +27,10 @@ const Transport = () => {
                     <TogglePlayBtn clickHandler={togglePlay} isPlaying={isPlaying} />
                 </Control>
                 <Control>
-                    <IconBtn clickHandler={() => updateCurrentBar(Math.min(currentBar + 1, numBars - 2))} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='forward3' altClass={classes['transport-btn']} />  
+                    <IconBtn clickHandler={() => updateCurrentBar(Math.min(currentBar + 1, numBars - 1))} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='forward3' altClass={classes['transport-btn']} />  
                 </Control>
                 <Control>
-                    <IconBtn clickHandler={() => updateCurrentBar(numBars - 2)} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='next2' altClass={classes['transport-btn']} />  
+                    <IconBtn clickHandler={() => updateCurrentBar(numBars - 1)} colors={[vars.defaultWhite, vars.greencolor]} size={24} icon='next2' altClass={classes['transport-btn']} />  
                 </Control>
             </div>
             <Status />

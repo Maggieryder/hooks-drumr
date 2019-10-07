@@ -24,7 +24,7 @@ const Bars = ( { track } ) => {
   const style = {
     width: `${100 * (numBars/2) }%`,
     gridTemplateColumns: `repeat(${numBars}, 1fr)`,
-    transform: `translateX(${-Math.min(currentBar * (100/numBars), 100/(numBars - 2))}%)`
+    transform: `translateX(-${Math.min((currentBar/numBars) * 100, (numBars - 1)*100)}%)`
   }
 
   return (
