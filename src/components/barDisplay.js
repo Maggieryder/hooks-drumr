@@ -1,98 +1,30 @@
 import React, { useContext } from 'react'
 
+
 // import useSequencer from '../hooks/useSequencer'
 
 import { DrumrContext } from '../context/DrumrContext'
 
+import vars from '../scss/_vars.scss';
 import classes from './barDisplay.module.scss'
 
 const BarDisplay = () => {
 
     // const { numBeats, numSteps, currentBar, currentStep, tempo, isPlaying } = useSequencer();
-    const {state:{ sequencer: { numBars, numSteps, currentBar, currentStep, tempo, isPlaying } }} = useContext(DrumrContext)
+    const {state:{ sequencer: { numBars, currentBar, isPlaying }}} = useContext(DrumrContext)
 
-    const barStyle = {
+    const bars = Array.from(Array(100).keys())
 
-    }
-
-    const stepStyle = {
-        transform: 'translateY(20%)'
-    }
+    // const barStyle = {
+    //     color: currentBar
+    // }
 
     return (
         <div className={classes['bar-display-container']}>
-            <div className={classes['bar-display']} style={barStyle}>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-            </div>
-            <div className={classes['bar-display']} >
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-            </div>
-            <div className={classes['bar-display']} >
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-            </div>
-            <div className={classes['bar-display']} >
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-                <div className={classes['step-display']} style={stepStyle}></div>
-            </div>
+            <div className={classes.indicator} style={{width: '4%', transform: `translateX(${currentBar * 25}%)`}}></div>
+            {
+                bars.map((b,i) => <div key={i} className={classes['bar-display']} style={{color: i === currentBar ? vars.greencolor : vars.defaultWhite }}>{i+1}</div>)
+            }
         </div>
     )
 }

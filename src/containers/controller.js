@@ -5,19 +5,17 @@ import InputRange from '../components/ui/inputRange'
 import Label from '../components/ui/label'
 import CurrentValue from '../components/ui/currentValue'
 import IconBtn from '../components/ui/iconBtn'
-import Icon from '../components/ui/icon'
 import BarIndicator from '../components/ui/barIndicator'
 import Tracks from '../components/tracks'
 import Control from '../components/control'
 import Processors from '../components/processors'
 import Transport from '../components/transport'
+import BarDisplay from '../components/barDisplay'
 
 
 import { useAuth } from "../hooks/useAuth.js";
 
 // import { DrumrProvider } from "../context/DrumrContext";
-
-
 import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
 
@@ -163,6 +161,9 @@ const Controller = () => {
           <Control>
             {auth.user ? <p className={uiclasses.smalltxt}>Logged in as {auth.user.email}</p> : <p className={uiclasses.smalltxt}>Sign in to access more features -></p>}        
           </Control>
+        </div>
+        <div className={classes.barspanel}>
+            <BarDisplay />
         </div>
         <div className={classes.trackspanel}>
           <Tracks />

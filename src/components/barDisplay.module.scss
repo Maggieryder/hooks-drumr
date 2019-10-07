@@ -1,31 +1,51 @@
 @import '../scss/vars';
 
 .bar-display-container {
+    position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: stretch;
-    margin: 0 -1rem;
-    height: 100%;
-    padding-left: 2px;
-    overflow:hidden;
+    justify-content: flex-start;
+    height: 40px;
+    border-top: 1px solid $white-01;
+    width: 150%;
+    
 
     .bar-display {
         display: flex;
         flex-direction: row;
-        justify-content: stretch;
+        align-items: center;
+        justify-content: center;
         height: 100%;
-        width: 25%;
+        width: 2%;
+        border-right: 1px solid $white-01;
+        color:  $white-02;
+        font-size:.5rem;
+        background: $black-03;
+        -webkit-user-select: none;
+        user-select: none;
+        // text-align: center;
 
-        .step-display {
-            height: 100%;
-            // width: calc(6.25% - 2px);
-            width: 6.25%;
-            // margin-right: 2px;
-            // background: $white-01;
-            border-left: 1px solid $white-01;
-            transform: translateY(80%);
-            transition: transform .25s ease-in-out;
-        }
+        // .step-display {
+        //     height: 100%;
+        //     // width: calc(6.25% - 2px);
+        //     width: 6.25%;
+        //     // margin-right: 2px;
+        //     // background: $white-01;
+        //     border-left: 1px solid $white-01;
+        //     transform: translateY(80%);
+        //     transition: transform .25s ease-in-out;
+        // }
+    }
+    .indicator {
+        position: absolute;
+        z-index: 1;
+        width: 4%;
+        height: 100%;
+        border: 2px solid $green;
+        background: transparent;
+        transition: transform .5s ease-in-out;
+        // cursor: zoom-in;
+        cursor: grab;
     }
 
 }
