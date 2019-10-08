@@ -5,7 +5,11 @@ import * as TYPES from '../actions/types'
 
 import { AUDIO_CONTEXT, SEQUENCER } from '../api'
 
+import useTrack from './useTrack'
+
 const useSequencer = () => {
+
+  const { triggerPlay } = useTrack()
 
   const {state:{ sequencer, tracks }, dispatch} = useContext(DrumrContext)
 
@@ -34,6 +38,8 @@ const useSequencer = () => {
         //   AUDIO_CONTEXT.resume()
         //   setTimeout(()=> AUDIO_CONTEXT.suspend(), 150)
         // }
+        triggerPlay({trackId: trackId, value: true})
+        //dispatch({type: TYPES.TRIGGERING, {trackId: trackId, value: true}})
         track.triggerSample(AUDIO_CONTEXT.currentTime)
       }
       dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })

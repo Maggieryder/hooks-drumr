@@ -56,7 +56,7 @@ export default function(state = initialState, action) {
     //     // console.log('tracksReducer TRIGGERING', action.value)
     //     return {
     //       ...state,
-    //       trigger: state.all.filter(t => t.id() === action.value.id)
+    //       trigger: state.all.filter(t => t.id() === action.trackId)
     //     }
     default:
         return state

@@ -84,7 +84,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
                 drawBuffer( track.buffer(), track.color(), 0 ) 
                 cancelAnimationFrame(requestId)
                 requestId = null
-                triggerPlay({value: false})
+                triggerPlay({ trackId: track.id(), value: false })
             }
         }
         if (isInPlay && !requestId) {
@@ -104,7 +104,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
             if (!!requestId) {
                 cancelAnimationFrame(requestId)
                 requestId = null
-                triggerPlay({value: false})
+                triggerPlay({trackId: track.id(),value: false})
             }
         })
     }, [isInPlay])

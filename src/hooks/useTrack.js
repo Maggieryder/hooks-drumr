@@ -117,6 +117,7 @@ const useTrack = () => {
 
   const triggerPlay = useCallback(
     ({ trackId, value }) => {
+      console.log('[useTrack] triggerPlay', { trackId, value })
       setState(state => ({
         ...state, 
         isInPlay: value

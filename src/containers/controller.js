@@ -18,6 +18,7 @@ import { useAuth } from "../hooks/useAuth.js";
 // import { DrumrProvider } from "../context/DrumrContext";
 import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
+import useTrack from '../hooks/useTrack'
 
 import vars from '../scss/_vars.scss'
 
@@ -54,6 +55,8 @@ const Controller = () => {
     removeBar,
     updateCurrentBar } = useSequencer()
 
+    const { triggerPlay } = useTrack()
+
     const { all, soloed, muted } = tracks
 
 
@@ -65,7 +68,7 @@ const Controller = () => {
   useEffect(() => {
     console.log('[controller] INIT')
     loadData('./resources')
-    SEQUENCER.init(dispatch)
+    SEQUENCER.init(dispatch, triggerPlay)
     SEQUENCER.updateCurrentBar(currentBar)
     SEQUENCER.updateNumBars(numBars)
     SEQUENCER.updateTempo(tempo)
