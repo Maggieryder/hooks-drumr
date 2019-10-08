@@ -92,17 +92,17 @@ class Sequencer {
   togglePlay() {
     let message;
     this.isPlaying = !this.isPlaying
+    this.currentStep = 0
+    this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: 0 })
     if (this.isPlaying){
-      // this.currentBar = 0
-      // this.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: 0 })
-      // this.currentStep = 0
-      // this.dispatch({type: TYPES.UPDATE_CURRENT_STEP, value: 0 })
+      this.currentBar = 0
+      this.dispatch({type: TYPES.UPDATE_CURRENT_BAR, value: 0 })
+      // this.context.resume()
       this.nextNoteTime = this.context.currentTime
-      this.timeWorker.postMessage('start')
-      this.context.resume()
+      this.timeWorker.postMessage('start')  
       message = 'stop'
     } else {
-      this.context.suspend()
+      // this.context.suspend()
       this.timeWorker.postMessage('stop')
       message = 'play'
     }
@@ -146,6 +146,11 @@ class Sequencer {
 
   running(){
     return this.isPlaying;
+  }
+
+  destroy(){
+    console.log('[ SEQUENCER ] destroy')
+    this.context.close()
   }
 
 }

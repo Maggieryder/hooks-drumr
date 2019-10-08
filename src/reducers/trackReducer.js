@@ -9,6 +9,7 @@ export const initialState = {
   delaySend: 0,
   solo: false, 
   mute: false, 
+  trigger: false,
   sequence: []
 }
 

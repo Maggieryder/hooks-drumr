@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Bar from './bar'
 
@@ -14,17 +14,20 @@ const Bars = ( { track } ) => {
 
   const { sequences, numSteps, numBars, currentBar } = sequencer
 
+  const [segment, setSegment] = useState(.25)
+
   const barSequence = sequences.filter(s => s.id === track.id())[0].sequence
 
   useEffect(() => {
     console.log('[ Bars ] barSequence', track.id(), ': ', barSequence)
     SEQUENCER.updateSequences(sequences)
+    setSegment((100/numBars))
   }, [sequences, numSteps, numBars])
 
   const style = {
     width: `${100 * (numBars/2) }%`,
     gridTemplateColumns: `repeat(${numBars}, 1fr)`,
-    transform: `translateX(-${Math.min((currentBar/numBars) * 100, 50)}%)`
+    transform: `translateX(-${Math.min(segment * currentBar, 100 - (segment * 2))}%)`
   }
 
   return (

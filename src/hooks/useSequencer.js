@@ -30,6 +30,10 @@ const useSequencer = () => {
       if (!isPlaying){
         dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value: barId })
         dispatch({ type: TYPES.UPDATE_CURRENT_STEP, value: stepId })
+        // if (AUDIO_CONTEXT.state === 'suspended') {
+        //   AUDIO_CONTEXT.resume()
+        //   setTimeout(()=> AUDIO_CONTEXT.suspend(), 150)
+        // }
         track.triggerSample(AUDIO_CONTEXT.currentTime)
       }
       dispatch({ type: TYPES.UPDATE_SEQUENCES, value: { trackId, barId, stepId, isOn } })
@@ -40,9 +44,11 @@ const useSequencer = () => {
   const togglePlay = useCallback(
     () => {
       // console.log('togglePlay', isPlaying)
+      // dispatch({ type: TYPES.UPDATE_CURRENT_STEP, value: 0 })
+      // if (!isPlaying){
+      //   dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value: 0 })
+      // }
       SEQUENCER.togglePlay(!isPlaying)
-      dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value: 0 })
-      dispatch({ type: TYPES.UPDATE_CURRENT_STEP, value: 0 })
       dispatch({ type: TYPES.IS_PLAYING })
     },
     [isPlaying],

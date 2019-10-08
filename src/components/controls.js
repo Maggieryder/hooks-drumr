@@ -8,7 +8,6 @@ import CurrentValue from './ui/currentValue'
 import Switch from './ui/switch'
 import IconBtn from './ui/iconBtn'
 import Soundwave from './ui/soundwave'
-import BarDisplay from './barDisplay'
 
 import useDrumr from '../hooks/useDrumr'
 import useTrack from '../hooks/useTrack'
@@ -30,7 +29,8 @@ const Controls = ( { track } ) => {
     reverbSend, setReverbSend,
     delaySend, setDelaySend,
     mute, setMute,
-    solo, setSolo
+    solo, setSolo,
+    isInPlay, triggerPlay
   } = useTrack();
 
   useEffect(() => {
@@ -93,8 +93,10 @@ const Controls = ( { track } ) => {
         <Label>Solo</Label>
       </Control>
       <Control>
-        {/* <BarDisplay /> */}
-        {track.buffer() && <Soundwave audioContext={AUDIO_CONTEXT} buffer={track.buffer()} id={track.id()} label={kitBuffers[voiceId].label} color={track.color()} onClick={() => {}} />}
+        {track.buffer() && <Soundwave label={kitBuffers[voiceId].label} onClickHandler={() => {
+          triggerPlay({value: true}) 
+          track.triggerSample(AUDIO_CONTEXT.currentTime)
+        }} track={track}/>}
       </Control>
     </div>
   )

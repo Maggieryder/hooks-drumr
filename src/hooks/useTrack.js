@@ -70,7 +70,7 @@ const useTrack = () => {
       setState(state => ({ 
         ...state, 
         reverbSend: value 
-      }));
+      }))
     },
     [all]
   )
@@ -82,7 +82,7 @@ const useTrack = () => {
       setState(state => ({ 
         ...state, 
         delaySend: value 
-      }));
+      }))
     },
     [all]
   )
@@ -96,7 +96,7 @@ const useTrack = () => {
       setState(state => ({ 
         ...state, 
         solo: value 
-      }));
+      }))
     },
     [all]
   )
@@ -110,9 +110,19 @@ const useTrack = () => {
       setState(state => ({ 
         ...state, 
         mute: value 
-      }));
+      }))
     },
     [all]
+  )
+
+  const triggerPlay = useCallback(
+    ({ trackId, value }) => {
+      setState(state => ({
+        ...state, 
+        isInPlay: value
+      }))
+    },
+    []
   )
 
   return {
@@ -133,7 +143,8 @@ const useTrack = () => {
     setDelaySend,
     setSolo,
     setMute,
-    isInPlay
+    isInPlay,
+    triggerPlay
   }
 }
 

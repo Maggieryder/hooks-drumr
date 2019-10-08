@@ -71,7 +71,7 @@ const Controller = () => {
     SEQUENCER.updateTempo(tempo)
     addTrack(0)
     return (() => {
-      
+      SEQUENCER.destroy()
     })
   }, [])
 
@@ -112,7 +112,11 @@ const Controller = () => {
     return (() => {
       
     })
-  }, [verbs]);
+  }, [verbs])
+
+  useEffect(() => {
+    SEQUENCER.updateCurrentBar(currentBar) 
+  }, [currentBar]);
 
 
   return (

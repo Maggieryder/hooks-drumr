@@ -16,6 +16,7 @@ export default class Track {
     this._reverbNode = REVERB.node()
     this._delayNode = DELAY.node()
     this._buffer = null
+    this._duration = 0
     // this.store = store;
     // this.store.subscribe(this.updateState.bind(this));
 
@@ -86,6 +87,12 @@ export default class Track {
   buffer(){
     return this._buffer;
   }
+
+  duration() {
+    return this._duration
+  }
+
+
 //   assignSample(buffer){
 //     this.buffer = buffer;
 //     this.sample = new Sample(this.context, buffer, this.panner.node(), this.outputGain,this.sendGains[0],this.sendGains[1]);
@@ -159,11 +166,16 @@ export default class Track {
   assignTrackBuffer(buffer){
     console.log('[Track Api] assignTrackBuffer', buffer)
     this._buffer = buffer
+    this._duration = buffer ? buffer.duration : 0
   }
   triggerSample(time) {
     // console.log('triggerSample')
     const sample = new Sample( AUDIO_CONTEXT, this._buffer )
     sample.connect(this._panner);
+    // if (AUDIO_CONTEXT.state === 'suspended') {
+    //   AUDIO_CONTEXT.resume()
+    //   setTimeout(()=> AUDIO_CONTEXT.suspend(), 100)
+    // }
     trigger(sample, time);
   }
 }
