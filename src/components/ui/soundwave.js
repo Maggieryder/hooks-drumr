@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useContext } from 'react'
 import PropTypes  from 'prop-types'
 
 import { getPixelRatio } from '../../utils/canvas'
@@ -6,16 +6,17 @@ import { getPixelRatio } from '../../utils/canvas'
 // import useSequencer from '../../hooks/useSequencer'
 import useTrack from '../../hooks/useTrack'
 
-// import { TrackContext } from '../context/TrackContext'
+import { ViewsContext } from '../../context/ViewsContext'
 
 import classes from './soundwave.module.scss'
 
 const amp = 2
-let startTime, requestId
 
 const Soundwave = ({ onClickHandler, label, track }) => {
 
     // const { numSteps, currentBar, currentStep, isPlaying } = useSequencer()
+
+    const { trackView } = useContext(ViewsContext)[0]
 
     const { buffer, isInPlay, triggerPlay } = useTrack()
 
@@ -29,9 +30,14 @@ const Soundwave = ({ onClickHandler, label, track }) => {
 
     useEffect(() => {
         console.log('[Soundwave] INIT buffer', buffer)
+        const sizeHandler = () => {
+            console.log('[ Soundwave ] sizeHandler')
+            setCanvasWidth(canvasRef.current.parentNode.clientWidth)
+            setCanvasHeight(canvasRef.current.parentNode.clientHeight)
+            drawBuffer( buffer, track.color(), 0 )
+        }
         window.addEventListener('resize', sizeHandler)
         sizeHandler()
-        drawBuffer( buffer, track.color(), 0 ) 
         console.log('Canvas Height', canvasHeight)
         return(()=> {
             window.removeEventListener('resize', sizeHandler)
@@ -41,20 +47,13 @@ const Soundwave = ({ onClickHandler, label, track }) => {
     useEffect(() => {
         console.log('############ [Soundwave] Update on new Buffer', buffer)
         drawBuffer( buffer, track.color(), 0 ) 
-    }, [buffer])
+    }, [buffer, trackView])
 
 
     useEffect(() => {
         console.log('[Soundwave] Update on isInPlay', isInPlay)
 
-        // let startTime, requestId
-
-        const cancelAnimation = () => {
-            if (requestId) {
-                cancelAnimationFrame(requestId)
-                requestId = null
-            }
-        }
+        let startTime, requestId
         
         const render = (timestamp) => {
             // console.log('timestamp', timestamp)
@@ -71,7 +70,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
                 })
             } else {
                 triggerPlay({trackId: track.id(), value: false})
-                // cancelAnimation()
+                requestId = null
                 // drawBuffer( buffer, track.color(), 0 ) 
             }
         }
@@ -86,20 +85,15 @@ const Soundwave = ({ onClickHandler, label, track }) => {
             })
         } else {
             // triggerPlay({trackId: track.id(),value: false})
-            //cancelAnimation()
             drawBuffer( buffer, track.color(), 0 ) 
         }
         
         return(()=> {
-            cancelAnimation()
+            if (!!requestId) cancelAnimationFrame(requestId)
         })
     }, [isInPlay])
 
-    const sizeHandler = () => {
-        console.log('[ Soundwave ] sizeHandler')
-        setCanvasWidth(canvasRef.current.parentNode.clientWidth)
-        setCanvasHeight(canvasRef.current.parentNode.clientHeight)
-    }
+    
 
     const drawBuffer = useCallback((buffer, color, progress) => {
         if (!buffer) return
@@ -140,7 +134,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
                 context.fillRect(p,(1+min2)*amp,1,Math.max(1,(max2-min2)*amp));
             }
         }
-    }, [ canvasWidth, canvasHeight ])
+    }, [ canvasWidth, canvasHeight, canvasRef ])
 
     return (
         <div id={track.id()} data-label={label} className={classes['sound-wave']} style={style} onClick={onClickHandler}>
