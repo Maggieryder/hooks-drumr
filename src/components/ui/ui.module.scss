@@ -345,6 +345,7 @@ select:-webkit-autofill:focus {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    appearance: none;
 
     &:hover {
         background-color:$gray;

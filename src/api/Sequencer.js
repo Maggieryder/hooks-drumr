@@ -9,7 +9,6 @@ class Sequencer {
   constructor(ctx){
     this.context = ctx
     this.dispatch = null
-    this.triggerPlay = ()=>{}
     this.timeWorker = null
     this.nextNoteTime = 0.0
 
@@ -26,9 +25,8 @@ class Sequencer {
     this.startTime = null
   }
 
-  init(dispatch, triggerPlay){
+  init(dispatch){
     this.dispatch = dispatch
-    this.triggerPlay = triggerPlay
     let self = this;
     this.timeWorker = new Worker('./time-worker.js');
     this.timeWorker.onmessage = function(e) {
@@ -74,9 +72,7 @@ class Sequencer {
           // console.log('bar/step', i, step)
           if (step === 1) {
             // this.dispatch({type: TYPES.TRIGGERING, {trackId: track.id(), value: true}})
-            this.triggerPlay({trackId: x, value: true})
             track.triggerSample(time)
-            // this.dispatch({type: TYPES.TRIGGERING, value: {id: track.id(), trigger: true} })
           }
           return true
         })
@@ -140,7 +136,7 @@ class Sequencer {
   }
 
   updateCurrentBar(index) {
-    console.log('########## updateCurrentBar', index)
+    // console.log('########## updateCurrentBar', index)
     this.currentBar = index
   }
   

@@ -30,6 +30,7 @@ const Controls = ( { track } ) => {
     delaySend, setDelaySend,
     mute, setMute,
     solo, setSolo,
+    buffer, 
     isInPlay, triggerPlay
   } = useTrack();
 
@@ -37,6 +38,7 @@ const Controls = ( { track } ) => {
     console.log('[track] INIT', track.id())
     setGain({trackId: track.id(), value: 5})
     setPan({trackId: track.id(), value: 0})
+    setVoiceId({trackId: track.id(), value: 0})
     return (() => {
         
     })
@@ -45,12 +47,12 @@ const Controls = ( { track } ) => {
   useEffect(() => {
     // console.log('[Controls] track.id voiceId', track.id(), voiceId)
     // console.log('[ Controls ] kitBuffers', kitBuffers)
-    all[track.id()].assignTrackBuffer(kitBuffers[voiceId].buffer)
+    all[track.id()].assignTrackBuffer(buffer)
     // all[track.id()].triggerSample(AUDIO_CONTEXT.currentTime)
     return (() => {
       
     })
-  }, [voiceId, kitBuffers])
+  }, [buffer])
 
   return (
     <div className={classes.controls}> 
@@ -62,6 +64,7 @@ const Controls = ( { track } ) => {
         <Select
           options={ kitBuffers }
           onValueChange={value => setVoiceId({ trackId: track.id(), value })}
+          initialValue={voiceId.toString()}
           />
       </Control> 
       <Control>
@@ -93,10 +96,10 @@ const Controls = ( { track } ) => {
         <Label>Solo</Label>
       </Control>
       <Control>
-        {track.buffer() && <Soundwave label={kitBuffers[voiceId].label} onClickHandler={() => {
-          triggerPlay({value: true}) 
+        <Soundwave label={kitBuffers[voiceId].label} onClickHandler={() => {
+          triggerPlay({trackId: track.id(), value: true}) 
           track.triggerSample(AUDIO_CONTEXT.currentTime)
-        }} track={track}/>}
+        }} track={track}/>
       </Control>
     </div>
   )

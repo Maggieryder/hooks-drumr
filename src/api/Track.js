@@ -122,7 +122,7 @@ export default class Track {
     return this._outputGain.gain.value;
   }
   updatePan(value){
-    console.log('[Track Api] updatePan id '+this.id()+' value', value )
+    // console.log('[Track Api] updatePan id '+this.id()+' value', value )
     let xPos = value,
       yPos = 0,
       zPos = 1 - Math.abs(xPos);

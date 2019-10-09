@@ -15,7 +15,7 @@ const useDelay = () => {
     const [syncOff, setSyncOff] = useState(false)
 
     useEffect(() => {
-        console.log('[useDelay] INIT')
+        // console.log('[useDelay] INIT')
         // setDelayTime(60.0 / tempo * .5)
         // DELAY.updateDelayTime(delayTime)
         DELAY.updateFeedbackGain(delayFeedback)
@@ -40,7 +40,7 @@ const useDelay = () => {
     }, [tempo, syncOff])
 
     useEffect(() => {      
-        console.log('[useDelay] delayTime', delayTime)
+        // console.log('[useDelay] delayTime', delayTime)
         DELAY.updateDelayTime(delayTime)
     }, [delayTime])
 

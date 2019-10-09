@@ -10,102 +10,88 @@ import useTrack from '../../hooks/useTrack'
 
 import classes from './soundwave.module.scss'
 
-const amp = 2;
+const amp = 2
+let startTime, requestId
 
 const Soundwave = ({ onClickHandler, label, track }) => {
 
-    let requestId = null
-
     // const { numSteps, currentBar, currentStep, isPlaying } = useSequencer()
 
-    const { isInPlay, triggerPlay } = useTrack()
+    const { buffer, isInPlay, triggerPlay } = useTrack()
 
     // const isCurrentBar = currentBar === barId
     
     const [ canvasWidth, setCanvasWidth ] = useState(100)
-    const [ canvasHeight, setCanvasHeight ] = useState(10)
+    const [ canvasHeight, setCanvasHeight ] = useState(60)
     const canvasRef = useRef()  
 
     const style = { '--track-color': track.color() }
 
     useEffect(() => {
-        console.log('[Soundwave] INIT buffer', track.buffer())
+        console.log('[Soundwave] INIT buffer', buffer)
         window.addEventListener('resize', sizeHandler)
         sizeHandler()
+        drawBuffer( buffer, track.color(), 0 ) 
         console.log('Canvas Height', canvasHeight)
         return(()=> {
             window.removeEventListener('resize', sizeHandler)
         })
     }, [])
 
-    // useEffect(() => {
-    //     console.log('[Soundwave] Update on new Buffer, or size', isPlaying)
-        
-    // }, [buffer, canvasWidth, canvasHeight])
+    useEffect(() => {
+        console.log('############ [Soundwave] Update on new Buffer', buffer)
+        drawBuffer( buffer, track.color(), 0 ) 
+    }, [buffer])
 
 
     useEffect(() => {
         console.log('[Soundwave] Update on isInPlay', isInPlay)
-        
-        // if (isPlaying) {
-        //     const startTime = new Date().getTime()
-        //     const render = (timestamp) => {
-                
-        //         const runtime = timestamp - (startTime/1000),
-        //             progress = runtime/track.duration()
-        //         console.log('timestamp', timestamp, 'startTime', startTime)
-        //         drawBuffer( track.buffer(), track.color(), progress )
-        //         requestId = requestAnimationFrame((render))
-        //     }  
-        //     render()  
-        // } else {   
-        //     drawBuffer( track.buffer(), color, 0 ) 
-        //     if (!!requestId) {
-        //         cancelAnimationFrame(requestId)
-        //         requestId = null
-        //     }
-        // }
-        let startTime, requestId
+
+        // let startTime, requestId
+
+        const cancelAnimation = () => {
+            if (requestId) {
+                cancelAnimationFrame(requestId)
+                requestId = null
+            }
+        }
         
         const render = (timestamp) => {
             // console.log('timestamp', timestamp)
             const now = timestamp / 1000
-            console.log('now', now)
+            // console.log('now', now)
             const runtime = now - startTime
-            console.log('runtime', runtime)
-            const progress = Math.min(runtime / (track.duration() * amp), 1)
-            // console.log('progress', progress)
-            drawBuffer( track.buffer(), track.color(), progress )
-            if ( runtime < (track.duration() * amp)) {
+            // console.log('runtime', runtime)
+            const progress = Math.min(runtime / (buffer.duration * amp), 1)
+            console.log('progress', progress)
+            drawBuffer( buffer, track.color(), progress )
+            if ( runtime < (buffer.duration * amp)) {
                 requestId = requestAnimationFrame(function(timestamp){
                     render(timestamp)
                 })
             } else {
-                drawBuffer( track.buffer(), track.color(), 0 ) 
-                cancelAnimationFrame(requestId)
-                requestId = null
-                triggerPlay({ trackId: track.id(), value: false })
+                triggerPlay({trackId: track.id(), value: false})
+                // cancelAnimation()
+                // drawBuffer( buffer, track.color(), 0 ) 
             }
         }
-        if (isInPlay && !requestId) {
+        if (isInPlay) {
             requestId = requestAnimationFrame(function(timestamp){
                 // startTime = timestamp || new Date().getTime()
                 startTime = timestamp / 1000
                 // startTime = audioContext.currentTime
                 console.log('START RAF', startTime)
-                console.log('BUFFER DUR', track.duration()*amp)
+                console.log('BUFFER DUR', buffer.duration*amp)
                 render(timestamp)
             })
         } else {
-            drawBuffer( track.buffer(), track.color(), 0 ) 
+            // triggerPlay({trackId: track.id(),value: false})
+            //cancelAnimation()
+            drawBuffer( buffer, track.color(), 0 ) 
         }
         
         return(()=> {
-            if (!!requestId) {
-                cancelAnimationFrame(requestId)
-                requestId = null
-                triggerPlay({trackId: track.id(),value: false})
-            }
+            cancelAnimation()
         })
     }, [isInPlay])
 

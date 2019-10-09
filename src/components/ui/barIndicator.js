@@ -5,14 +5,14 @@ import classes from './ui.module.scss'
 
 const BarIndicator = ({ items, barClickHandler, addClickHandler, removeClickHandler, numBars, currentBar }) => {
     const { pages, startIndex, endIndex, startPage, endPage } = paginate(numBars, currentBar, 1, 4)
-    console.log('items.length', items.length)
-    console.log('pages', pages)
-    console.log('startIndex', startIndex)
-    console.log('endIndex', endIndex)
-    console.log('startPage', startPage)
-    console.log('endPage', endPage)
-    const bars = pages.slice(startIndex, endIndex)
-    console.log('bars', bars)
+    // console.log('items.length', items.length)
+    // console.log('pages', pages)
+    // console.log('startIndex', startIndex)
+    // console.log('endIndex', endIndex)
+    // console.log('startPage', startPage)
+    // console.log('endPage', endPage)
+    // const bars = pages.slice(startIndex, endIndex)
+    // console.log('bars', bars)
     
 
 

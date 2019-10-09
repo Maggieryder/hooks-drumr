@@ -37,6 +37,7 @@ const Controller = () => {
     kits, 
     currentKitId, 
     setCurrentKitId, 
+    kitBuffers,
     verbs,   
     tracks,
     addTrack } = useDrumr()
@@ -72,7 +73,7 @@ const Controller = () => {
     SEQUENCER.updateCurrentBar(currentBar)
     SEQUENCER.updateNumBars(numBars)
     SEQUENCER.updateTempo(tempo)
-    addTrack(0)
+    // addTrack(0)
     return (() => {
       SEQUENCER.destroy()
     })
@@ -105,7 +106,14 @@ const Controller = () => {
     return (() => {
       
     })
-  }, [kits, currentKitId]);
+  }, [kits, currentKitId])
+
+  useEffect(() => {
+    console.log('[ controller ] kitBuffers', kitBuffers)
+    if (all.length < 1 && kitBuffers[0].buffer) addTrack(0)
+  }, [kitBuffers, all])
+
+  
 
   useEffect(() => { 
     if (verbs) {
