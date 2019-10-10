@@ -10,6 +10,7 @@
   // border-right: 1px solid $white-01;
   padding: 0 1rem;
   color: $white-03;
+  transform: translate3d(0,0,0);
   &:after {
     content: '';
     position:absolute;
