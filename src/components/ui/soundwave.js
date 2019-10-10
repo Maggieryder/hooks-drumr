@@ -44,10 +44,10 @@ const Soundwave = ({ onClickHandler, label, track }) => {
         })
     }, [])
 
-    useEffect(() => {
-        console.log('############ [Soundwave] Update on new Buffer', buffer)
-        drawBuffer( buffer, track.color(), 0 ) 
-    }, [buffer, trackView])
+    // useEffect(() => {
+    //     console.log('############ [Soundwave] Update on new Buffer', buffer)
+    //     drawBuffer( buffer, track.color(), 0 ) 
+    // }, [buffer])
 
 
     useEffect(() => {
@@ -91,7 +91,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
         return(()=> {
             if (!!requestId) cancelAnimationFrame(requestId)
         })
-    }, [isInPlay])
+    }, [isInPlay, buffer, trackView, canvasWidth, canvasHeight])
 
     
 
