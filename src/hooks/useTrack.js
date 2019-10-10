@@ -120,6 +120,7 @@ const useTrack = () => {
   const triggerPlay = useCallback(
     ({ trackId, value }) => {
       console.log('[useTrack] triggerPlay', { trackId, value })
+      //all[trackId].triggerSample()
       setState(state => ({
         ...state, 
         isInPlay: value

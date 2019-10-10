@@ -72,6 +72,8 @@ class Sequencer {
           // console.log('bar/step', i, step)
           if (step === 1) {
             // this.dispatch({type: TYPES.TRIGGERING, {trackId: track.id(), value: true}})
+            const triggerEv = new CustomEvent('triggerNote', { detail: track });
+            window.dispatchEvent(triggerEv)
             track.triggerSample(time)
           }
           return true

@@ -3,30 +3,29 @@ import PropTypes  from 'prop-types'
 
 import { getPixelRatio } from '../../utils/canvas'
 
-// import useSequencer from '../../hooks/useSequencer'
+import useSequencer from '../../hooks/useSequencer'
 import useTrack from '../../hooks/useTrack'
 
 import { ViewsContext } from '../../context/ViewsContext'
 
-import classes from './soundwave.module.scss'
+import vars from '../../scss/_vars.scss'
 
-const amp = 2
+import classes from './soundwave.module.scss'
 
 const Soundwave = ({ onClickHandler, label, track }) => {
 
-    // const { numSteps, currentBar, currentStep, isPlaying } = useSequencer()
+    const { isPlaying } = useSequencer()
 
     const { trackView } = useContext(ViewsContext)[0]
 
-    const { buffer, isInPlay, triggerPlay } = useTrack()
-
-    // const isCurrentBar = currentBar === barId
+    const { buffer, isInPlay, triggerPlay} = useTrack()
     
+    const [ amp, setAmp ] = useState(2)
     const [ canvasWidth, setCanvasWidth ] = useState(100)
     const [ canvasHeight, setCanvasHeight ] = useState(60)
     const canvasRef = useRef()  
 
-    const style = { '--track-color': track.color() }
+    const style = { '--track-color': isInPlay ? track.color() : vars.defaultWhite }
 
     useEffect(() => {
         console.log('[Soundwave] INIT buffer', buffer)
@@ -36,13 +35,26 @@ const Soundwave = ({ onClickHandler, label, track }) => {
             setCanvasHeight(canvasRef.current.parentNode.clientHeight)
             drawBuffer( buffer, track.color(), 0 )
         }
+        const triggerNoteHandler = (e) => {
+            console.log('triggerNoteHandler', e.detail.id())
+            if (e.detail.id() === track.id()){
+                // console.log('PLAY', track.id())
+                triggerPlay({trackId: track.id(), value: true})
+            }
+        }
         window.addEventListener('resize', sizeHandler)
+        window.addEventListener('triggerNote', triggerNoteHandler)
         sizeHandler()
         console.log('Canvas Height', canvasHeight)
         return(()=> {
             window.removeEventListener('resize', sizeHandler)
+            window.removeEventListener('triggerNote', triggerNoteHandler)
         })
     }, [])
+
+    useEffect(() => {
+        setAmp(isPlaying ? 1 : 2)
+    }, [isPlaying])
 
 
     useEffect(() => {
@@ -132,7 +144,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
     }, [ canvasWidth, canvasHeight, canvasRef ])
 
     return (
-        <div id={track.id()} data-label={label} className={classes['sound-wave']} style={style} onClick={onClickHandler}>
+        <div id={track.id()} data-label={label} className={classes['sound-wave']} style={style} onClick={onClickHandler} onTriggerNote={()=> console.log('onTriggerNote', track.id())}>
             <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} />
         </div>
     )
