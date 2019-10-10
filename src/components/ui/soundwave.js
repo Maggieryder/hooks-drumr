@@ -44,11 +44,6 @@ const Soundwave = ({ onClickHandler, label, track }) => {
         })
     }, [])
 
-    // useEffect(() => {
-    //     console.log('############ [Soundwave] Update on new Buffer', buffer)
-    //     drawBuffer( buffer, track.color(), 0 ) 
-    // }, [buffer])
-
 
     useEffect(() => {
         console.log('[Soundwave] Update on isInPlay', isInPlay)
