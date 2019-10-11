@@ -30,8 +30,7 @@ const Controls = ( { track } ) => {
     delaySend, setDelaySend,
     mute, setMute,
     solo, setSolo,
-    buffer, 
-    isInPlay, triggerPlay
+    triggerPlay
   } = useTrack();
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 
 const useSignUpForm = (initialState, callback) => {
     const [inputs, setInputs] = useState(initialState)

@@ -9,7 +9,7 @@ import useSequencer from '../hooks/useSequencer'
 
 const Bar = ( { trackId, barId, sequence, color, isMute } ) => {
 
-  const { onNoteTap, numBars, numBeats, numSteps, currentBar, currentStep, tempo, isPlaying } = useSequencer();
+  const { onNoteTap, numBeats, numSteps, currentBar, currentStep, tempo, isPlaying } = useSequencer();
 
   const isCurrentBar = currentBar === barId
 
@@ -18,7 +18,6 @@ const Bar = ( { trackId, barId, sequence, color, isMute } ) => {
   const style = {
     gridTemplateColumns: 'repeat('+numSteps+', 1fr)',
     // width: isPlaying ?  '50%' : isCurrentBar ? '50%' : '25%',
-    // width: `${numBars * 50}vw`,
     '--progress': isCurrentBar ? isPlaying ? (currentStep / (numSteps - 1)) : ((currentStep+1) / numSteps) : 0,
     '--visible' : isMute ? 0 : 1,
     '--bartime' : isPlaying ? currentStep===0 ? '0s' : (60 / tempo) / numBeats +'s' : '.25s'

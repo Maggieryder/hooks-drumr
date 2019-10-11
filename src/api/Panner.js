@@ -1,8 +1,8 @@
 const PannerNode = (context) => {
 
-    const xPos = Math.floor(window.innerWidth/2)
-    const yPos = Math.floor(window.innerHeight/2)
-    const zPos = 300;
+    // const xPos = Math.floor(window.innerWidth/2)
+    // const yPos = Math.floor(window.innerHeight/2)
+    // const zPos = 300;
 
     const panner = context.createPanner()
     // panner.panningModel = 'equalpower';

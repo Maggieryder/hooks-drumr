@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
-import Control from './control'
+// import PropTypes from 'prop-types'
 // import IconBtn from './ui/iconBtn'
 // import Icon from './ui/icon'
 // import Label from './ui/label'
@@ -11,7 +10,6 @@ import { AUDIO_CONTEXT } from '../api'
 
 import { DrumrContext } from '../context/DrumrContext'
 
-import vars from '../scss/_vars.scss'
 import classes from './status.module.scss'
 
 function msToTime(ct) {
@@ -30,18 +28,6 @@ function msToTime(ct) {
     return [h,mins,secs,ms]
 }
 
-// function msToTime(duration) {
-//     var milliseconds = parseInt((duration % 1000) / 100),
-//       seconds = Math.floor((duration / 1000) % 60),
-//       minutes = Math.floor((duration / (1000 * 60)) % 60),
-//       hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-  
-//     hours = (hours < 10) ? "0" + hours : hours;
-//     minutes = (minutes < 10) ? "0" + minutes : minutes;
-//     seconds = (seconds < 10) ? "0" + seconds : seconds;
-  
-//     return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
-//   }
 
 const Status = () => {
     const {state:{ sequencer: { currentBar, currentStep, numBeats } }} = useContext(DrumrContext)
@@ -66,8 +52,8 @@ const Status = () => {
     )
 }
 
-Status.propTypes = {
-    //
-}
+// Status.propTypes = {
+//     //
+// }
 
 export default Status

@@ -90,18 +90,6 @@ const useDrumr = () => {
     []
   )
 
-  // const soloTrack = useCallback((id) => {
-  //     dispatch({ type: TYPES.SOLO_TRACK, trackId: id })
-  //   },
-  //   []
-  // )
-
-  // const unSoloTrack = useCallback((id) => {
-  //     dispatch({ type: TYPES.UNSOLO_TRACK, trackId: id })
-  //   },
-  //   []
-  // )
-
   const loadData = async (url) => {  
     dispatch({ type: TYPES.IS_LOADING, value: true })
     try {

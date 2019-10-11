@@ -3,8 +3,8 @@ import paginate from '../../utils/paginate'
 import vars from '../../scss/_vars.scss';
 import classes from './ui.module.scss'
 
-const BarIndicator = ({ items, barClickHandler, addClickHandler, removeClickHandler, numBars, currentBar }) => {
-    const { pages, startIndex, endIndex, startPage, endPage } = paginate(numBars, currentBar, 1, 4)
+const BarIndicator = ({ barClickHandler, addClickHandler, numBars, currentBar }) => {
+    const { pages, startPage } = paginate(numBars, currentBar, 1, 4)
     // console.log('items.length', items.length)
     // console.log('pages', pages)
     // console.log('startIndex', startIndex)

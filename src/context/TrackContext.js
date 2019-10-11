@@ -4,7 +4,6 @@ const initialState = {
   trackId: null,
   color: null,
   context: null,
-  // buffer: null,
   voiceId: 0,
   gain: 0,
   pan: 0,

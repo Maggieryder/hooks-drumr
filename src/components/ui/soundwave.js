@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useContext } from 'react'
-import PropTypes  from 'prop-types'
+// import PropTypes  from 'prop-types'
 
-import { getPixelRatio } from '../../utils/canvas'
+// import { getPixelRatio } from '../../utils/canvas'
 
 import useTrack from '../../hooks/useTrack'
 
@@ -80,7 +80,7 @@ const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
                 // drawBuffer( buffer, track.color(), 0 ) 
             }
         }
-        if (!isMute && isInPlay) {
+        if (!isMute && isInPlay && !requestId) {
             requestId = requestAnimationFrame(function(timestamp){
                 // startTime = timestamp || new Date().getTime()
                 startTime = timestamp / 1000
@@ -104,7 +104,7 @@ const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
     const drawBuffer = useCallback((buffer, color, progress) => {
         if (!buffer) return
         const context = canvasRef.current.getContext('2d')
-        const ratio = getPixelRatio(context)
+        // const ratio = getPixelRatio(context)
         let data = buffer.getChannelData( 0 );
         let step = Math.ceil( data.length / canvasWidth );
         let amp = canvasHeight / 2;
@@ -150,8 +150,8 @@ const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
 
 }
 
-Soundwave.propTypes = {
-  //
-}
+// Soundwave.propTypes = {
+//   //
+// }
 
 export default Soundwave
