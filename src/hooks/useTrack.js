@@ -17,7 +17,7 @@ const useTrack = () => {
     trackId,
     color,
     context, 
-    buffer,
+    // buffer,
     voiceId,
     gain,
     pan,
@@ -30,7 +30,7 @@ const useTrack = () => {
 
   const setVoiceId = useCallback(
     ({ trackId, value }) => {
-      console.log('[useTrack] setVoiceId', value)
+      // console.log('[useTrack] setVoiceId', value)
       // tracks.all[trackId].assignTrackBuffer(kitBuffers[voiceId].buffer)
       setState(state => ({ 
         ...state, 
@@ -119,7 +119,7 @@ const useTrack = () => {
 
   const triggerPlay = useCallback(
     ({ trackId, value }) => {
-      console.log('[useTrack] triggerPlay', { trackId, value })
+      // console.log('[useTrack] triggerPlay', { trackId, value })
       //all[trackId].triggerSample()
       setState(state => ({
         ...state, 
@@ -133,7 +133,7 @@ const useTrack = () => {
     trackId,
     color,
     context,
-    buffer,
+    // buffer,
     voiceId,
     gain,
     pan,

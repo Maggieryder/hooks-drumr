@@ -23,10 +23,12 @@ const BarDisplay = () => {
         <div className={classes['bar-display-container']}>
             <div className={classes.indicator} style={{width: '4%', transform: `translateX(${currentBar * 25}%)`}}></div>
             {
-                bars.map((b,i) => <div key={i} className={classes['bar-display']} style={{color: i === currentBar ? vars.greencolor : vars.defaultWhite, background:  i < numBars ? vars.mutedWhite : 'transparent'}}>{i+1}</div>)
+                bars.map((b,i) => <div key={i} className={classes['bar-display']} style={{color: i === currentBar ? vars.greencolor : i < numBars ? vars.defaultWhite : 'transparent'}}>{i+1}</div>)
             }
         </div>
     )
 }
+
+//, background:  i < numBars ? vars.mutedBlack : vars.defaultBlack
 
 export default BarDisplay

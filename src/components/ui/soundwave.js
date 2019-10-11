@@ -7,25 +7,27 @@ import useSequencer from '../../hooks/useSequencer'
 import useTrack from '../../hooks/useTrack'
 
 import { ViewsContext } from '../../context/ViewsContext'
+import { DrumrContext } from '../../context/DrumrContext'
 
 import vars from '../../scss/_vars.scss'
 
 import classes from './soundwave.module.scss'
 
-const Soundwave = ({ onClickHandler, label, track }) => {
+const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
 
-    const { isPlaying } = useSequencer()
+    // const { isPlaying } = useSequencer()
+    const { state: { sequencer: { isPlaying }}} = useContext(DrumrContext)
 
     const { trackView } = useContext(ViewsContext)[0]
 
-    const { buffer, isInPlay, triggerPlay} = useTrack()
+    const { isInPlay, triggerPlay } = useTrack()
     
     const [ amp, setAmp ] = useState(2)
     const [ canvasWidth, setCanvasWidth ] = useState(100)
     const [ canvasHeight, setCanvasHeight ] = useState(60)
     const canvasRef = useRef()  
 
-    const style = { '--track-color': isInPlay ? track.color() : vars.defaultWhite }
+    const style = { '--track-color': !isMute && isInPlay ? track.color() : vars.defaultWhite }
 
     useEffect(() => {
         console.log('[Soundwave] INIT buffer', buffer)
@@ -36,9 +38,8 @@ const Soundwave = ({ onClickHandler, label, track }) => {
             drawBuffer( buffer, track.color(), 0 )
         }
         const triggerNoteHandler = (e) => {
-            console.log('triggerNoteHandler', e.detail.id())
+            // console.log('triggerNoteHandler', e.detail.id())
             if (e.detail.id() === track.id()){
-                // console.log('PLAY', track.id())
                 triggerPlay({trackId: track.id(), value: true})
             }
         }
@@ -58,7 +59,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
 
 
     useEffect(() => {
-        console.log('[Soundwave] Update on isInPlay', isInPlay)
+        // console.log('[Soundwave] Update on isInPlay', isInPlay)
 
         let startTime, requestId
         
@@ -69,7 +70,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
             const runtime = now - startTime
             // console.log('runtime', runtime)
             const progress = Math.min(runtime / (buffer.duration * amp), 1)
-            console.log('progress', progress)
+            // console.log('progress', progress)
             drawBuffer( buffer, track.color(), progress )
             if ( runtime < (buffer.duration * amp)) {
                 requestId = requestAnimationFrame(function(timestamp){
@@ -81,13 +82,13 @@ const Soundwave = ({ onClickHandler, label, track }) => {
                 // drawBuffer( buffer, track.color(), 0 ) 
             }
         }
-        if (isInPlay) {
+        if (!isMute && isInPlay) {
             requestId = requestAnimationFrame(function(timestamp){
                 // startTime = timestamp || new Date().getTime()
                 startTime = timestamp / 1000
                 // startTime = audioContext.currentTime
-                console.log('START RAF', startTime)
-                console.log('BUFFER DUR', buffer.duration*amp)
+                // console.log('START RAF', startTime)
+                // console.log('BUFFER DUR', buffer.duration*amp)
                 render(timestamp)
             })
         } else {
@@ -98,7 +99,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
         return(()=> {
             if (!!requestId) cancelAnimationFrame(requestId)
         })
-    }, [isInPlay, buffer, trackView, canvasWidth, canvasHeight])
+    }, [isMute, isInPlay, buffer, trackView, canvasWidth, canvasHeight])
 
     
 
@@ -113,7 +114,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
         // context.fillStyle = "rgba(255,255,255,.05)";
         // context.fillRect(0,0,canvasWidth,canvasHeight);
         // context.fillStyle = isPlaying ? color : "rgba(255,255,255,.2)"; /*47AE32;*/
-        context.fillStyle = 'rgba(255,255,255,.2)';
+        context.fillStyle = vars.defaultWhite;
         for(let i=0; i < canvasWidth; i++){
             let min = 1.0;
             let max = -1.0;
@@ -144,7 +145,7 @@ const Soundwave = ({ onClickHandler, label, track }) => {
     }, [ canvasWidth, canvasHeight, canvasRef ])
 
     return (
-        <div id={track.id()} data-label={label} className={classes['sound-wave']} style={style} onClick={onClickHandler} onTriggerNote={()=> console.log('onTriggerNote', track.id())}>
+        <div id={track.id()} data-label={label} className={classes['sound-wave']} style={style} onClick={onClickHandler} >
             <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} />
         </div>
     )
