@@ -21,7 +21,7 @@ export default function(state = initialState, action) {
                 id: action.value.trackId,
                 sequence: getSequence(action.value.numSteps, action.value.numBars)
             }
-        case TYPES.ADD_BAR:
+        case TYPES.ADD_BARS:
             return {
                 ...state,
                 sequence: [...state.sequence, getSteps(action.value.numSteps)]

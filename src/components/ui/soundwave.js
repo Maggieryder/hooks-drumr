@@ -3,7 +3,6 @@ import PropTypes  from 'prop-types'
 
 import { getPixelRatio } from '../../utils/canvas'
 
-import useSequencer from '../../hooks/useSequencer'
 import useTrack from '../../hooks/useTrack'
 
 import { ViewsContext } from '../../context/ViewsContext'
@@ -15,7 +14,6 @@ import classes from './soundwave.module.scss'
 
 const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
 
-    // const { isPlaying } = useSequencer()
     const { state: { sequencer: { isPlaying }}} = useContext(DrumrContext)
 
     const { trackView } = useContext(ViewsContext)[0]
@@ -27,7 +25,7 @@ const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
     const [ canvasHeight, setCanvasHeight ] = useState(60)
     const canvasRef = useRef()  
 
-    const style = { '--track-color': !isMute && isInPlay ? track.color() : vars.defaultWhite }
+    const style = { '--track-color': !isMute && isInPlay ? track.color() : vars.waveWhite }
 
     useEffect(() => {
         console.log('[Soundwave] INIT buffer', buffer)
@@ -114,7 +112,7 @@ const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
         // context.fillStyle = "rgba(255,255,255,.05)";
         // context.fillRect(0,0,canvasWidth,canvasHeight);
         // context.fillStyle = isPlaying ? color : "rgba(255,255,255,.2)"; /*47AE32;*/
-        context.fillStyle = vars.defaultWhite;
+        context.fillStyle = vars.waveWhite;
         for(let i=0; i < canvasWidth; i++){
             let min = 1.0;
             let max = -1.0;

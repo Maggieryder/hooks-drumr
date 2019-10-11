@@ -53,10 +53,10 @@ export default function(state = initialState, action) {
           ...state,
           swing: action.value
         }
-    case TYPES.ADD_BAR:
+    case TYPES.ADD_BARS:
         return {
             ...state,
-            numBars: state.numBars + 1,
+            numBars: state.numBars + 2,
             sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
     case TYPES.REMOVE_BAR:

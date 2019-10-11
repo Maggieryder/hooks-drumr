@@ -52,7 +52,7 @@ const Controller = () => {
     numSteps, 
     setNumSteps,
     currentBar,
-    addBar,
+    addBars,
     removeBar,
     updateCurrentBar } = useSequencer()
 
@@ -163,7 +163,7 @@ const Controller = () => {
           <Control>
             <BarIndicator items={Array.from(Array(numBars).keys())} 
                       barClickHandler={updateCurrentBar} 
-                      addClickHandler={addBar} 
+                      addClickHandler={addBars} 
                       removeClickHandler={removeBar} 
                       numBars={numBars} 
                       currentBar={currentBar} />
