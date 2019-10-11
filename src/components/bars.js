@@ -16,12 +16,15 @@ const Bars = ( { track } ) => {
 
   const [segment, setSegment] = useState(.25)
 
-  const barSequence = sequences.filter(s => s.id === track.id())[0].sequence
+  const [barSequence, setBarSequence] = useState(sequences.filter(s => s.id === track.id())[0].sequence)
+
+  // const barSequence = sequences.filter(s => s.id === track.id())[0].sequence
 
   useEffect(() => {
     console.log('[ Bars ] barSequence', track.id(), ': ', barSequence)
     SEQUENCER.updateSequences(sequences)
     setSegment((100/numBars))
+    setBarSequence(sequences.filter(s => s.id === track.id())[0].sequence)
   }, [sequences, numSteps, numBars])
 
   const style = {

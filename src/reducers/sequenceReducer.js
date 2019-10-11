@@ -24,7 +24,7 @@ export default function(state = initialState, action) {
         case TYPES.ADD_BARS:
             return {
                 ...state,
-                sequence: [...state.sequence, getSteps(action.value.numSteps)]
+                sequence: [...state.sequence, getSteps(action.value.numSteps), getSteps(action.value.numSteps)]
             }
         case TYPES.REMOVE_BAR:
             return {
