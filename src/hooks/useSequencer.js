@@ -32,8 +32,8 @@ const useSequencer = () => {
       console.log('NOTE TAP trackIndex', trackId, 'bar', barId, 'step', stepId, 'isOn', isOn);
       const track = all[trackId]      
       if (!isPlaying){
-        dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value: barId })
-        dispatch({ type: TYPES.UPDATE_CURRENT_STEP, value: stepId })
+        // dispatch({ type: TYPES.UPDATE_CURRENT_BAR, value: barId })
+        // dispatch({ type: TYPES.UPDATE_CURRENT_STEP, value: stepId })
         // if (AUDIO_CONTEXT.state === 'suspended') {
         //   AUDIO_CONTEXT.resume()
         //   setTimeout(()=> AUDIO_CONTEXT.suspend(), 150)

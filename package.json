@@ -11,9 +11,11 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-intersection-observer": "^8.24.2",
     "react-scripts": "^2.1.8",
     "react-select": "^2.4.4",
     "react-spring": "^8.0.27",
+    "react-use-gesture": "^6.0.12",
     "redux": "^4.0.4",
     "styled-components": "^4.3.2",
     "use-measure": "^0.2.2"

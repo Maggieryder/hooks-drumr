@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useCallback } from 'react'
 import PropTypes from 'prop-types'
 // import { useSpring, animated, interpolate , config } from 'react-spring'
 // import useMeasure from 'use-measure';
@@ -16,6 +16,8 @@ const Track = ({ track }) => {
   
   const { trackView } = useContext(ViewsContext)[0]
 
+  
+
   // const barsRef = useRef()
   // const controlsRef = useRef()
   // const barsHeight = useMeasure(barsRef).height
@@ -31,6 +33,8 @@ const Track = ({ track }) => {
 
   // const barprops = useSpring({height: trackView !== 1 ? 50 : 0 , from: {height: trackView === 1 ? 0 : 50  }, config: myConfig})
   // const controlsprops = useSpring({height: trackView !== 2 ? 60 : 0 , from: {height: trackView === 2 ? 0 : 60 }, config: myConfig})
+  
+
 
   return (
     <TrackProvider>

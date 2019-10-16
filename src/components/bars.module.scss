@@ -1,17 +1,22 @@
 @import '../scss/vars';
 
 .bars {
+  position: relative;
   // display: block;
-  // // display: flex;
-  // // flex-direction: row;
+  display: flex;
+  flex-direction: row;
   // // grid-template-columns: repeat(2, 1fr);
   // // grid-template-rows: 50px;
   // width: auto;
-  display: grid;
+  // display: grid;
   
   height: 100%;
   // border-top: 1px solid $white-01;
   border-top: 1px solid $white-01;
-  overflow: hidden;
+  white-space: nowrap;
+  overflow:scroll;
+  // overflow-y: hidden;
+  // overflow-x: scroll;
+  // overflow: hidden;
   transition: transform 1s ease-in-out;
 }
