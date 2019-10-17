@@ -15,15 +15,31 @@ const Bars = ( { track } ) => {
   const barsRef = useRef()
 
   const bind = useGesture({
-    onWheel: state => {
-      console.log('useScroll ev', state)
+    onWheel: ({initial, delta, direction, first, last, movement }) => {
+      if (first) {console.log('onWheel started', initial) }
+      if (last) { console.log('onWheel ended', movement, direction) }
+      console.log('onWheel ev', delta)
     },
-    onDrag: state => {
-      console.log('useDrag ev', state)
+    onDrag: ({initial, delta, direction, first, last, movement}) => {
+      if (first) {console.log('onDrag started', initial) }
+      if (last) { console.log('onDrag ended', movement, direction) }
+      console.log('onDrag ev', delta)
     },
+    onScroll: ({initial, delta, direction, first, last, movement}) => {
+      if (first) {console.log('onScroll started', initial) }
+      if (last) { console.log('onScroll ended', movement, direction) }
+      console.log('onScroll ev', delta)
+    },
+    // onHover: ({xy}) => {
+    //   console.log('onHover ev', xy)
+    // },
   }, 
   { domTarget: barsRef,
-    dragDelay: 300 }
+    dragDelay: 300,
+    drag: true,
+    // pinch: true,
+    scroll: true,
+    wheel: true }
   )
 
   // const bind = useWheel(
@@ -48,15 +64,16 @@ const Bars = ( { track } ) => {
 
   const [barSequence, setBarSequence] = useState(sequences.filter(s => s.id === track.id())[0].sequence)
 
-  const [{ sl, xy }, set] = useSpring(() => ({ sl: 0, xy: [0, 0] }))
+  // const [{ sl, xy }, set] = useSpring(() => ({ sl: 0, xy: [0, 0] }))
+  const props = useSpring({ scroll: 100, from: { scroll: 0 } })
 
   const onScroll = useCallback(e => {console.log('scolling')}, [])
 
-  useEffect(() => {
-    if (barsRef.current) {
-      bind()
-    }
-  },[bind, barsRef])
+  // useEffect(() => {
+  //   if (barsRef.current) {
+  //     bind()
+  //   }
+  // },[bind, barsRef])
 
   useEffect(() => {
     // console.log('[ Bars ] barSequence', track.id(), ': ', barSequence)
@@ -66,6 +83,8 @@ const Bars = ( { track } ) => {
     // const position = target.getBoundingClientRect()
     // const seg = position.width / numBars
     // setScrollLeft(`-${Math.min(seg * currentBar, position.width - (seg * 2))}`)
+     // setScrollLeft(`${Math.min(segment * currentBar, position.width - (segment * 2))}`)
+    //  target.scrollLeft = `-${Math.min(segment * currentBar, position.width - (segment * 2))}`
     // setSegment(position.width / numBars)
     setBarSequence(sequences.filter(s => s.id === track.id())[0].sequence)
   }, [sequences, numSteps, numBars, currentBar])
@@ -84,7 +103,7 @@ const Bars = ( { track } ) => {
   }
 
   return (
-    <div ref={barsRef} className={classes.bars} style={style} >
+    <div className={classes.bars} style={style} >
       {barSequence && barSequence.map((s,i) => {
         return <Bar key={i} trackId={track.id()} barId={i} sequence={s} color={track.color()} isMute={track.isMute() && !track.isSolo()}/>
       })}

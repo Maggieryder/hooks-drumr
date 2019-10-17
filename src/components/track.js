@@ -1,7 +1,7 @@
-import React, { useContext, useCallback } from 'react'
+import React, { useContext, useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
-// import { useSpring, animated, interpolate , config } from 'react-spring'
-// import useMeasure from 'use-measure';
+import { useSpring, animated, interpolate , config } from 'react-spring'
+import { useScroll, useDrag, useWheel, useGesture } from 'react-use-gesture'
 
 import Bars from './bars'
 import Controls from './controls'
@@ -16,6 +16,47 @@ const Track = ({ track }) => {
   
   const { trackView } = useContext(ViewsContext)[0]
 
+  const barContainerRef = useRef()
+
+  const bind = useGesture({
+    // onWheel: ({initial, delta, direction, first, last, movement }) => {
+    //   if (first) {console.log('onWheel started', initial) }
+    //   if (last) { console.log('onWheel ended', movement, direction) }
+    //   console.log('onWheel ev', delta)
+    // },
+    // onDrag: ({initial, delta, direction, first, last, movement}) => {
+    //   if (first) {console.log('onDrag started', initial) }
+    //   if (last) { console.log('onDrag ended', movement, direction) }
+    //   console.log('onDrag ev', delta)
+    // },
+    onScroll: ({initial, delta, direction, first, last, movement }) => {
+      if (first) {console.log('onScroll started', initial) }
+      if (last) { 
+        console.log('onScroll ended', movement, direction, barContainerRef.current.className) 
+        let allBarContainers = [...document.getElementsByClassName(`${barContainerRef.current.className}`)] //document.getElementsByClassName(`${barContainerRef.current.className}`)
+        allBarContainers.map(container => {
+          console.log('container.firstChild', container.firstChild)
+          if (container !== barContainerRef.current){
+            container.scrollTo(initial + movement, 0)
+          }
+          
+        })
+        
+      }
+      console.log('onScroll ev', delta)
+    },
+    // onHover: ({xy}) => {
+    //   console.log('onHover ev', xy)
+    // },
+  }, 
+  // { domTarget: barsRef,
+  //   dragDelay: 300,
+  //   drag: true,
+  //   // pinch: true,
+  //   scroll: true,
+  //   wheel: true }
+  // { domTarget: barContainerRef }
+  )
   
 
   // const barsRef = useRef()
@@ -40,6 +81,8 @@ const Track = ({ track }) => {
     <TrackProvider>
       <div className={classes.track}>
         <div 
+          {...bind()} 
+          ref={barContainerRef}
           className={classes['bars-mask']} 
           style={{height: trackView !== 1 ? '50px' : 0}}>
           <Bars track={track}/>

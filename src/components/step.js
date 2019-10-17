@@ -17,7 +17,7 @@ const Step = ({ onTap, step, isBeat, isOne, color, velocity }) => {
     // rootMargin: '0% -3.1%',
   })
 
-  const props = useSpring({ opacity: inView ? 1 : 0 })
+  // const props = useSpring({ opacity: inView ? 1 : 0 })
 
   const style = {
     // '--size': isBeat ? '20px' : isCurrentBar ? '10px' :'5px',
@@ -37,13 +37,14 @@ const Step = ({ onTap, step, isBeat, isOne, color, velocity }) => {
   }
 
   return (
-    <animated.div
-      ref={ref}
+    <div
+      // ref={ref}
       onClick={handleClick}
       className={classes.step} 
-      style={props}>
+      // style={props}
+      >
         <div style={style} >{step}</div>
-    </animated.div>
+    </div>
   );
 }
 

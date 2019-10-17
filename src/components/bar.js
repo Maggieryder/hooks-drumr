@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
-// import { useInView } from 'react-intersection-observer'
-// import { useSpring, animated } from 'react-spring'
+import { useInView } from 'react-intersection-observer'
+import { useSpring, animated } from 'react-spring'
 
 import Step from './step'
 
@@ -11,13 +11,13 @@ import useSequencer from '../hooks/useSequencer'
 
 const Bar = ( { trackId, barId, sequence, color, isMute } ) => {
 
-  // const [ref, inView, entry] = useInView({
-  //   /* Options */
-  //   // threshold: 0,
-  //   rootMargin: '0px -200px',
-  // })
+  const [ref, inView, entry] = useInView({
+    /* Options */
+    // threshold: 0,
+    rootMargin: '90% 0%',
+  })
 
-  // const props = useSpring({ opacity: inView ? 1 : 0 })
+  const props = useSpring({ opacity: inView ? 1 : 0 })
 
   const { onNoteTap, numBeats, numSteps, currentBar, currentStep, tempo, isPlaying } = useSequencer();
 
@@ -40,8 +40,9 @@ const Bar = ( { trackId, barId, sequence, color, isMute } ) => {
       id={ barId + 1 } 
       style={style}>
         {sequence.map((s,i) => {
-          return <Step
-                    key={i}
+          return <animated.div key={i} ref={ref} style={props}>
+                    <Step
+                    // key={i}
                     step={Math.floor(i/numBeats) + 1} 
                     isBeat={i % numBeats === 0} 
                     isOne={s}
@@ -50,7 +51,7 @@ const Bar = ( { trackId, barId, sequence, color, isMute } ) => {
                     isCurrentStep={i===currentStep}
                     onTap={(isOn) => onNoteTap(trackId, barId, i, isOn)} 
                     velocity={.5} />
-                 
+                 </animated.div>
         })}
     </div>
   );
