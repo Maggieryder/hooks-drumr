@@ -26,6 +26,7 @@
     white-space: nowrap;
     overflow: hidden;
     overflow-x: scroll;
+    scroll-behavior: smooth;
     transition: height .5s ease-in-out;
     scrollbar-height: none; /* Firefox */
     -ms-overflow-style: none;  /* IE 10+ */

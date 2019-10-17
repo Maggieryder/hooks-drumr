@@ -1,5 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useInView } from 'react-intersection-observer'
+import { useSpring, animated } from 'react-spring'
+
 import classes from './step.module.scss'
 
 import vars from '../scss/_vars.scss'
@@ -7,6 +10,14 @@ import vars from '../scss/_vars.scss'
 const Step = ({ onTap, step, isBeat, isOne, color, velocity }) => {
 
   // console.log('[ step ] update id / isOne', step, isOne)
+
+  const [ref, inView, entry] = useInView({
+    /* Options */
+    threshold: 0,
+    // rootMargin: '0% -3.1%',
+  })
+
+  const props = useSpring({ opacity: inView ? 1 : 0 })
 
   const style = {
     // '--size': isBeat ? '20px' : isCurrentBar ? '10px' :'5px',
@@ -26,10 +37,13 @@ const Step = ({ onTap, step, isBeat, isOne, color, velocity }) => {
   }
 
   return (
-    <div onClick={handleClick}
-      className={classes.step} >
+    <animated.div
+      ref={ref}
+      onClick={handleClick}
+      className={classes.step} 
+      style={props}>
         <div style={style} >{step}</div>
-    </div>
+    </animated.div>
   );
 }
 

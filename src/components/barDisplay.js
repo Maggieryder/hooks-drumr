@@ -9,11 +9,11 @@ const BarDisplay = () => {
 
     const {state:{ sequencer: { numBars, currentBar }}} = useContext(DrumrContext)
 
-    const bars = Array.from(Array(100).keys())
+    const bars = Array.from(Array(numBars).keys())
 
     return (
         <div className={classes['bar-display-container']}>
-            <div className={classes.indicator} style={{width: '2%', transform: `translateX(${Math.min(currentBar * 50, (numBars - 2) * 50)}%)`}}></div>
+            <div className={classes.indicator} style={{width: '6%', transform: `translateX(${Math.min(currentBar * 50, (numBars - 2) * 50)}%)`}}></div>
             {
                 bars.map((b,i) => <div key={i} className={classes['bar-display']} style={{color: i === currentBar ? vars.greencolor : vars.defaultWhite}}>{i < numBars ? i+1 : ''}</div>)
             }
