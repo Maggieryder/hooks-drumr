@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 const initialState = {
     trackView: 0,
+    zoomIndex: 1, 
+    zoom: 2, 
     viewTrackSteps: true,
     editTrackStepsArray: []
 }

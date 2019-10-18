@@ -2,6 +2,7 @@ import { useContext, useCallback } from 'react'
 import { ViewsContext } from '../context/ViewsContext'
 
 const TRACK_VIEWS = ['settings', 'steps', 'both']
+const ZOOM_VIEWS = [2, 4, 6]
 
 const useViews = () => {
 
@@ -9,6 +10,8 @@ const useViews = () => {
 
     const {
         trackView,
+        zoomIndex, 
+        zoom,
         viewTrackSteps,
         editTrackStepsArray
     } = state
@@ -24,6 +27,32 @@ const useViews = () => {
         },
         [trackView]
     )
+
+    const zoomIn = useCallback(
+        () => {
+          // console.log('[useViews] setViewTrackSettings', trackView)
+          const nextIndex = (zoomIndex + 1) < ZOOM_VIEWS.length ? zoomIndex + 1 : zoomIndex;
+          setState(state => ({ 
+            ...state,
+            zoomIndex: nextIndex,
+            zoom: ZOOM_VIEWS[nextIndex]
+          }))
+        },
+        [zoomIndex]
+    )
+
+    const zoomOut = useCallback(
+      () => {
+        // console.log('[useViews] setViewTrackSettings', trackView)
+        const nextIndex = (zoomIndex - 1) > 0 ? zoomIndex - 1 : 0;
+        setState(state => ({ 
+          ...state,
+          zoomIndex: nextIndex,
+          zoom: ZOOM_VIEWS[nextIndex]
+        }))
+      },
+      [zoomIndex]
+  )
 
     const toggleViewTrackSteps = useCallback(
         () => {
@@ -51,6 +80,10 @@ const useViews = () => {
 
     return {
         trackView,
+        zoomIndex, 
+        zoom, 
+        zoomIn, 
+        zoomOut,
         viewTrackSteps,
         editTrackStepsArray,
         toggleTrackView,

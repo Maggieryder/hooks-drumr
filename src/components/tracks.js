@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef  } from 'react'
+import React, { useState, useEffect, useContext, useRef  } from 'react'
 import PropTypes from 'prop-types'
 import { useScroll, useDrag, useWheel, useGesture } from 'react-use-gesture'
 import Track from './track'
@@ -6,6 +6,7 @@ import Track from './track'
 import classes from './tracks.module.scss'
 
 import { DrumrContext } from '../context/DrumrContext'
+import useViews from '../hooks/useSequencer'
 
 
 const Tracks = () => {
@@ -13,6 +14,10 @@ const Tracks = () => {
   const {state:{ tracks: { all }, sequencer: { numBars } } } = useContext(DrumrContext)
 
   const tracksRef = useRef()
+
+  const { zoom, zoomIn, zoomOut } = useViews()
+
+  // const [ zoom, setZoom ] = useState(ZOOM_VIEWS[zoomIndex])
 
   // const bind = useGesture({
     
@@ -63,15 +68,13 @@ const Tracks = () => {
   //     // wheel: true }
   )
 
-  const style = {
-    width: `${100 * (numBars/2) }%`,
-  }
+  
 
   useEffect(() => {
     console.log('[ TRACKS ] tracks INIT')
     return (() => { 
     })
-  }, []);
+  }, [])
 
   useEffect(() => {
     console.log('[ TRACKS ] tracks CHANGE', all)
@@ -79,7 +82,16 @@ const Tracks = () => {
     return (() => {
       
     })
-  }, [ all ]);
+  }, [ all ])
+
+  useEffect(() => {
+    console.log('[ TRACKS ] zoom', zoom)
+
+  }, [zoom])
+
+  const style = {
+    width: `${100 * (numBars/2) }%`,
+  }
 
   return (
     <div  {...bind()} ref={tracksRef} className={classes.trackspane}>

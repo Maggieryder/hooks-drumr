@@ -38,6 +38,8 @@
     }
     .indicator {
         position: absolute;
+        top: 0;
+        left: 0;
         z-index: 1;
         width: 4%;
         height: 100%;
@@ -46,6 +48,7 @@
         transition: transform .5s ease-in-out;
         // cursor: zoom-in;
         cursor: grab;
+        will-change: transform;
     }
 
 }

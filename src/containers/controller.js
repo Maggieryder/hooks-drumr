@@ -29,7 +29,7 @@ import { MIXER, SEQUENCER } from '../api'
 
 const Controller = () => {
 
-  const auth = useAuth();
+  const auth = useAuth()
 
   const { 
     loadData, 
@@ -167,7 +167,7 @@ const Controller = () => {
                       removeClickHandler={removeBar} 
                       numBars={numBars} 
                       currentBar={currentBar} />
-            <Label>Bars</Label>
+            <Label>+/- 2 Bars</Label>
           </Control> 
           <Control style={{WebkitAlignItems:'flex-start', alignItems:'flex-start'}}>
             <IconBtn clickHandler={() => addTrack(tracks.all.length)} colors={[vars.defaultWhite, vars.greencolor]} size={8} icon='plus' />
