@@ -17,7 +17,7 @@ const Step = ({ onTap, step, isBeat, isOne, color, velocity }) => {
     // rootMargin: '0% -3.1%',
   })
 
-  // const props = useSpring({ opacity: inView ? 1 : 0 })
+  const props = useSpring({ opacity: inView ? 1 : 0 })
 
   const style = {
     // '--size': isBeat ? '20px' : isCurrentBar ? '10px' :'5px',
@@ -28,6 +28,7 @@ const Step = ({ onTap, step, isBeat, isOne, color, velocity }) => {
     '--bgcolor': isOne ? color : vars.defaultStepBg,
     // color: isBeat ? vars.beatTxtColor : 'transparent',
     // background:  isOne ? 'red' : '#505258'
+    opacity: inView ? 1 : 0 
   }
 
   const handleClick = event => {
@@ -38,7 +39,7 @@ const Step = ({ onTap, step, isBeat, isOne, color, velocity }) => {
 
   return (
     <div
-      // ref={ref}
+      ref={ref}
       onClick={handleClick}
       className={classes.step} 
       // style={props}

@@ -18,7 +18,9 @@ const Track = ({ track }) => {
 
   const barContainerRef = useRef()
 
+  let allBarContainers
   const bind = useGesture({
+    
     // onWheel: ({initial, delta, direction, first, last, movement }) => {
     //   if (first) {console.log('onWheel started', initial) }
     //   if (last) { console.log('onWheel ended', movement, direction) }
@@ -30,20 +32,28 @@ const Track = ({ track }) => {
     //   console.log('onDrag ev', delta)
     // },
     onScroll: ({initial, delta, direction, first, last, movement }) => {
-      if (first) {console.log('onScroll started', initial) }
-      if (last) { 
-        console.log('onScroll ended', movement, direction, barContainerRef.current.className) 
-        let allBarContainers = [...document.getElementsByClassName(`${barContainerRef.current.className}`)] //document.getElementsByClassName(`${barContainerRef.current.className}`)
-        allBarContainers.map(container => {
-          console.log('container.firstChild', container.firstChild)
+      allBarContainers = [...document.getElementsByClassName(`${barContainerRef.current.className}`)] 
+      if (first) {
+        console.log('onScroll started', initial) 
+        allBarContainers.forEach(container => {
           if (container !== barContainerRef.current){
-            container.scrollTo(initial + movement, 0)
+            console.log(container)
           }
-          
         })
-        
       }
-      console.log('onScroll ev', delta)
+      if (last) { 
+        console.log('onScroll ended', movement, direction, barContainerRef.current.scrollLeft) 
+        allBarContainers.forEach(container => {
+          if (container !== barContainerRef.current){
+            container.scrollTo(barContainerRef.current.scrollLeft, 0)
+          }
+        })}
+        // allBarContainers.map(container => {
+        //   if (container !== barContainerRef.current){
+        //     container.scrollTo(barContainerRef.current.scrollLeft, 0)
+        //   }
+        // })
+      // console.log('onScroll ev', delta)
     },
     // onHover: ({xy}) => {
     //   console.log('onHover ev', xy)
