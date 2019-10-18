@@ -164,7 +164,7 @@ export default class Track {
     // this._meter.disconnect();
   }
   assignTrackBuffer(buffer){
-    console.log('[Track Api] assignTrackBuffer', buffer)
+    // console.log('[Track Api] assignTrackBuffer', buffer)
     this._buffer = buffer
     this._duration = buffer ? buffer.duration : 0
   }

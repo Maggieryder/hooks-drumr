@@ -37,7 +37,7 @@ const Track = ({ track }) => {
         console.log('onScroll started', initial) 
         allBarContainers.forEach(container => {
           if (container !== barContainerRef.current){
-            console.log(container)
+            console.log(container.bind)
           }
         })
       }
@@ -46,11 +46,12 @@ const Track = ({ track }) => {
         allBarContainers.forEach(container => {
           if (container !== barContainerRef.current){
             container.scrollTo(barContainerRef.current.scrollLeft, 0)
+            // container.scrollLeft = barContainerRef.current.scrollLeft
           }
         })}
-        // allBarContainers.map(container => {
+        // allBarContainers.forEach(container => {
         //   if (container !== barContainerRef.current){
-        //     container.scrollTo(barContainerRef.current.scrollLeft, 0)
+        //     container.scrollLeft += movement
         //   }
         // })
       // console.log('onScroll ev', delta)
@@ -91,7 +92,7 @@ const Track = ({ track }) => {
     <TrackProvider>
       <div className={classes.track}>
         <div 
-          {...bind()} 
+          // {...bind()} 
           ref={barContainerRef}
           className={classes['bars-mask']} 
           style={{height: trackView !== 1 ? '50px' : 0}}>

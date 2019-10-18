@@ -13,8 +13,8 @@ const Step = ({ onTap, step, isBeat, isOne, color, velocity }) => {
 
   const [ref, inView, entry] = useInView({
     /* Options */
-    threshold: 0,
-    // rootMargin: '0% -3.1%',
+    // threshold: 0,
+    rootMargin: '0% -3.1%',
   })
 
   const props = useSpring({ opacity: inView ? 1 : 0 })

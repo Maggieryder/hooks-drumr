@@ -3,7 +3,7 @@ import paginate from '../../utils/paginate'
 import vars from '../../scss/_vars.scss';
 import classes from './ui.module.scss'
 
-const BarIndicator = ({ barClickHandler, addClickHandler, numBars, currentBar }) => {
+const BarIndicator = ({ removeClickHandler, addClickHandler, numBars, currentBar }) => {
     const { pages, startPage } = paginate(numBars, currentBar, 1, 4)
     // console.log('items.length', items.length)
     // console.log('pages', pages)
@@ -58,8 +58,8 @@ const BarIndicator = ({ barClickHandler, addClickHandler, numBars, currentBar })
 
     return (
         <div className={classes['btn-group']} >       
-            {pages.map((item,i) => <button key={i} onClick={() => barClickHandler(item - 1)} className={classes['btn']} style={{color: currentBar === item - 1 ? vars.greencolor : vars.defaultWhite}}>{startPage + i}</button>)}
-            {/* {numBars > 1  && <button onClick={removeClickHandler} className={classes['btn']} >-</button>} */}
+            {/* {pages.map((item,i) => <button key={i} onClick={() => barClickHandler(item - 1)} className={classes['btn']} style={{color: currentBar === item - 1 ? vars.greencolor : vars.defaultWhite}}>{startPage + i}</button>)} */}
+            <button onClick={removeClickHandler} className={classes['btn']} >-</button>
             <button onClick={addClickHandler} className={classes['btn']}>+</button>
         </div>
     )

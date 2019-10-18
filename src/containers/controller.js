@@ -109,7 +109,7 @@ const Controller = () => {
   }, [kits, currentKitId])
 
   useEffect(() => {
-    console.log('[ controller ] kitBuffers', kitBuffers)
+    // console.log('[ controller ] kitBuffers', kitBuffers)
     if (all.length < 1 && kitBuffers[0].buffer) addTrack(0)
   }, [kitBuffers, all])
 
@@ -180,9 +180,9 @@ const Controller = () => {
         <div className={classes.barspanel}>
             <BarDisplay />
         </div>
-        <div className={classes.trackspanel}>
-          <Tracks />
-        </div>
+
+        <Tracks />
+
         
         <div className={classes.bottompanel}>
         

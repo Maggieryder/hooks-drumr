@@ -28,7 +28,7 @@ const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
     const style = { '--track-color': !isMute && isInPlay ? track.color() : vars.waveWhite }
 
     useEffect(() => {
-        console.log('[Soundwave] INIT buffer', buffer)
+        // console.log('[Soundwave] INIT buffer', buffer)
         const sizeHandler = () => {
             console.log('[ Soundwave ] sizeHandler')
             setCanvasWidth(canvasRef.current.parentNode.clientWidth)
@@ -44,7 +44,7 @@ const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
         window.addEventListener('resize', sizeHandler)
         window.addEventListener('triggerNote', triggerNoteHandler)
         sizeHandler()
-        console.log('Canvas Height', canvasHeight)
+        // console.log('Canvas Height', canvasHeight)
         return(()=> {
             window.removeEventListener('resize', sizeHandler)
             window.removeEventListener('triggerNote', triggerNoteHandler)

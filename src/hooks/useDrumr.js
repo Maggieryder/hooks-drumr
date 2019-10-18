@@ -120,7 +120,7 @@ const useDrumr = () => {
     voices = obj.voices
     let buffersToLoad = voices.length,
     buffers = [] 
-    console.log('loadBuffers voices', voices) 
+    // console.log('loadBuffers voices', voices) 
     dispatch({ type: TYPES.IS_LOADING, value: true })
     for (let i = 0;i<voices.length;i++){
       buffers[i] = { label:voices[i].label, buffer:{}, value: voices[i].value }

@@ -2,17 +2,22 @@
 
 .track {
   position: relative;
-  display: grid;
+  display: block;
   /* grid-template-columns: repeat(4, 1fr); */
-  grid-template-rows: 1fr auto;
+  // grid-template-rows: 1fr auto;
   width: 100%;
   height: auto;
   // border-bottom: 1px solid $white-01;
 
   .controls-mask {
     position: relative;
+    position: -webkit-sticky;
+    position: sticky;
+    // position: fixed;
+    left: 0;
+    top: 50px;
     transform: translateZ(0);
-    width: 100%;
+    width: calc(100vw - 44px);
     height:60px;
     overflow: hidden;
     transition: height .5s ease-in-out;
@@ -21,11 +26,11 @@
   .bars-mask {
     position: relative;
     transform: translateZ(0);
-    width: 100%;
+    width: auto;
     height:40px;
     white-space: nowrap;
-    overflow-y: hidden;
-    overflow-x: scroll;
+    overflow: hidden;
+    // overflow-x: scroll;
     scroll-behavior: smooth;
     transition: height .5s ease-in-out;
     scrollbar-height: none; /* Firefox */

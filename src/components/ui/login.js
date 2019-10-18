@@ -11,7 +11,7 @@ const SignIn = ({ modalClosed }) => {
     const { signup, signin, error, user } = useAuth()
 
     useEffect(()=> {
-        console.log('ERROR', error)
+        // console.log('ERROR', error)
         if ( user && !error) modalClosed()
       }, [error, user])
 
