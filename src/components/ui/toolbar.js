@@ -12,7 +12,7 @@ import classes from './ui.module.scss'
 const toolbar = () => {
 
     const auth = useAuth()
-    const { trackView, toggleTrackView } = useViews()
+    const { trackView, toggleTrackView, zoom, toggleZoom } = useViews()
     
     return (
         <nav className={classes.toolbar}>
@@ -40,10 +40,10 @@ const toolbar = () => {
                 </li> */}
                 <li>
                     <ToolbarBtn 
-                        clickHandler={auth.user ? ()=>{} : null}
+                        clickHandler={()=>{toggleZoom()}}
                         colors={[vars.defaultWhite,vars.hiliteWhite]} 
                         size={20} 
-                        icon="zoom-in"
+                        icon={zoom === 2 ? 'zoom-out' : 'zoom-in' }
                         disabled={!auth.user}/>
                 </li>
                 <li>

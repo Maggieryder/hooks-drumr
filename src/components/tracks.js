@@ -6,7 +6,7 @@ import Track from './track'
 import classes from './tracks.module.scss'
 
 import { DrumrContext } from '../context/DrumrContext'
-import useViews from '../hooks/useSequencer'
+import useViews from '../hooks/useViews'
 
 
 const Tracks = () => {
@@ -15,7 +15,9 @@ const Tracks = () => {
 
   const tracksRef = useRef()
 
-  const { zoom, zoomIn, zoomOut } = useViews()
+  const { zoom } = useViews()
+
+  console.log('[ TRACKS ] tracks zoom', zoom)
 
   // const [ zoom, setZoom ] = useState(ZOOM_VIEWS[zoomIndex])
 
@@ -71,7 +73,7 @@ const Tracks = () => {
   
 
   useEffect(() => {
-    console.log('[ TRACKS ] tracks INIT')
+    console.log('[ TRACKS ] tracks INIT', zoom)
     return (() => { 
     })
   }, [])
@@ -90,7 +92,7 @@ const Tracks = () => {
   }, [zoom])
 
   const style = {
-    width: `${100 * (numBars/2) }%`,
+    width: `${100 * (numBars/zoom) }%`,
   }
 
   return (

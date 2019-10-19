@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 
 const initialState = {
     trackView: 0,
-    zoomIndex: 1, 
-    zoom: 2, 
-    viewTrackSteps: true,
-    editTrackStepsArray: []
+    // zoomIndex: 0, 
+    zoom: 2
+    // viewTrackSteps: true,
+    // editTrackStepsArray: []
 }
 
 const ViewsContext =  React.createContext([{}, () => {}])

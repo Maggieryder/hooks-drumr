@@ -177,9 +177,9 @@ const Controller = () => {
             {auth.user ? <p className={uiclasses.smalltxt}>Logged in as {auth.user.email}</p> : <p className={uiclasses.smalltxt}>Sign in to access more features -></p>}        
           </Control>
         </div>
-        <div className={classes.barspanel}>
-            <BarDisplay />
-        </div>
+        
+        <BarDisplay />
+        
 
         <Tracks />
 
