@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useRef  } from 'react'
 import PropTypes from 'prop-types'
-import { useScroll, useDrag, useWheel, useGesture } from 'react-use-gesture'
+import { useScroll  } from 'react-use-gesture'
+import { useSpring, animated } from 'react-spring'
 import Track from './track'
 
 import classes from './tracks.module.scss'
@@ -54,16 +55,38 @@ const Tracks = () => {
   // //   wheel: true }
   // // { domTarget: barContainerRef }
   // )
-
+  const axis = React.useRef()
+  const [{ x, y }, set] = useSpring(() => ({ x: 0, y: 0 }))
   const bind = useScroll(
-    ({initial, delta, direction, first, last, movement }) => {
+    ({first, last, direction: [dx, dy] }) => { //movement: [mx, my] , memo = [x.getValue(), y.getValue()]
         if (first) {
-          console.log('onScroll started', initial) 
+          // console.log('onScroll started axis', axis.current) 
         }
-        if (last) { 
-          console.log('onScroll ended', movement, direction, tracksRef.current.scrollLeft) 
+
+        if (!axis.current) {
+          if (Math.abs(dx) > Math.abs(dy)) axis.current = 'x'
+          else if (Math.abs(dy) > Math.abs(dx)) axis.current = 'y'
         }
-        // console.log('onScroll ev', delta)
+        // if (axis.current === 'x') set({ x: memo[0] + mx, immediate: true })
+        // else if (axis.current === 'y') set({ y: memo[1] + my, immediate: true })
+
+        
+        if (axis.current === 'x') {
+          tracksRef.current.style.overflowY= 'hidden'
+        } else {
+          tracksRef.current.style.overflowX= 'hidden'
+        }
+        
+        // console.log('onScroll axis', axis.current) 
+        // if (first) {
+        //   console.log('onScroll started', initial) 
+        // }
+        if (last) {
+          axis.current = null
+          tracksRef.current.style.overflowX = 'auto'
+          tracksRef.current.style.overflowY = 'auto'
+        }
+        // return memo
     }, 
   //   { domTarget: tracksRef }
   //     // scroll: true,
@@ -96,13 +119,13 @@ const Tracks = () => {
   }
 
   return (
-    <div  {...bind()} ref={tracksRef} className={classes.trackspane}>
+    <animated.div  {...bind()} ref={tracksRef} className={classes.trackspane}>
       <div className={classes.tracks} style={style}>         
           { all.map((track, i ) => {
             return <Track key={i} track={track} />
           }) }
       </div>
-    </div>
+    </animated.div>
   );
 }
 
