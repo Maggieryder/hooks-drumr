@@ -213,6 +213,7 @@ select:-webkit-autofill:focus {
 
 .input-range {
     appearance: none;
+    user-select: none;
     box-sizing: border-box;
     font-size: 0px;
     position: relative;
@@ -221,11 +222,12 @@ select:-webkit-autofill:focus {
     margin: 0;
     outline: none;
     border: none;
-    padding: 1rem 0;
+    padding: 1.7rem 0;
     width: 100%;
+    height: calc(100% - 2px);
     background: transparent;
     outline-color: transparent;
-    z-index: 20;
+    z-index: 200;
     // Remove extra padding on Edge that causes vertical misalignment
     // IE Edge 16+ CSS
     // See https://browserstrangeness.github.io/css_hacks.html
@@ -250,11 +252,11 @@ select:-webkit-autofill:focus {
 
     &::-webkit-slider-thumb {
         appearance: none;
-        background: $green;
+        background: transparent;
         border: 0;
-        margin-top: -6px;
-        height: 15px;
-        width: 3px;
+        margin-top: -12px;
+        height: 24px;
+        width: 24px;
     }
     &::-moz-range-thumb {
         appearance: none;
@@ -299,7 +301,7 @@ select:-webkit-autofill:focus {
     &:hover,
     &:active {
         &::-webkit-slider-thumb {
-            background: $green;
+            // background: $green;
         }
         &::-moz-range-thumb {
             background: $green;
@@ -320,6 +322,7 @@ select:-webkit-autofill:focus {
 
 .label {
     position:absolute;
+    user-select: none;
     bottom: 4px;
     width: 100%;
     text-align: center;
@@ -377,6 +380,7 @@ select:-webkit-autofill:focus {
 
 .current-value {
     position: absolute;
+    user-select: none;
     top: 3px;
     width: 100%;
     text-align: center;

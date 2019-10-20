@@ -21,6 +21,7 @@
     height:60px;
     overflow: hidden;
     transition: height .5s ease-in-out;
+    z-index: 20;
   }
 
   .bars-mask {

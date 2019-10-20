@@ -16,7 +16,7 @@ const Tracks = () => {
 
   const tracksRef = useRef()
 
-  const { zoom } = useViews()
+  const { zoom, trackView } = useViews()
 
   console.log('[ TRACKS ] tracks zoom', zoom)
 
@@ -58,7 +58,7 @@ const Tracks = () => {
   const axis = React.useRef()
   const [{ x, y }, set] = useSpring(() => ({ x: 0, y: 0 }))
   const bind = useScroll(
-    ({first, last, direction: [dx, dy] }) => { //movement: [mx, my] , memo = [x.getValue(), y.getValue()]
+    ({first, last, direction: [dx, dy], memo = [x.getValue(), y.getValue()] }) => { //movement: [mx, my] , memo = [x.getValue(), y.getValue()]
         if (first) {
           // console.log('onScroll started axis', axis.current) 
         }
@@ -71,7 +71,7 @@ const Tracks = () => {
         // else if (axis.current === 'y') set({ y: memo[1] + my, immediate: true })
 
         
-        if (axis.current === 'x') {
+        if (axis.current === 'x' && trackView !== 1) {
           tracksRef.current.style.overflowY= 'hidden'
         } else {
           tracksRef.current.style.overflowX= 'hidden'
@@ -86,7 +86,7 @@ const Tracks = () => {
           tracksRef.current.style.overflowX = 'auto'
           tracksRef.current.style.overflowY = 'auto'
         }
-        // return memo
+        return memo
     }, 
   //   { domTarget: tracksRef }
   //     // scroll: true,
