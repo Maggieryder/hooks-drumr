@@ -1,29 +1,37 @@
 @import '../scss/vars';
 
-.tracks {
-  display: grid;
-  grid-template-rows: repeat(auto, 1fr);
-  width: 100%;
-  height: auto;
-  border-bottom: 1px solid $white-01;
-  /* background: #fc0; */
-}
+
 
 .trackspane {
-  width: 100%;
-  height: calc(100% - 284px);
+  position: absolute;
+  top: 101px;
+  bottom: 203px;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  // width: 100%;
+  // height: calc(100% - 284px);
   overflow: auto;
   scroll-behavior: smooth;
-  transition: height .5s ease-in-out;
+  // transition: height .5s ease-in-out;
   scrollbar-width: none; /* Firefox */
-  scrollbar-height: none; /* Firefox */
+  // scrollbar-height: none; /* Firefox */
   -ms-overflow-style: none;  /* IE 10+ */
-  overscroll-behavior: none;
+  // overscroll-behavior: none;
+  // -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar {
     -webkit-appearance: none;
     height: 0px; 
     width: 0px; 
     background-color: transparent;
+  }
+  .tracks {
+    display: grid;
+    grid-template-rows: repeat(auto, 1fr);
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid $white-01;
+    /* background: #fc0; */
   }
 }
 

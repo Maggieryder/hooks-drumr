@@ -34,7 +34,8 @@
     // overflow-x: scroll;
     scroll-behavior: smooth;
     transition: height .5s ease-in-out;
-    scrollbar-height: none; /* Firefox */
+    scrollbar-width: none;
+    // scrollbar-height: none; /* Firefox */
     -ms-overflow-style: none;  /* IE 10+ */
     &::-webkit-scrollbar {
       -webkit-appearance: none;

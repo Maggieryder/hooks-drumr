@@ -1,7 +1,7 @@
 import React, { Fragment, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useInView } from 'react-intersection-observer'
-import { useSpring, animated } from 'react-spring'
+// import { useSpring, animated } from 'react-spring'
 
 import Step from './step'
 
@@ -17,7 +17,7 @@ const Bar = ( { trackId, barId, sequence, color, isMute } ) => {
     rootMargin: '2% 0%',
   })
 
-  const props = useSpring({ opacity: inView ? 1 : 0 })
+  // const props = useSpring({ opacity: inView ? 1 : 0 })
 
   const { onNoteTap, numBeats, numSteps, currentBar, currentStep, tempo, isPlaying } = useSequencer();
 

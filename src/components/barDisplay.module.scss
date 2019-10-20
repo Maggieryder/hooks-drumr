@@ -18,7 +18,7 @@
         border: 2px solid $green;
         background: transparent;
         transform-origin: 0 0;
-        transition: all .5s;
+        transition: all;
         // cursor: zoom-in;
         cursor: grab;
         will-change: transform;
@@ -26,13 +26,14 @@
 
 
     .bar-display-container {
-        position: relative;
+        // position: relative;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         height: 100%;
         border-top: 1px solid $white-01;
-        width: 200%;
+        border-bottom: 1px solid $white-01;
+        width: auto;
         background: $black-03;
         
 
@@ -42,7 +43,7 @@
             align-items: center;
             justify-content: center;
             height: 100%;
-            width: 3%;
+            width: 25%;
             border-right: 1px solid $white-01;
             color:  $white-02;
             font-size:.5rem;
