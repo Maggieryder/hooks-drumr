@@ -82,7 +82,7 @@ const Tracks = () => {
     }, 
     { 
       domTarget: tracksRef,
-      // passive: false, capture: true
+      event: { passive: false }
     }
   )
 
