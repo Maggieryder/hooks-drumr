@@ -46,14 +46,16 @@ const toolbar = () => {
                         clickHandler={()=>{copyBars(zoom)}} 
                         colors={[vars.defaultWhite,vars.hiliteWhite]} 
                         size={20} 
-                        icon='eyedropper'/>
+                        icon='eyedropper'
+                        disabled={!auth.user}/>
                 </li>
                 <li>
                     <ToolbarBtn 
                         clickHandler={()=>{pasteBars(zoom)}} 
                         colors={[vars.defaultWhite,vars.hiliteWhite]} 
                         size={20} 
-                        icon='droplet'/>
+                        icon='droplet'
+                        disabled={!auth.user}/>
                 </li>
                 <li>
                     <ToolbarBtn 
