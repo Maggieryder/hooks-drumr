@@ -5,8 +5,6 @@ import Layout from './components/layout'
 import { ProvideAuth } from "./hooks/useAuth.js";
 
 
-import { DrumrProvider } from "./context/DrumrContext";
-
 import Controller from './containers/controller'
 
 const App = (props) => {
@@ -14,9 +12,7 @@ const App = (props) => {
   return ( 
     <ProvideAuth>
       <Layout>
-        <DrumrProvider>
-          <Controller/>
-        </DrumrProvider>
+        <Controller/>
       </Layout>
     </ProvideAuth>
   );

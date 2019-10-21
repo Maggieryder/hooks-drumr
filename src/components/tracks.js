@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useContext, useRef  } from 'react'
+import React, { useCallback, useEffect, useContext, useRef  } from 'react'
 import PropTypes from 'prop-types'
+import { isFirefox } from "react-device-detect";
 import { useScroll, useGesture  } from 'react-use-gesture'
 // import { useSpring, animated } from 'react-spring'
 import Track from './track'
@@ -7,17 +8,41 @@ import Track from './track'
 import classes from './tracks.module.scss'
 
 import { DrumrContext } from '../context/DrumrContext'
+import useSequencer from '../hooks/useSequencer'
 import useViews from '../hooks/useViews'
 
 
 const Tracks = () => {
 
-  const {state:{ tracks: { all }, sequencer: { numBars } } } = useContext(DrumrContext)
+  const {state:{ tracks: { all } } } = useContext(DrumrContext)
+
+  const { numBars, currentBar, updateCurrentBar, isPlaying } = useSequencer()
 
   const { zoom, trackView } = useViews()
 
+  const scrollRef = useRef()
   const tracksRef = useRef()
   const axis = React.useRef()
+
+  const calculateCurrentBar = useCallback(
+    forward => {
+      const seg = segmentSize()
+      // const index = forward ? Math.round(scrollRef.current.scrollLeft / seg) : Math.round(scrollRef.current.scrollLeft / seg)
+      const index = Math.round(scrollRef.current.scrollLeft / seg)
+      const newBarIndex = Math.min(Math.max(index, 0), numBars - 1)
+      console.log('calculateCurrentBar seg newBarIndex', newBarIndex ) 
+      updateCurrentBar(newBarIndex)
+    },
+    [numBars, zoom],
+  )
+
+  const segmentSize = useCallback(
+    () => {
+      const tracksRect = tracksRef.current.getBoundingClientRect()
+      return tracksRect.width / numBars
+    },
+    [numBars],
+  )
   // const [{ x, y }, set] = useSpring(() => ({ x: 0, y: 0 }))
 
   // const bind = useGesture({
@@ -36,52 +61,61 @@ const Tracks = () => {
   //         // if (axis.current === 'x') set({ x: memo[0] + mx, immediate: true })
   //         // else if (axis.current === 'y') set({ y: memo[1] + my, immediate: true })
   //         if (axis.current === 'x' && trackView !== 1) {
-  //           // tracksRef.current.style.overflowY= 'hidden'
+  //           // scrollRef.current.style.overflowY= 'hidden'
   //         } else {
-  //           // tracksRef.current.style.overflowX= 'hidden'
+  //           // scrollRef.current.style.overflowX= 'hidden'
   //         }    
   //         if (last) {
   //           axis.current = null
   //           console.log('onScroll ended event ', event ) 
-  //           // tracksRef.current.style.overflowX = 'auto'
-  //           // tracksRef.current.style.overflowY = 'auto'
+  //           // scrollRef.current.style.overflowX = 'auto'
+  //           // scrollRef.current.style.overflowY = 'auto'
   //         }
   //     }),
   //   },
   //   {
-  //     domTarget: tracksRef,
+  //     domTarget: scrollRef,
   //     passive: false, capture: true
   //   }
   // )
   const bind = useScroll(
-    ({event, first, last, direction: [dx, dy] }) => { //, memo = [x.getValue(), y.getValue()]
+    ({event, first, last, initial:[ix, iy], direction: [dx, dy] }) => { //, memo = [x.getValue(), y.getValue()]
       // state => {
         if (first) {
-          console.log('onScroll started event ', event ) 
+          // console.log('onScroll started isFirefox ', isFirefox ) 
         }     
         !last && event.preventDefault()
         if (!axis.current) {
           if (Math.abs(dx) > Math.abs(dy)) axis.current = 'x'
           else if (Math.abs(dy) > Math.abs(dx)) axis.current = 'y'
         }
-        console.log('onScroll moving event ', event ) 
+        // console.log('onScroll moving event ', event ) 
         // if (axis.current === 'x') set({ x: memo[0] + mx, immediate: true })
         // else if (axis.current === 'y') set({ y: memo[1] + my, immediate: true })
-        if (axis.current === 'x' && trackView !== 1) {
-          // tracksRef.current.style.overflowY= 'hidden'
-        } else {
-          // tracksRef.current.style.overflowX= 'hidden'
-        }    
+        if (!isFirefox) {
+          if (axis.current === 'x' && trackView !== 1) {
+            scrollRef.current.style.overflowY= 'hidden'
+          } else {
+            scrollRef.current.style.overflowX= 'hidden'
+          } 
+        }   
         if (last) {
-          axis.current = null
-          console.log('onScroll ended event ', event ) 
-          // tracksRef.current.style.overflowX = 'auto'
-          // tracksRef.current.style.overflowY = 'auto'
-        }
+          if (!isFirefox) {
+            axis.current = null
+            scrollRef.current.style.overflowX = 'auto'
+            scrollRef.current.style.overflowY = 'auto'
+          }
+          console.log('onScroll ended event scrollRef.current.scrollLeft', scrollRef.current.scrollLeft)
+          if (!isPlaying) {
+            calculateCurrentBar(dx > ix)
+          }
+          
+
+        } 
         // return memo
     }, 
     { 
-      domTarget: tracksRef,
+      domTarget: scrollRef,
       event: { passive: false }
     }
   )
@@ -104,17 +138,18 @@ const Tracks = () => {
   }, [ all ])
 
   useEffect(() => {
-    console.log('[ TRACKS ] zoom', zoom)
-
-  }, [zoom])
+    console.log('[ TRACKS ] currentBar', currentBar)
+    const seg = segmentSize()
+    scrollRef.current.scrollLeft = currentBar * seg
+  }, [currentBar])
 
   const style = {
     width: `${100 * (numBars/zoom) }%`,
   }
 
   return (
-    <div ref={tracksRef} className={classes.trackspane}>
-      <div className={classes.tracks} style={style}>         
+    <div ref={scrollRef} className={classes.trackspane}>
+      <div ref={tracksRef} className={classes.tracks} style={style}>         
           { all.map((track, i ) => {
             return <Track key={i} track={track} />
           }) }

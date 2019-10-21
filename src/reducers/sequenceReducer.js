@@ -2,7 +2,8 @@ import * as TYPES from '../actions'
 
 const initialState = {
     id: null,
-    sequence: []
+    sequence: [],
+    clipboard: []
 }
 
 const getSteps = (steps) => Array.apply(null, {length: steps}).map(() => 0)
@@ -15,7 +16,7 @@ export default function(state = initialState, action) {
     // console.log('sequence Reducer action', action)
     switch (action.type){
         case TYPES.ADD_SEQUENCE:
-            // console.log('ADD_SEQUENCE',getSequence(action.value.numSteps, action.value.numBars))
+            console.log('ADD_SEQUENCE',getSequence(action.value.numSteps, action.value.numBars))
             return {
                 ...state,
                 id: action.value.trackId,
@@ -26,10 +27,10 @@ export default function(state = initialState, action) {
                 ...state,
                 sequence: [...state.sequence, getSteps(action.value.numSteps), getSteps(action.value.numSteps)]
             }
-        case TYPES.REMOVE_BAR:
+        case TYPES.REMOVE_BARS:
             return {
                 ...state,
-                sequence: state.sequence.filter((b,i) => i !== state.sequence.length-1)
+                sequence: state.sequence.filter((b,i) => i < state.sequence.length-2)
             }
         case TYPES.UPDATE_NUMSTEPS:
             return {
@@ -65,6 +66,27 @@ export default function(state = initialState, action) {
             //     ],              
             //     ...state.slice(barId)     // copy the rest, starting at index barId
             // ]
+        case TYPES.COPY_SEQUENCE:
+            console.log('TYPES.COPY_SEQUENCE', action.value)
+            return {
+                ...state,
+                clipboard: state.sequence.slice(action.value.firstBar, action.value.numberOfBars)
+            }
+        case TYPES.PASTE_SEQUENCE:
+            console.log('TYPES.PASTE_SEQUENCE', state.clipboard)
+            const { firstBar, numberOfBars } = action.value
+            return {
+                ...state,
+                sequence: [ 
+                    // copy the first items up to firstBar unchanged
+                    ...state.sequence.slice(0, firstBar),
+                    // insert the new item
+                    ...state.clipboard,
+                    // copy the rest, starting at end index
+                    ...state.sequence.slice(firstBar + numberOfBars) 
+                ],
+                clipboard: []
+            }
         default: 
             return state
         

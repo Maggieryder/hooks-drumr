@@ -6,6 +6,7 @@ import Login from './ui/login'
 import { useAuth } from "../hooks/useAuth.js";
 
 import { ViewsProvider } from "../context/ViewsContext"
+import { DrumrProvider } from "../context/DrumrContext";
 
 const layout = ({children}) => {
 
@@ -14,15 +15,16 @@ const layout = ({children}) => {
     return (
         <div className='wrapper'>
             <ViewsProvider>
-                <Toolbar/>
-                <div className='main-container'>
-                    {children}
-                </div>
+                <DrumrProvider>
+                    <Toolbar/>
+                    <div className='main-container'>
+                        {children}
+                    </div>
+                </DrumrProvider>
                 <Modal show={auth.login} modalClosed={() => auth.setLogin(false)}>
                     <Login modalClosed={() => auth.setLogin(false)}/>
                 </Modal>
-            </ViewsProvider>
-            
+            </ViewsProvider>   
         </div>
     )
 }

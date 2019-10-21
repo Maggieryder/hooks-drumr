@@ -46,7 +46,7 @@ const BarDisplay = () => {
         if (first) { 
             const marqueeXPos = marqueeRef.current.getBoundingClientRect().left
             // offset = memo[0] - initial[0]
-            console.log('marqueeXPos', marqueeXPos, memo[0], initial[0])
+            // console.log('marqueeXPos', marqueeXPos, memo[0], initial[0])
             set({
                 x: 0, // currentBar * seg,
                 immediate: true
@@ -58,7 +58,7 @@ const BarDisplay = () => {
             setIsDragging(false) 
             
             const newBarIndex = Math.max(Math.round((memo[0] + movement[0]) / seg), 0)
-            console.log('seg * newBarIndex', seg * newBarIndex)
+            // console.log('seg * newBarIndex', seg * newBarIndex)
             updateCurrentBar(newBarIndex)
             set( { 
                 x: seg * newBarIndex,

@@ -10,6 +10,7 @@
     "jquery": "^3.4.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-device-detect": "^1.9.10",
     "react-dom": "^16.8.6",
     "react-intersection-observer": "^8.24.2",
     "react-scripts": "^2.1.8",

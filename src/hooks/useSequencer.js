@@ -89,8 +89,8 @@ const useSequencer = () => {
   const removeBar = useCallback(
     () => {
       if (numBars > 1) {
-        SEQUENCER.updateNumBars( numBars - 1 )
-        dispatch({ type: TYPES.REMOVE_BAR })
+        SEQUENCER.updateNumBars( numBars - 2 )
+        dispatch({ type: TYPES.REMOVE_BARS })
       }
     },
     [numBars],
@@ -115,6 +115,25 @@ const useSequencer = () => {
     [isPlaying],
   )
 
+  const copyBars = useCallback(
+    (zoom) => {
+      const firstBar = Math.min(currentBar, numBars - 2)
+      console.log('copyBars', firstBar, zoom, sequences)
+      // const clipboard = 
+      dispatch({ type: TYPES.COPY_SEQUENCE, value: { firstBar, numberOfBars: zoom } })
+    },
+    [numBars, currentBar],
+  )
+
+  const pasteBars = useCallback(
+    (zoom) => {
+      const firstBar = Math.min(currentBar, numBars - 2)
+      console.log('pasteBars', firstBar, zoom)
+      dispatch({ type: TYPES.PASTE_SEQUENCE, value: { firstBar, numberOfBars:zoom } })
+    },
+    [numBars, currentBar],
+  )
+
   return {
     dispatch,
     isPlaying,
@@ -133,7 +152,9 @@ const useSequencer = () => {
     addBars,
     removeBar,
     onNoteTap,
-    updateCurrentBar
+    updateCurrentBar,
+    copyBars,
+    pasteBars
   }
 }
 

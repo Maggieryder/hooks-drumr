@@ -5,6 +5,7 @@ import ToolbarBtn from './toolbarBtn';
 
 import { useAuth } from "../../hooks/useAuth";
 import useViews from "../../hooks/useViews";
+import useSequencer from '../../hooks/useSequencer'
 
 import vars from '../../scss/_vars.scss';
 import classes from './ui.module.scss'
@@ -13,6 +14,7 @@ const toolbar = () => {
 
     const auth = useAuth()
     const { trackView, toggleTrackView, zoom, toggleZoom } = useViews()
+    const { copyBars, pasteBars } = useSequencer()
     
     return (
         <nav className={classes.toolbar}>
@@ -26,25 +28,32 @@ const toolbar = () => {
                 </li>       
                 <li>
                     <ToolbarBtn 
-                        clickHandler={()=>{toggleTrackView()}} 
+                        clickHandler={toggleTrackView} 
                         colors={[vars.defaultWhite, trackView === 0 ? vars.greencolor : trackView === 1 ? vars.redcolor : vars.hiliteWhite ]} 
                         size={20} 
                         icon='eye'/>
                 </li>
-                {/* <li>
-                    <ToolbarBtn 
-                        clickHandler={()=>{toggleViewTrackSteps()}} 
-                        colors={[vars.defaultWhite,vars.hiliteWhite]} 
-                        size={20} 
-                        icon='music'/>
-                </li> */}
                 <li>
                     <ToolbarBtn 
-                        clickHandler={()=>{toggleZoom()}}
+                        clickHandler={toggleZoom}
                         colors={[vars.defaultWhite,vars.hiliteWhite]} 
                         size={20} 
                         icon={zoom === 2 ? 'zoom-out' : 'zoom-in' }
                         disabled={!auth.user}/>
+                </li>
+                <li>
+                    <ToolbarBtn 
+                        clickHandler={()=>{copyBars(zoom)}} 
+                        colors={[vars.defaultWhite,vars.hiliteWhite]} 
+                        size={20} 
+                        icon='eyedropper'/>
+                </li>
+                <li>
+                    <ToolbarBtn 
+                        clickHandler={()=>{pasteBars(zoom)}} 
+                        colors={[vars.defaultWhite,vars.hiliteWhite]} 
+                        size={20} 
+                        icon='droplet'/>
                 </li>
                 <li>
                     <ToolbarBtn 

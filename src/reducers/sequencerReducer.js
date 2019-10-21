@@ -59,10 +59,10 @@ export default function(state = initialState, action) {
             numBars: state.numBars + 2,
             sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
-    case TYPES.REMOVE_BAR:
+    case TYPES.REMOVE_BARS:
         return {
             ...state,
-            numBars: state.numBars - 1,
+            numBars: state.numBars - 2,
             currentBar: state.numBars - 2,
             sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
@@ -84,6 +84,16 @@ export default function(state = initialState, action) {
           numBeats: action.value.numSteps === 12 ? 3 : 4,
           sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
+    case TYPES.COPY_SEQUENCE:
+        return {
+          ...state,
+          sequences: state.sequences.map(t => sequenceReducer(t, action))
+        }
+    case TYPES.PASTE_SEQUENCE:
+      return {
+        ...state,
+        sequences: state.sequences.map(t => sequenceReducer(t, action))
+      }
     default:
         return state
   } 

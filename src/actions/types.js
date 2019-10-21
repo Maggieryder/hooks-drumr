@@ -8,11 +8,15 @@ export const REMOVE_SEQUENCE = 'REMOVE_SEQUENCE'
 
 export const ADD_BARS = 'ADD_BARS'
 
-export const REMOVE_BAR = 'REMOVE_BAR'
+export const REMOVE_BARS = 'REMOVE_BARS'
 
 export const UPDATE_CURRENT_BAR = 'UPDATE_CURRENT_BAR'
 
 export const UPDATE_CURRENT_STEP = 'UPDATE_CURRENT_STEP'
+
+export const COPY_SEQUENCE = 'COPY_SEQUENCE'
+
+export const PASTE_SEQUENCE = 'PASTE_SEQUENCE'
 
 export const UPDATE_TEMPO = 'UPDATE_TEMPO'
 
