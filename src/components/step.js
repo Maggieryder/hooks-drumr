@@ -22,7 +22,7 @@ const Step = ({ onTap, step, isBeat, isOne, color, velocity }) => {
   const style = {
     // '--size': isBeat ? '20px' : isCurrentBar ? '10px' :'5px',
     // '--size': isBeat ? '20px' : '5px',
-    '--size': isOne ? '6px' : isBeat ? '4px' : '2px',
+    '--size': isOne ? '6px' : isBeat ? '4px' : '1px',
     // '--viz': isCurrentBar && isCurrentStep ? 0 : 1,
     // '--scale': isCurrentBar && isCurrentStep ? 1.5 : 1,
     '--bgcolor': isOne ? color : vars.defaultStepBg,
