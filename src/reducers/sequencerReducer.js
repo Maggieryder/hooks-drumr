@@ -9,6 +9,7 @@ const initialState = {
   numBeats: 4,
   numSteps: 16,
   sequences: [],
+  hasClipboard: false,
   currentBar: 0,
   currentStep: 0
 }
@@ -87,11 +88,13 @@ export default function(state = initialState, action) {
     case TYPES.COPY_SEQUENCE:
         return {
           ...state,
+          hasClipboard: true,
           sequences: state.sequences.map(t => sequenceReducer(t, action))
         }
     case TYPES.PASTE_SEQUENCE:
       return {
         ...state,
+        hasClipboard: false,
         sequences: state.sequences.map(t => sequenceReducer(t, action))
       }
     default:

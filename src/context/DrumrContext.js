@@ -23,6 +23,7 @@ const initialSequencerState = {
   numBeats: 4,
   numSteps: 16,
   sequences: [],
+  hasClipboard: false,
   currentBar: 0,
   currentStep: 0
 }

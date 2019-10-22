@@ -7,7 +7,7 @@
     height: 40px;
     overflow:hidden;
 
-    .indicator {
+    .marquee {
         position: absolute;
         display: block;
         top: 0;
@@ -15,7 +15,9 @@
         z-index: 1;
         width: 100%;
         height: 100%;
-        border: 2px solid $green;
+        border-color: $green;
+        border-width: 2px;
+        border-style: solid;
         background: transparent;
         transform-origin: 0 0;
         transition: all;

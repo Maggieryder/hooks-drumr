@@ -12,7 +12,7 @@ import useSequencer from '../hooks/useSequencer'
 import useViews from '../hooks/useViews'
 
 
-const Tracks = () => {
+const Tracks = ({ moveMarquee }) => {
 
   const {state:{ tracks: { all } } } = useContext(DrumrContext)
 
@@ -22,11 +22,19 @@ const Tracks = () => {
 
   const scrollRef = useRef()
   const tracksRef = useRef()
-  const axis = React.useRef()
+  const axis = useRef()
+
+
+  const boundaries = useCallback(
+    () => {
+      return tracksRef.current.getBoundingClientRect()
+    },
+    [],
+  )
 
   const calculateCurrentBar = useCallback(
     forward => {
-      const seg = segmentSize()
+      const seg = segmentWidth()
       // const index = forward ? Math.round(scrollRef.current.scrollLeft / seg) : Math.round(scrollRef.current.scrollLeft / seg)
       const index = Math.round(scrollRef.current.scrollLeft / seg)
       const newBarIndex = Math.min(Math.max(index, 0), numBars - 1)
@@ -36,10 +44,10 @@ const Tracks = () => {
     [numBars, zoom],
   )
 
-  const segmentSize = useCallback(
+  const segmentWidth = useCallback(
     () => {
-      const tracksRect = tracksRef.current.getBoundingClientRect()
-      return tracksRect.width / numBars
+      const { width } = boundaries()
+      return width / numBars
     },
     [numBars],
   )
@@ -107,9 +115,10 @@ const Tracks = () => {
           }
           console.log('onScroll ended event scrollRef.current.scrollLeft', scrollRef.current.scrollLeft)
           if (!isPlaying) {
-            calculateCurrentBar(dx > ix)
+            // calculateCurrentBar(dx > ix)
           }
-          
+          const perc = scrollRef.current.scrollLeft / boundaries().width
+          moveMarquee(perc)
 
         } 
         // return memo
@@ -137,11 +146,11 @@ const Tracks = () => {
     })
   }, [ all ])
 
-  useEffect(() => {
-    console.log('[ TRACKS ] currentBar', currentBar)
-    const seg = segmentSize()
-    scrollRef.current.scrollLeft = currentBar * seg
-  }, [currentBar])
+  // useEffect(() => {
+  //   console.log('[ TRACKS ] currentBar', currentBar)
+  //   const seg = segmentWidth()
+  //   scrollRef.current.scrollLeft = currentBar * seg
+  // }, [currentBar])
 
   const style = {
     width: `${100 * (numBars/zoom) }%`,

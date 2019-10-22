@@ -23,6 +23,7 @@ const useSequencer = () => {
     numSteps,
     numBeats,
     sequences,
+    hasClipboard,
     currentBar,
     currentStep
      } = sequencer
@@ -146,6 +147,7 @@ const useSequencer = () => {
     setSwing,
     setNumSteps,
     sequences,
+    hasClipboard,
     currentBar,
     currentStep,
     togglePlay,

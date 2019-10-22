@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useCallback } from 'react'
 
 import Select from '../components/ui/select'
 import InputRange from '../components/ui/inputRange'
@@ -129,6 +129,17 @@ const Controller = () => {
     SEQUENCER.updateCurrentBar(currentBar) 
   }, [currentBar]);
 
+  const marqueeRef = useRef()
+
+  const moveMarquee = useCallback(
+    (perc) => {
+      
+      const { width } =  marqueeRef.current.getBoundingClientRect()
+      console.log('marqueeRef.current', width, perc, width * perc)
+      marqueeRef.current.scrollLeft = width * perc
+    },
+    [],
+  )
 
   return (
     
@@ -178,10 +189,10 @@ const Controller = () => {
           </Control>
         </div>
         
-        <BarDisplay />
+        <BarDisplay ref={marqueeRef}/>
         
 
-        <Tracks />
+        <Tracks moveMarquee={moveMarquee}/>
 
         
         <div className={classes.bottompanel}>
