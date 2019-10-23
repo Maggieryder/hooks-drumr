@@ -61,7 +61,6 @@ const ScrollControl = () => {
     const moveTo = useCallback(
         (perc, ref) => {
             const { width } =  ref.current.getBoundingClientRect()
-            console.log('ref.current', ref, width, perc, width * perc)
             if (ref === draggerRef) {
                 ref.current.style.transform =  `translateX(${width * perc}px)`
             } else {
@@ -119,8 +118,17 @@ const ScrollControl = () => {
         }
       )
 
-      const draggerBind = useDrag(({ first, last, movement, memo = [x.getValue()] }) => {
+      const draggerBind = useDrag(({ first, last, xy, movement, memo = [x.getValue()] }) => {
         const { width, left, right } = boundaries(draggerContentRef)
+        const clampedX = Math.min(Math.max(memo[0] + movement[0], left), right - (width / numBars * zoom))
+        
+        
+        // const range = boundaries(draggerContentRef).width - boundaries(draggerRef).width
+        // moveTo(clampedX / range, scrollerRef)
+        set({
+            x: clampedX,
+            immediate: true
+        })
         if (first) { 
             console.log('drag start')
             // set({
@@ -134,24 +142,16 @@ const ScrollControl = () => {
             setIsDragging(false) 
             const newBarIndex = calculatePositionIndex(memo[0] + movement[0], draggerRef)
             updateCurrentBar(newBarIndex)
-            // set({
-            //     x: Math.min(Math.max(memo[0] + movement[0], left), right - (width / numBars * zoom)),
-            //     immediate: true
-            // })
+            console.log('newBarIndex', newBarIndex)
+            const range = boundaries(draggerContentRef).width - boundaries(draggerRef).width
+            const perc = (width / numBars-1 * newBarIndex) / range
+            moveTo(perc, scrollerRef)
+            // moveTo(pos, scrollerRef)
+            set({
+                x: clampedX,
+                immediate: true
+            })
         }
-
-        // console.log('memo[0]', memo[0])
-        // console.log('movement[0]', movement[0])
-        
-        set({
-            x: Math.min(Math.max(memo[0] + movement[0], left), right - (width / numBars * zoom)),
-            immediate: true
-        })
-        const range = boundaries(draggerContentRef).width - boundaries(draggerRef).width
-        console.log('range', range)
-        const perc = memo[0] + movement[0] / range
-        moveTo(perc, scrollerRef)
-
         return memo
     }, 
     {
