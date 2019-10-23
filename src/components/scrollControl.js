@@ -64,7 +64,7 @@ const ScrollControl = () => {
             if (ref === draggerRef) {
                 ref.current.style.transform =  `translateX(${width * perc}px)`
             } else {
-                ref.current.scrollLeft = width * perc
+                ref.current.scrollLeft = Math.min(width * perc, width)
             }
         },
         []
@@ -119,7 +119,7 @@ const ScrollControl = () => {
       )
 
       const draggerBind = useDrag(({ first, last, xy, movement, memo = [x.getValue()] }) => {
-        const { width, left, right } = boundaries(draggerContentRef)
+        const { width, left, right } = boundaries(draggerRef)
         const clampedX = Math.min(Math.max(memo[0] + movement[0], left), right - (width / numBars * zoom))
         
         
@@ -144,13 +144,15 @@ const ScrollControl = () => {
             updateCurrentBar(newBarIndex)
             console.log('newBarIndex', newBarIndex)
             const range = boundaries(draggerContentRef).width - boundaries(draggerRef).width
-            const perc = (width / numBars-1 * newBarIndex) / range
-            moveTo(perc, scrollerRef)
+            const seg = range / numBars
+            const perc = (seg * newBarIndex) / range
+            // const clampedX = Math.min(Math.max(memo[0] + movement[0], left), right - (width / numBars * zoom))
+            moveTo(clampedX / range, scrollerRef)
             // moveTo(pos, scrollerRef)
-            set({
-                x: clampedX,
-                immediate: true
-            })
+            // set({
+            //     x: clampedX,
+            //     immediate: true
+            // })
         }
         return memo
     }, 

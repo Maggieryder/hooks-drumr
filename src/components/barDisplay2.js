@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react'
 
-
 // import { ViewsContext } from '../context/ViewsContext'
 import useSequencer from '../hooks/useSequencer'
 
