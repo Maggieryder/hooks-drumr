@@ -130,13 +130,22 @@ const Controller = () => {
   }, [currentBar]);
 
   const marqueeRef = useRef()
+  const scrollerRef = useRef()
 
   const moveMarquee = useCallback(
     (perc) => {
-      
       const { width } =  marqueeRef.current.getBoundingClientRect()
-      console.log('marqueeRef.current', width, perc, width * perc)
-      marqueeRef.current.scrollLeft = width * perc
+      // console.log('marqueeRef.current', width, perc, width * perc)
+      marqueeRef.current.style.transform =  `translateX(${width * perc}px)`
+    },
+    [],
+  )
+
+  const moveTracks = useCallback(
+    (perc) => {
+      const { width } =  scrollerRef.current.getBoundingClientRect()
+      // console.log('scrollerRef.current width perc w*p', width, perc, width * perc)
+      scrollerRef.current.scrollLeft =  `translateX(${width * perc}px)`
     },
     [],
   )
@@ -189,10 +198,10 @@ const Controller = () => {
           </Control>
         </div>
         
-        <BarDisplay ref={marqueeRef}/>
+        <BarDisplay moveTracks={moveTracks} ref={marqueeRef}/>
         
 
-        <Tracks moveMarquee={moveMarquee}/>
+        <Tracks moveMarquee={moveMarquee} ref={scrollerRef}/>
 
         
         <div className={classes.bottompanel}>

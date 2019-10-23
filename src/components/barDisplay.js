@@ -8,7 +8,7 @@ import useSequencer from '../hooks/useSequencer'
 import vars from '../scss/_vars.scss';
 import classes from './barDisplay.module.scss'
 
-const BarDisplay = forwardRef((props, ref) => {
+const BarDisplay = forwardRef(({ moveTracks }, ref) => {
 
     const { zoom } = useContext(ViewsContext)[0]
 
@@ -18,7 +18,7 @@ const BarDisplay = forwardRef((props, ref) => {
 
     const [{ x }, set] = useSpring(() => ({ x: 0}))
 
-    ref={set} 
+    
 
     const [ isDragging, setIsDragging ] = useState(false)
 
@@ -27,7 +27,7 @@ const BarDisplay = forwardRef((props, ref) => {
 
     const calculateCurrentBar = useCallback(
         position => {
-          const seg = segmentWidth()
+          const seg = segmentWidth(boundaryRef)
           const index = Math.round(position / seg)
           const newBarIndex = Math.min(Math.max(index, 0), numBars - 1)
         //   console.log('calculateCurrentBar seg newBarIndex', newBarIndex ) 
@@ -37,22 +37,22 @@ const BarDisplay = forwardRef((props, ref) => {
     )
 
     const boundaries = useCallback(
-        () => {
-            return boundaryRef.current.getBoundingClientRect()
+        (ref) => {
+            return ref.current.getBoundingClientRect()
         },
         [],
     )
 
     const segmentWidth = useCallback(
-        () => {
-          const { width } = boundaries()
+        (ref) => {
+          const { width } = boundaries(ref)
           return width / numBars
         },
         [numBars],
     )
 
     useEffect(() => {
-        const seg = segmentWidth()
+        const seg = segmentWidth(boundaryRef)
         set( { 
             x: seg * currentBar,
             immediate: true
@@ -61,7 +61,7 @@ const BarDisplay = forwardRef((props, ref) => {
 
 
     const bind = useDrag(({ first, last, movement, memo = [x.getValue()] }) => {
-        const { width, left, right } = boundaries()
+        const { width, left, right } = boundaries(boundaryRef)
         if (first) { 
             console.log('drag start')
             // set({
@@ -99,7 +99,7 @@ const BarDisplay = forwardRef((props, ref) => {
     const style = {
         // transform: isDragging ? x.interpolate(x => `translateX(${x}px)`) : `translateX(${Math.min(currentBar * 100 / zoom, (numBars - zoom) * 100 / zoom)}%)`,
         transform: x.interpolate(x => `translateX(${x}px)`),
-        transitionDuration: isDragging ? '0s' : '.5s',
+        transitionDuration: isDragging ? '0s' : '.15s',
         width: `${100 / numBars * zoom}%`, 
         borderStyle: hasClipboard ? 'dotted' : 'solid',
         borderColor: numBars === zoom ? 'transparent' : vars.greencolor
@@ -110,7 +110,7 @@ const BarDisplay = forwardRef((props, ref) => {
 
     return (
         <div className={classes.barspane}>
-            <animated.div {...bind()} className={classes.marquee} style={style}></animated.div>
+            <animated.div {...bind()} ref={ref} className={classes.marquee} style={style}></animated.div>
             <div ref={boundaryRef} className={classes['bar-display-container']} >                
                 {
                     bars.map((b,i) => <div key={i} className={classes['bar-display']} style={{color: i === currentBar ? vars.greencolor : vars.defaultWhite, width: `${100 / numBars}%`}} onClick={() => updateCurrentBar(i)}>{i < numBars ? i+1 : ''}</div>)

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useContext, useRef  } from 'react'
+import React, { useCallback, useEffect, useContext, useRef, forwardRef  } from 'react'
 import PropTypes from 'prop-types'
 import { isFirefox } from "react-device-detect";
 import { useScroll, useGesture  } from 'react-use-gesture'
@@ -12,7 +12,7 @@ import useSequencer from '../hooks/useSequencer'
 import useViews from '../hooks/useViews'
 
 
-const Tracks = ({ moveMarquee }) => {
+const Tracks = forwardRef(({ moveMarquee }, ref ) => {
 
   const {state:{ tracks: { all } } } = useContext(DrumrContext)
 
@@ -26,8 +26,8 @@ const Tracks = ({ moveMarquee }) => {
 
 
   const boundaries = useCallback(
-    () => {
-      return tracksRef.current.getBoundingClientRect()
+    (ref) => {
+      return ref.current.getBoundingClientRect()
     },
     [],
   )
@@ -46,7 +46,7 @@ const Tracks = ({ moveMarquee }) => {
 
   const segmentWidth = useCallback(
     () => {
-      const { width } = boundaries()
+      const { width } = boundaries(tracksRef)
       return width / numBars
     },
     [numBars],
@@ -115,12 +115,16 @@ const Tracks = ({ moveMarquee }) => {
           }
           console.log('onScroll ended event scrollRef.current.scrollLeft', scrollRef.current.scrollLeft)
           if (!isPlaying) {
-            // calculateCurrentBar(dx > ix)
+            calculateCurrentBar(dx > ix)
           }
-          const perc = scrollRef.current.scrollLeft / boundaries().width
-          moveMarquee(perc)
+          // const perc = scrollRef.current.scrollLeft / boundaries(scrollRef).width
+          // moveMarquee(perc)
 
         } 
+        // console.log('scroll', scrollRef.current.scrollLeft)
+        // console.log('width', boundaries(scrollRef).width)
+        const perc = scrollRef.current.scrollLeft / boundaries(scrollRef).width
+        moveMarquee(perc)
         // return memo
     }, 
     { 
@@ -146,11 +150,11 @@ const Tracks = ({ moveMarquee }) => {
     })
   }, [ all ])
 
-  // useEffect(() => {
-  //   console.log('[ TRACKS ] currentBar', currentBar)
-  //   const seg = segmentWidth()
-  //   scrollRef.current.scrollLeft = currentBar * seg
-  // }, [currentBar])
+  useEffect(() => {
+    console.log('[ TRACKS ] currentBar', currentBar)
+    const seg = segmentWidth()
+    scrollRef.current.scrollLeft = currentBar * seg
+  }, [currentBar])
 
   const style = {
     width: `${100 * (numBars/zoom) }%`,
@@ -165,7 +169,7 @@ const Tracks = ({ moveMarquee }) => {
       </div>
     </div>
   );
-}
+})
 
 Tracks.propType = {
   tracks: PropTypes.arrayOf(PropTypes.object)
