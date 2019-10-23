@@ -1,72 +1,71 @@
 @import '../scss/vars';
 
+.marquee {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-color: $green;
+    border-width: 2px;
+    border-style: solid;
+    background: transparent;
+    transform-origin: 0 0;
+    transition: all;
+    // cursor: zoom-in;
+    cursor: grab;
+    will-change: transform;
+}
+
+
+.bar-display-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 100%;
+    border-top: 1px solid $white-01;
+    border-bottom: 1px solid $white-01;
+    width: auto;
+    background: $black-03;
+    
+
+    .bar-display {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 25%;
+        border-right: 1px solid $white-01;
+        color:  $white-02;
+        font-size:.5rem;
+        // background: $black-03;
+        -webkit-user-select: none;
+        user-select: none;
+        // text-align: center;
+
+        // .step-display {
+        //     height: 100%;
+        //     // width: calc(6.25% - 2px);
+        //     width: 6.25%;
+        //     // margin-right: 2px;
+        //     // background: $white-01;
+        //     border-left: 1px solid $white-01;
+        //     transform: translateY(80%);
+        //     transition: transform .25s ease-in-out;
+        // }
+    }
+    
+
+}
+
 .barspane {
     position: relative;
     display: block;
     width: 100%;
     height: 40px;
     overflow:hidden;
-
-    .marquee {
-        position: absolute;
-        display: block;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        width: 100%;
-        height: 100%;
-        border-color: $green;
-        border-width: 2px;
-        border-style: solid;
-        background: transparent;
-        transform-origin: 0 0;
-        transition: all;
-        // cursor: zoom-in;
-        cursor: grab;
-        will-change: transform;
-    }
-
-
-    .bar-display-container {
-        // position: relative;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        height: 100%;
-        border-top: 1px solid $white-01;
-        border-bottom: 1px solid $white-01;
-        width: auto;
-        background: $black-03;
-        
-
-        .bar-display {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 25%;
-            border-right: 1px solid $white-01;
-            color:  $white-02;
-            font-size:.5rem;
-            // background: $black-03;
-            -webkit-user-select: none;
-            user-select: none;
-            // text-align: center;
-
-            // .step-display {
-            //     height: 100%;
-            //     // width: calc(6.25% - 2px);
-            //     width: 6.25%;
-            //     // margin-right: 2px;
-            //     // background: $white-01;
-            //     border-left: 1px solid $white-01;
-            //     transform: translateY(80%);
-            //     transition: transform .25s ease-in-out;
-            // }
-        }
-        
-
-    }
-
 }

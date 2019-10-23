@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react'
+import React, { useEffect } from 'react'
 
 import Select from '../components/ui/select'
 import InputRange from '../components/ui/inputRange'
@@ -6,11 +6,12 @@ import Label from '../components/ui/label'
 import CurrentValue from '../components/ui/currentValue'
 import IconBtn from '../components/ui/iconBtn'
 import BarIndicator from '../components/ui/barIndicator'
-import Tracks from '../components/tracks'
+// import Tracks from '../components/tracks'
 import Control from '../components/control'
 import Processors from '../components/processors'
 import Transport from '../components/transport'
-import BarDisplay from '../components/barDisplay'
+// import BarDisplay from '../components/barDisplay'
+import ScrollControl from '../components/scrollControl'
 
 
 import { useAuth } from "../hooks/useAuth.js";
@@ -129,26 +130,26 @@ const Controller = () => {
     SEQUENCER.updateCurrentBar(currentBar) 
   }, [currentBar]);
 
-  const marqueeRef = useRef()
-  const scrollerRef = useRef()
+  // const marqueeRef = useRef()
+  // const scrollerRef = useRef()
 
-  const moveMarquee = useCallback(
-    (perc) => {
-      const { width } =  marqueeRef.current.getBoundingClientRect()
-      // console.log('marqueeRef.current', width, perc, width * perc)
-      marqueeRef.current.style.transform =  `translateX(${width * perc}px)`
-    },
-    [],
-  )
+  // const moveMarquee = useCallback(
+  //   (perc) => {
+  //     const { width } =  marqueeRef.current.getBoundingClientRect()
+  //     // console.log('marqueeRef.current', width, perc, width * perc)
+  //     marqueeRef.current.style.transform =  `translateX(${width * perc}px)`
+  //   },
+  //   [],
+  // )
 
-  const moveTracks = useCallback(
-    (perc) => {
-      const { width } =  scrollerRef.current.getBoundingClientRect()
-      // console.log('scrollerRef.current width perc w*p', width, perc, width * perc)
-      scrollerRef.current.scrollLeft =  `translateX(${width * perc}px)`
-    },
-    [],
-  )
+  // const moveTracks = useCallback(
+  //   (perc) => {
+  //     const { width } =  scrollerRef.current.getBoundingClientRect()
+  //     // console.log('scrollerRef.current width perc w*p', width, perc, width * perc)
+  //     scrollerRef.current.scrollLeft =  `translateX(${width * perc}px)`
+  //   },
+  //   [],
+  // )
 
   return (
     
@@ -198,10 +199,11 @@ const Controller = () => {
           </Control>
         </div>
         
-        <BarDisplay moveTracks={moveTracks} ref={marqueeRef}/>
+        {/* <BarDisplay moveTracks={moveTracks} ref={marqueeRef}/>
         
 
-        <Tracks moveMarquee={moveMarquee} ref={scrollerRef}/>
+        <Tracks moveMarquee={moveMarquee} ref={scrollerRef}/> */}
+        <ScrollControl />
 
         
         <div className={classes.bottompanel}>

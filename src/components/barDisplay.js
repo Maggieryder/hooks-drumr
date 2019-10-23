@@ -18,8 +18,6 @@ const BarDisplay = forwardRef(({ moveTracks }, ref) => {
 
     const [{ x }, set] = useSpring(() => ({ x: 0}))
 
-    
-
     const [ isDragging, setIsDragging ] = useState(false)
 
     // const marqueeRef = useRef()
