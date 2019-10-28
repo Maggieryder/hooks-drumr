@@ -30,6 +30,7 @@ const ScrollControl = () => {
     const draggerContentRef = useRef()
 
     const [ isDragging, setIsDragging ] = useState(false)
+    const [ isScrolling, setIsScrolling ] = useState(false)
 
     const [{ x }, set] = useSpring(() => ({ x: 0}))
 
@@ -52,29 +53,33 @@ const ScrollControl = () => {
         (position, ref) => {
           const seg = segmentWidth(ref)
           const index = Math.round(position / seg)
-          const clampedIndex = Math.min(Math.max(index, 0), numBars - 1)
+          const clampedIndex = Math.min(Math.max(index, 0), numBars - 2)
           return clampedIndex
         },
         [numBars]
     )
 
-    const moveTo = useCallback(
-        (perc, ref) => {
-            const { width } =  ref.current.getBoundingClientRect()
-            if (ref === draggerRef) {
-                ref.current.style.transform =  `translateX(${width * perc}px)`
-            } else {
-                ref.current.scrollLeft = Math.min(width * perc, width)
-            }
+    const moveDraggerTo = useCallback(
+        (perc) => {
+            const { width } =  boundaries(draggerRef)
+            draggerRef.current.style.transform = `translateX(${width * perc}px)`
+        },
+        []
+    )
+
+    const moveScrollerTo = useCallback(
+        (perc) => {
+            const { width } =  boundaries(scrollerContentRef)
+            scrollerRef.current.scrollLeft = Math.min(width * perc, width)
         },
         []
     )
 
     const scrollerBind = useScroll(
         ({event, first, last, initial:[ix, iy], direction: [dx, dy] }) => { //, memo = [x.getValue(), y.getValue()]
-          // state => {
             if (first) {
               // console.log('onScroll started isFirefox ', isFirefox ) 
+              setIsScrolling(true)
             }     
             !last && event.preventDefault()
             if (!axis.current) {
@@ -92,6 +97,7 @@ const ScrollControl = () => {
               } 
             }   
             if (last) {
+              setIsScrolling(false)
               if (!isFirefox) {
                 axis.current = null
                 scrollerRef.current.style.overflowX = 'auto'
@@ -99,17 +105,19 @@ const ScrollControl = () => {
               }
               console.log('onScroll ended event scrollerRef.current.scrollLeft', scrollerRef.current.scrollLeft)
               if (!isPlaying) {
-                const newBarIndex = calculatePositionIndex(scrollerRef.current.scrollLeft, scrollerRef)
+                const newBarIndex = calculatePositionIndex(scrollerRef.current.scrollLeft, scrollerContentRef)
                 updateCurrentBar(newBarIndex)
               }
               // const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width
-              // moveMarquee(perc)
-    
+              // moveTo(perc, draggerRef)   
             } 
             // console.log('scroll', scrollerRef.current.scrollLeft)
             // console.log('width', boundaries(scrollerRef).width)
-            const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width
-            moveTo(perc, draggerRef)
+            if(!isDragging){
+              const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width
+              moveDraggerTo(perc)
+            }
+            
             // return memo
         }, 
         { 
@@ -119,12 +127,9 @@ const ScrollControl = () => {
       )
 
       const draggerBind = useDrag(({ first, last, xy, movement, memo = [x.getValue()] }) => {
-        const { width, left, right } = boundaries(draggerRef)
-        const clampedX = Math.min(Math.max(memo[0] + movement[0], left), right - (width / numBars * zoom))
-        
-        
-        // const range = boundaries(draggerContentRef).width - boundaries(draggerRef).width
-        // moveTo(clampedX / range, scrollerRef)
+        const draggerWidth = boundaries(draggerRef).width
+        const boundaryWidth = boundaries(draggerContentRef).width
+        const clampedX = Math.min(Math.max(memo[0] + movement[0], 0), boundaryWidth - draggerWidth )//(width / numBars * zoom)
         set({
             x: clampedX,
             immediate: true
@@ -138,35 +143,37 @@ const ScrollControl = () => {
             setIsDragging(true) 
         }
         if (last) { 
-            console.log('drag end')
+            console.log('drag end content left', boundaries(draggerRef).left, boundaries(draggerRef).x)
+            console.log('drag end new pos', memo[0] + movement[0])
             setIsDragging(false) 
-            const newBarIndex = calculatePositionIndex(memo[0] + movement[0], draggerRef)
-            updateCurrentBar(newBarIndex)
+            const newBarIndex = calculatePositionIndex(memo[0] + movement[0], draggerContentRef)
+            // updateCurrentBar(newBarIndex)
             console.log('newBarIndex', newBarIndex)
-            const range = boundaries(draggerContentRef).width - boundaries(draggerRef).width
-            const seg = range / numBars
-            const perc = (seg * newBarIndex) / range
-            // const clampedX = Math.min(Math.max(memo[0] + movement[0], left), right - (width / numBars * zoom))
-            moveTo(clampedX / range, scrollerRef)
-            // moveTo(pos, scrollerRef)
+            const seg = segmentWidth(draggerContentRef)
+            const perc = (seg * newBarIndex) / boundaryWidth
+            console.log('drag end perc', perc)
+            moveScrollerTo(perc)
             // set({
             //     x: clampedX,
             //     immediate: true
-            // })
+            // })      
         }
         return memo
     }, 
     {
-        // dragDelay: true,
+        dragDelay: true,
         // drag: true, 
     })
 
     useEffect(() => {
+        const boundaryWidth = boundaries(draggerContentRef).width
         const seg = segmentWidth(draggerContentRef)
-        // set( { 
-        //     x: seg * currentBar,
-        //     immediate: true
-        // })
+        const perc = (seg * currentBar) / boundaryWidth
+        moveScrollerTo(perc)
+        set( { 
+            x: Math.min(Math.max(seg * currentBar, 0), seg * (numBars - zoom)),
+            immediate: true
+        })
     }, [currentBar, numBars])
 
     const marqueeStyle = {
