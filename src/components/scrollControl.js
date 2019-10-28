@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useContext, useRef  } from 're
 import PropTypes from 'prop-types'
 import { isFirefox } from "react-device-detect";
 import { useScroll, useDrag  } from 'react-use-gesture'
-import { useSpring, animated } from 'react-spring'
+import { useSpring, animated, interpolate, config } from 'react-spring'
 
 // import { ViewsContext } from '../context/ViewsContext'
 import useSequencer from '../hooks/useSequencer'
@@ -32,13 +32,20 @@ const ScrollControl = () => {
     const [ isDragging, setIsDragging ] = useState(false)
     const [ isScrolling, setIsScrolling ] = useState(false)
 
-    const [{ x }, set] = useSpring(() => ({ x: 0}))
+    const [{ x }, set] = useSpring(() => ({ x: 0, config: config.gentle }))
 
     const boundaries = useCallback(
         ref => {
           return ref.current.getBoundingClientRect()
         },
         []
+    )
+
+    const clampedResult = useCallback(
+      (n, min, max) => {
+        return Math.min(Math.max(n, min), max)
+      },
+      []
     )
 
     const segmentWidth = useCallback(
@@ -53,7 +60,7 @@ const ScrollControl = () => {
         (position, ref) => {
           const seg = segmentWidth(ref)
           const index = Math.round(position / seg)
-          const clampedIndex = Math.min(Math.max(index, 0), numBars - 2)
+          const clampedIndex = clampedResult(index, 0, numBars - 2)
           return clampedIndex
         },
         [numBars]
@@ -76,7 +83,7 @@ const ScrollControl = () => {
     )
 
     const scrollerBind = useScroll(
-        ({event, first, last, initial:[ix, iy], direction: [dx, dy] }) => { //, memo = [x.getValue(), y.getValue()]
+        ({event, first, last, direction: [dx, dy] }) => { // initial:[ix, iy], memo = [x.getValue(), y.getValue()]
             if (first) {
               // console.log('onScroll started isFirefox ', isFirefox ) 
               setIsScrolling(true)
@@ -97,7 +104,7 @@ const ScrollControl = () => {
               } 
             }   
             if (last) {
-              setIsScrolling(false)
+              
               if (!isFirefox) {
                 axis.current = null
                 scrollerRef.current.style.overflowX = 'auto'
@@ -109,7 +116,8 @@ const ScrollControl = () => {
                 updateCurrentBar(newBarIndex)
               }
               // const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width
-              // moveTo(perc, draggerRef)   
+              // moveTo(perc, draggerRef)  
+              setIsScrolling(false) 
             } 
             // console.log('scroll', scrollerRef.current.scrollLeft)
             // console.log('width', boundaries(scrollerRef).width)
@@ -126,13 +134,16 @@ const ScrollControl = () => {
         }
       )
 
-      const draggerBind = useDrag(({ first, last, xy, movement, memo = [x.getValue()] }) => {
+      const draggerBind = useDrag(({ first, last, movement, down, velocity, direction, memo = [x.getValue()] }) => { //
         const draggerWidth = boundaries(draggerRef).width
         const boundaryWidth = boundaries(draggerContentRef).width
-        const clampedX = Math.min(Math.max(memo[0] + movement[0], 0), boundaryWidth - draggerWidth )//(width / numBars * zoom)
+        const seg = segmentWidth(draggerContentRef)
+        const clampedX = clampedResult(memo[0] + movement[0], 0, boundaryWidth - draggerWidth)
+        console.log('direction[0] * velocity', direction[0] * velocity)
         set({
             x: clampedX,
-            immediate: true
+            immediate: down,
+            config: { velocity: direction[0] * velocity, decay: true }
         })
         if (first) { 
             console.log('drag start')
@@ -145,36 +156,45 @@ const ScrollControl = () => {
         if (last) { 
             console.log('drag end content left', boundaries(draggerRef).left, boundaries(draggerRef).x)
             console.log('drag end new pos', memo[0] + movement[0])
-            setIsDragging(false) 
+            
             const newBarIndex = calculatePositionIndex(memo[0] + movement[0], draggerContentRef)
-            // updateCurrentBar(newBarIndex)
+            updateCurrentBar(newBarIndex)        
+            
             console.log('newBarIndex', newBarIndex)
-            const seg = segmentWidth(draggerContentRef)
-            const perc = (seg * newBarIndex) / boundaryWidth
-            console.log('drag end perc', perc)
-            moveScrollerTo(perc)
-            // set({
-            //     x: clampedX,
-            //     immediate: true
-            // })      
+            
+            if(!isScrolling){ 
+              const perc = (seg * newBarIndex) / boundaryWidth
+              console.log('drag end perc', perc)
+              moveScrollerTo(perc)
+            }
+            const clampedX = clampedResult(seg * newBarIndex, 0, seg * (numBars - zoom))
+            set({
+                x: clampedX,
+                immediate: false,
+                config: { velocity: direction[0] * velocity, decay: false }    
+            }) 
+            setIsDragging(false)      
         }
         return memo
     }, 
     {
-        dragDelay: true,
+        // dragDelay: true,
         // drag: true, 
     })
 
-    useEffect(() => {
+    useEffect(() => {      
+        const seg = segmentWidth(draggerContentRef)      
+        // const clampedX = clampedResult(seg * currentBar, 0, seg * (numBars - zoom))  
+        // set( { 
+        //     x: clampedX,
+        //     immediate: true,
+        //     config: { velocity: .05, decay: false }  
+
+        // })
         const boundaryWidth = boundaries(draggerContentRef).width
-        const seg = segmentWidth(draggerContentRef)
         const perc = (seg * currentBar) / boundaryWidth
         moveScrollerTo(perc)
-        set( { 
-            x: Math.min(Math.max(seg * currentBar, 0), seg * (numBars - zoom)),
-            immediate: true
-        })
-    }, [currentBar, numBars])
+    }, [currentBar, numBars, zoom])
 
     const marqueeStyle = {
         // transform: isDragging ? x.interpolate(x => `translateX(${x}px)`) : `translateX(${Math.min(currentBar * 100 / zoom, (numBars - zoom) * 100 / zoom)}%)`,
