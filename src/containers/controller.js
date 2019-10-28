@@ -6,17 +6,13 @@ import Label from '../components/ui/label'
 import CurrentValue from '../components/ui/currentValue'
 import IconBtn from '../components/ui/iconBtn'
 import BarIndicator from '../components/ui/barIndicator'
-// import Tracks from '../components/tracks'
 import Control from '../components/control'
 import Processors from '../components/processors'
 import Transport from '../components/transport'
-// import BarDisplay from '../components/barDisplay'
 import ScrollControl from '../components/scrollControl'
-
 
 import { useAuth } from "../hooks/useAuth.js";
 
-// import { DrumrProvider } from "../context/DrumrContext";
 import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
 import useTrack from '../hooks/useTrack'
@@ -130,31 +126,9 @@ const Controller = () => {
     SEQUENCER.updateCurrentBar(currentBar) 
   }, [currentBar]);
 
-  // const marqueeRef = useRef()
-  // const scrollerRef = useRef()
-
-  // const moveMarquee = useCallback(
-  //   (perc) => {
-  //     const { width } =  marqueeRef.current.getBoundingClientRect()
-  //     // console.log('marqueeRef.current', width, perc, width * perc)
-  //     marqueeRef.current.style.transform =  `translateX(${width * perc}px)`
-  //   },
-  //   [],
-  // )
-
-  // const moveTracks = useCallback(
-  //   (perc) => {
-  //     const { width } =  scrollerRef.current.getBoundingClientRect()
-  //     // console.log('scrollerRef.current width perc w*p', width, perc, width * perc)
-  //     scrollerRef.current.scrollLeft =  `translateX(${width * perc}px)`
-  //   },
-  //   [],
-  // )
-
   return (
-    
       <div className={classes.controller}>
-        <div className={classes.toppanel}>
+        <div className={classes.topPane}>
           {kits ? <Control>
                     <Select
                       options={kits}
@@ -199,15 +173,9 @@ const Controller = () => {
           </Control>
         </div>
         
-        {/* <BarDisplay moveTracks={moveTracks} ref={marqueeRef}/>
-        
-
-        <Tracks moveMarquee={moveMarquee} ref={scrollerRef}/> */}
         <ScrollControl />
 
-        
-        <div className={classes.bottompanel}>
-        
+        <div className={classes.bottomPane}>    
           <Processors />
           <Transport />
         </div>   

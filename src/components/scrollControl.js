@@ -8,8 +8,8 @@ import { useSpring, animated, interpolate, config } from 'react-spring'
 import useSequencer from '../hooks/useSequencer'
 import useViews from '../hooks/useViews'
 
-import Tracks from './tracks2'
-import BarDisplay from './/barDisplay2'
+import Tracks from './tracks'
+import BarDisplay from './barDisplay'
 
 import vars from '../scss/_vars.scss';
 import classes from './scrollControl.module.scss'
@@ -139,7 +139,7 @@ const ScrollControl = () => {
         const boundaryWidth = boundaries(draggerContentRef).width
         const seg = segmentWidth(draggerContentRef)
         const clampedX = clampedResult(memo[0] + movement[0], 0, boundaryWidth - draggerWidth)
-        console.log('direction[0] * velocity', direction[0] * velocity)
+        // console.log('direction[0] * velocity', direction[0] * velocity)
         set({
             x: clampedX,
             immediate: down,
