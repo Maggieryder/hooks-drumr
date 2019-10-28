@@ -178,9 +178,11 @@ const ScrollControl = () => {
         return memo
     }, 
     {
+        domTarget: draggerRef 
         // dragDelay: true,
         // drag: true, 
     })
+
 
     useEffect(() => {      
         const seg = segmentWidth(draggerContentRef)      
@@ -196,6 +198,9 @@ const ScrollControl = () => {
         moveScrollerTo(perc)
     }, [currentBar, numBars, zoom])
 
+    
+    useEffect(!isPlaying ? draggerBind : ()=>{}, [draggerBind, isPlaying])
+
     const marqueeStyle = {
         // transform: isDragging ? x.interpolate(x => `translateX(${x}px)`) : `translateX(${Math.min(currentBar * 100 / zoom, (numBars - zoom) * 100 / zoom)}%)`,
         transform: x.interpolate(x => `translateX(${x}px)`),
@@ -208,7 +213,7 @@ const ScrollControl = () => {
     return (
         <>
             <div className={classes.dragPane}>
-                <animated.div {...draggerBind()} ref={draggerRef} className={classes.marquee} style={marqueeStyle}></animated.div>
+                <animated.div ref={draggerRef} className={classes.marquee} style={marqueeStyle}></animated.div>
                 <BarDisplay ref={draggerContentRef} />
             </div>
             <div {...scrollerBind()} ref={scrollerRef} className={classes.scrollPane}>
