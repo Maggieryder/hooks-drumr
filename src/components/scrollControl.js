@@ -69,7 +69,8 @@ const ScrollControl = () => {
     const moveDraggerTo = useCallback(
         (perc) => {
             const { width } =  boundaries(draggerRef)
-            draggerRef.current.style.transform = `translateX(${width * perc}px)`
+            const boundaryWidth = boundaries(draggerContentRef).width
+            setDraggerPosition(width * perc, 0, boundaryWidth, true, 0 )
         },
         []
     )
@@ -115,13 +116,14 @@ const ScrollControl = () => {
               const newBarIndex = calculatePositionIndex(scrollerRef.current.scrollLeft, scrollerContentRef)
               updateCurrentBar(newBarIndex)
               // const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width
-              // moveTo(perc, draggerRef)  
+           
               setIsScrolling(false) 
             } 
             // console.log('scroll', scrollerRef.current.scrollLeft)
             // console.log('width', boundaries(scrollerRef).width)
             if(!isDragging){
-              const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width
+              const { width } = boundaries(scrollerRef)
+              const perc = scrollerRef.current.scrollLeft / width
               moveDraggerTo(perc)
             }
             // return memo
@@ -134,13 +136,13 @@ const ScrollControl = () => {
       )
 
       const setDraggerPosition = useCallback(
-        (position, max, down, velocity) => {
+        (position, min, max, down, velocity) => {
           const draggerWidth = boundaries(draggerRef).width
-          const clampedX = clampedResult(position, 0, max - draggerWidth)
+          const clampedX = clampedResult(position, min, max - draggerWidth)
           set({
             draggerX: clampedX,
             immediate: down,
-            config: { velocity: velocity, decay: true }
+            config: { velocity: velocity, decay: down }
           })
         }, []
       )
@@ -151,34 +153,22 @@ const ScrollControl = () => {
           const seg = segmentWidth(draggerContentRef)
           const pos = memo[0] + movement[0]
           const v = direction[0] * velocity
-          setDraggerPosition(pos, boundaryWidth, down, v )
+          setDraggerPosition(pos, 0, boundaryWidth, down, v )
           if (first) { 
               console.log('drag start')
-              // set({
-              //     draggerX: 0, // currentBar * seg,
-              //     immediate: true
-              // })
               setIsDragging(true) 
           }
           if (last) { 
-              // console.log('drag end content left', boundaries(draggerRef).left, boundaries(draggerRef).x)
               // console.log('drag end new pos', memo[0] + movement[0]) 
               const newBarIndex = calculatePositionIndex(pos, draggerContentRef)
-              updateCurrentBar(newBarIndex)        
-              console.log('newBarIndex', newBarIndex)
-              
+              // updateCurrentBar(newBarIndex)        
+              console.log('drag end newBarIndex', newBarIndex) 
               if(!isScrolling){ 
                 const perc = (seg * newBarIndex) / boundaryWidth
                 console.log('drag end perc', perc)
                 moveScrollerTo(perc)
               }
-              const clampedX = clampedResult(seg * newBarIndex, 0, seg * (numBars - zoom))
-              set({
-                  draggerX: clampedX,
-                  immediate: false,
-                  config: { velocity: direction[0] * velocity, decay: false }    
-              }) 
-              // setDraggerPosition(seg * newBarIndex, seg * (numBars - zoom), false, v )
+              // setDraggerPosition(seg * newBarIndex, 0, boundaryWidth, down, v )
               setIsDragging(false)      
           }
           return memo
@@ -191,24 +181,20 @@ const ScrollControl = () => {
     })
 
 
-    useEffect(() => {      
-        const seg = segmentWidth(draggerContentRef) 
-        if (isPlaying) {
-          const clampedX = clampedResult(seg * currentBar, 0, seg * (numBars - zoom))  
-          set( { 
-              draggerX: clampedX,
-              immediate: true,
-              config: { velocity: .05, decay: false }  
-          })
+    useEffect(() => {
+        scrollerRef.current.style.overflowX = (isPlaying) ? 'hidden' : 'auto'  
+        if (!isDragging && !isScrolling) {
           const boundaryWidth = boundaries(draggerContentRef).width
-          const perc = (seg * currentBar) / boundaryWidth
-          moveScrollerTo(perc)
+          const seg = segmentWidth(draggerContentRef) 
+          const perc = (seg * currentBar) / boundaryWidth 
+          if (isPlaying) setDraggerPosition(seg * currentBar, 0, boundaryWidth, false, .25 )
+          moveScrollerTo(perc) 
         }     
-    }, [currentBar, numBars, zoom, isPlaying])
+    }, [currentBar, isPlaying])
 
-    useEffect(() => {      
-      scrollerRef.current.style.overflowX = (isPlaying) ? 'hidden' : 'auto'
-    }, [isPlaying])
+    // useEffect(() => {      
+    //   scrollerRef.current.style.overflowX = (isPlaying) ? 'hidden' : 'auto'
+    // }, [isPlaying])
 
     // useEffect(() => {
     //   console.log('ScrollControl isPlaying', isPlaying)
