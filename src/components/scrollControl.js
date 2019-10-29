@@ -32,7 +32,7 @@ const ScrollControl = () => {
     const [ isDragging, setIsDragging ] = useState(false)
     const [ isScrolling, setIsScrolling ] = useState(false)
 
-    const [{ x }, set] = useSpring(() => ({ x: 0, config: config.gentle }))
+    const [{ draggerX }, set] = useSpring(() => ({ draggerX: 0, config: config.gentle }))
 
     const boundaries = useCallback(
         ref => {
@@ -84,6 +84,7 @@ const ScrollControl = () => {
 
     const scrollerBind = useScroll(
         ({event, first, last, direction: [dx, dy] }) => { // initial:[ix, iy], memo = [x.getValue(), y.getValue()]
+          if (!isPlaying) {
             if (first) {
               // console.log('onScroll started isFirefox ', isFirefox ) 
               setIsScrolling(true)
@@ -94,8 +95,8 @@ const ScrollControl = () => {
               else if (Math.abs(dy) > Math.abs(dx)) axis.current = 'y'
             }
             // console.log('onScroll moving event ', event ) 
-            // if (axis.current === 'x') set({ x: memo[0] + mx, immediate: true })
-            // else if (axis.current === 'y') set({ y: memo[1] + my, immediate: true })
+            // if (axis.current === 'x') set({ draggerX: memo[0] + mx, immediate: true })
+            // else if (axis.current === 'y') set({ draggerY: memo[1] + my, immediate: true })
             if (!isFirefox) {
               if (axis.current === 'x' && trackView !== 1) {
                 scrollerRef.current.style.overflowY= 'hidden'
@@ -111,10 +112,8 @@ const ScrollControl = () => {
                 scrollerRef.current.style.overflowY = 'auto'
               }
               console.log('onScroll ended event scrollerRef.current.scrollLeft', scrollerRef.current.scrollLeft)
-              if (!isPlaying) {
-                const newBarIndex = calculatePositionIndex(scrollerRef.current.scrollLeft, scrollerContentRef)
-                updateCurrentBar(newBarIndex)
-              }
+              const newBarIndex = calculatePositionIndex(scrollerRef.current.scrollLeft, scrollerContentRef)
+              updateCurrentBar(newBarIndex)
               // const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width
               // moveTo(perc, draggerRef)  
               setIsScrolling(false) 
@@ -125,8 +124,8 @@ const ScrollControl = () => {
               const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width
               moveDraggerTo(perc)
             }
-            
             // return memo
+          } 
         }, 
         { 
           domTarget: scrollerRef,
@@ -134,48 +133,50 @@ const ScrollControl = () => {
         }
       )
 
-      const draggerBind = useDrag(({ first, last, movement, down, velocity, direction, memo = [x.getValue()] }) => { //
-        const draggerWidth = boundaries(draggerRef).width
-        const boundaryWidth = boundaries(draggerContentRef).width
-        const seg = segmentWidth(draggerContentRef)
-        const clampedX = clampedResult(memo[0] + movement[0], 0, boundaryWidth - draggerWidth)
-        // console.log('direction[0] * velocity', direction[0] * velocity)
-        set({
-            x: clampedX,
-            immediate: down,
-            config: { velocity: direction[0] * velocity, decay: true }
-        })
-        if (first) { 
-            console.log('drag start')
-            // set({
-            //     x: 0, // currentBar * seg,
-            //     immediate: true
-            // })
-            setIsDragging(true) 
+      const draggerBind = useDrag(({ first, last, movement, down, velocity, direction, memo = [draggerX.getValue()] }) => {
+        if (!isPlaying) {
+          const draggerWidth = boundaries(draggerRef).width
+          const boundaryWidth = boundaries(draggerContentRef).width
+          const seg = segmentWidth(draggerContentRef)
+          const clampedX = clampedResult(memo[0] + movement[0], 0, boundaryWidth - draggerWidth)
+          // console.log('direction[0] * velocity', direction[0] * velocity)
+          set({
+              draggerX: clampedX,
+              immediate: down,
+              config: { velocity: direction[0] * velocity, decay: true }
+          })
+          if (first) { 
+              console.log('drag start')
+              // set({
+              //     draggerX: 0, // currentBar * seg,
+              //     immediate: true
+              // })
+              setIsDragging(true) 
+          }
+          if (last) { 
+              console.log('drag end content left', boundaries(draggerRef).left, boundaries(draggerRef).x)
+              console.log('drag end new pos', memo[0] + movement[0])
+              
+              const newBarIndex = calculatePositionIndex(memo[0] + movement[0], draggerContentRef)
+              updateCurrentBar(newBarIndex)        
+              
+              console.log('newBarIndex', newBarIndex)
+              
+              if(!isScrolling){ 
+                const perc = (seg * newBarIndex) / boundaryWidth
+                console.log('drag end perc', perc)
+                moveScrollerTo(perc)
+              }
+              const clampedX = clampedResult(seg * newBarIndex, 0, seg * (numBars - zoom))
+              set({
+                  draggerX: clampedX,
+                  immediate: false,
+                  config: { velocity: direction[0] * velocity, decay: false }    
+              }) 
+              setIsDragging(false)      
+          }
+          return memo
         }
-        if (last) { 
-            console.log('drag end content left', boundaries(draggerRef).left, boundaries(draggerRef).x)
-            console.log('drag end new pos', memo[0] + movement[0])
-            
-            const newBarIndex = calculatePositionIndex(memo[0] + movement[0], draggerContentRef)
-            updateCurrentBar(newBarIndex)        
-            
-            console.log('newBarIndex', newBarIndex)
-            
-            if(!isScrolling){ 
-              const perc = (seg * newBarIndex) / boundaryWidth
-              console.log('drag end perc', perc)
-              moveScrollerTo(perc)
-            }
-            const clampedX = clampedResult(seg * newBarIndex, 0, seg * (numBars - zoom))
-            set({
-                x: clampedX,
-                immediate: false,
-                config: { velocity: direction[0] * velocity, decay: false }    
-            }) 
-            setIsDragging(false)      
-        }
-        return memo
     }, 
     {
         domTarget: draggerRef 
@@ -185,29 +186,46 @@ const ScrollControl = () => {
 
 
     useEffect(() => {      
-        const seg = segmentWidth(draggerContentRef)      
-        // const clampedX = clampedResult(seg * currentBar, 0, seg * (numBars - zoom))  
-        // set( { 
-        //     x: clampedX,
-        //     immediate: true,
-        //     config: { velocity: .05, decay: false }  
+        const seg = segmentWidth(draggerContentRef) 
+        if (isPlaying) {
+          const clampedX = clampedResult(seg * currentBar, 0, seg * (numBars - zoom))  
+          set( { 
+              draggerX: clampedX,
+              immediate: true,
+              config: { velocity: .05, decay: false }  
+          })
+          const boundaryWidth = boundaries(draggerContentRef).width
+          const perc = (seg * currentBar) / boundaryWidth
+          moveScrollerTo(perc)
+        }     
+    }, [currentBar, numBars, zoom, isPlaying])
 
-        // })
-        const boundaryWidth = boundaries(draggerContentRef).width
-        const perc = (seg * currentBar) / boundaryWidth
-        moveScrollerTo(perc)
-    }, [currentBar, numBars, zoom])
+    useEffect(() => {      
+      scrollerRef.current.style.overflowX = (isPlaying) ? 'hidden' : 'auto'
+    }, [isPlaying])
 
-    
-    useEffect(!isPlaying ? draggerBind : ()=>{}, [draggerBind, isPlaying])
+    // useEffect(() => {
+    //   console.log('ScrollControl isPlaying', isPlaying)
+    //   if (isPlaying) {
+    //     scrollerRef.current.style.overflowX= 'hidden'
+    //   } else {
+    //     draggerBind()
+    //     scrollerBind()
+    //   }
+    // },[draggerBind, scrollerBind, isPlaying])
+
+    useEffect(draggerBind, [draggerBind])
+
+    useEffect(scrollerBind, [scrollerBind])
 
     const marqueeStyle = {
         // transform: isDragging ? x.interpolate(x => `translateX(${x}px)`) : `translateX(${Math.min(currentBar * 100 / zoom, (numBars - zoom) * 100 / zoom)}%)`,
-        transform: x.interpolate(x => `translateX(${x}px)`),
+        transform: draggerX.interpolate(x => `translateX(${x}px)`),
         transitionDuration: isDragging ? '0s' : '.15s',
         width: `${100 / numBars * zoom}%`, 
         borderStyle: hasClipboard ? 'dotted' : 'solid',
-        borderColor: numBars === zoom ? 'transparent' : vars.greencolor
+        borderColor: numBars === zoom ? 'transparent' : vars.greencolor,
+        cursor: isPlaying ? 'default' : 'grab'
     }
 
     return (
@@ -216,7 +234,7 @@ const ScrollControl = () => {
                 <animated.div ref={draggerRef} className={classes.marquee} style={marqueeStyle}></animated.div>
                 <BarDisplay ref={draggerContentRef} />
             </div>
-            <div {...scrollerBind()} ref={scrollerRef} className={classes.scrollPane}>
+            <div ref={scrollerRef} className={classes.scrollPane}>
                 <Tracks ref={scrollerContentRef}/>
             </div>
         </>
@@ -225,3 +243,4 @@ const ScrollControl = () => {
 
 export default ScrollControl
 
+/* {...scrollerBind()}  */
