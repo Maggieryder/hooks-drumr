@@ -114,7 +114,7 @@ const ScrollControl = () => {
               }
               console.log('onScroll ended event scrollerRef.current.scrollLeft', scrollerRef.current.scrollLeft)
               const newBarIndex = calculatePositionIndex(scrollerRef.current.scrollLeft, scrollerContentRef)
-              updateCurrentBar(newBarIndex)
+              if(!isDragging) updateCurrentBar(newBarIndex)
               // const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width
            
               setIsScrolling(false) 
@@ -161,14 +161,14 @@ const ScrollControl = () => {
           if (last) { 
               // console.log('drag end new pos', memo[0] + movement[0]) 
               const newBarIndex = calculatePositionIndex(pos, draggerContentRef)
-              // updateCurrentBar(newBarIndex)        
+              updateCurrentBar(newBarIndex)        
               console.log('drag end newBarIndex', newBarIndex) 
               if(!isScrolling){ 
                 const perc = (seg * newBarIndex) / boundaryWidth
                 console.log('drag end perc', perc)
-                moveScrollerTo(perc)
+                // moveScrollerTo(perc)
               }
-              // setDraggerPosition(seg * newBarIndex, 0, boundaryWidth, down, v )
+              setDraggerPosition(seg * newBarIndex, 0, boundaryWidth, down, v )
               setIsDragging(false)      
           }
           return memo
