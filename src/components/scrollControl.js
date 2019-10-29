@@ -133,18 +133,25 @@ const ScrollControl = () => {
         }
       )
 
+      const setDraggerPosition = useCallback(
+        (position, max, down, velocity) => {
+          const draggerWidth = boundaries(draggerRef).width
+          const clampedX = clampedResult(position, 0, max - draggerWidth)
+          set({
+            draggerX: clampedX,
+            immediate: down,
+            config: { velocity: velocity, decay: true }
+          })
+        }, []
+      )
+
       const draggerBind = useDrag(({ first, last, movement, down, velocity, direction, memo = [draggerX.getValue()] }) => {
         if (!isPlaying) {
-          const draggerWidth = boundaries(draggerRef).width
           const boundaryWidth = boundaries(draggerContentRef).width
           const seg = segmentWidth(draggerContentRef)
-          const clampedX = clampedResult(memo[0] + movement[0], 0, boundaryWidth - draggerWidth)
-          // console.log('direction[0] * velocity', direction[0] * velocity)
-          set({
-              draggerX: clampedX,
-              immediate: down,
-              config: { velocity: direction[0] * velocity, decay: true }
-          })
+          const pos = memo[0] + movement[0]
+          const v = direction[0] * velocity
+          setDraggerPosition(pos, boundaryWidth, down, v )
           if (first) { 
               console.log('drag start')
               // set({
@@ -154,12 +161,10 @@ const ScrollControl = () => {
               setIsDragging(true) 
           }
           if (last) { 
-              console.log('drag end content left', boundaries(draggerRef).left, boundaries(draggerRef).x)
-              console.log('drag end new pos', memo[0] + movement[0])
-              
-              const newBarIndex = calculatePositionIndex(memo[0] + movement[0], draggerContentRef)
+              // console.log('drag end content left', boundaries(draggerRef).left, boundaries(draggerRef).x)
+              // console.log('drag end new pos', memo[0] + movement[0]) 
+              const newBarIndex = calculatePositionIndex(pos, draggerContentRef)
               updateCurrentBar(newBarIndex)        
-              
               console.log('newBarIndex', newBarIndex)
               
               if(!isScrolling){ 
@@ -173,6 +178,7 @@ const ScrollControl = () => {
                   immediate: false,
                   config: { velocity: direction[0] * velocity, decay: false }    
               }) 
+              // setDraggerPosition(seg * newBarIndex, seg * (numBars - zoom), false, v )
               setIsDragging(false)      
           }
           return memo
