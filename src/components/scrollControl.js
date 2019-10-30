@@ -106,7 +106,6 @@ const ScrollControl = () => {
               } 
             }   
             if (last) {
-              
               if (!isFirefox) {
                 axis.current = null
                 scrollerRef.current.style.overflowX = 'auto'
@@ -114,14 +113,17 @@ const ScrollControl = () => {
               }
               console.log('onScroll ended event scrollerRef.current.scrollLeft', scrollerRef.current.scrollLeft)
               const newBarIndex = calculatePositionIndex(scrollerRef.current.scrollLeft, scrollerContentRef)
-              if(!isDragging) updateCurrentBar(newBarIndex)
-              // const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width
-           
-              setIsScrolling(false) 
+              if(!isDragging) {
+                console.log('SCROLLER updateCurrentBar isDragging', isDragging)
+                updateCurrentBar(newBarIndex)
+              }
+              // const perc = scrollerRef.current.scrollLeft / boundaries(scrollerRef).width   
+              // setIsScrolling(false)  
+              setTimeout(() => {
+                setIsScrolling(false)
+              }, 200) 
             } 
-            // console.log('scroll', scrollerRef.current.scrollLeft)
-            // console.log('width', boundaries(scrollerRef).width)
-            if(!isDragging){
+            else if(!isDragging){
               const { width } = boundaries(scrollerRef)
               const perc = scrollerRef.current.scrollLeft / width
               moveDraggerTo(perc)
@@ -153,23 +155,27 @@ const ScrollControl = () => {
           const seg = segmentWidth(draggerContentRef)
           const pos = memo[0] + movement[0]
           const v = direction[0] * velocity
-          setDraggerPosition(pos, 0, boundaryWidth, down, v )
+          
           if (first) { 
               console.log('drag start')
               setIsDragging(true) 
           }
           if (last) { 
-              // console.log('drag end new pos', memo[0] + movement[0]) 
               const newBarIndex = calculatePositionIndex(pos, draggerContentRef)
-              updateCurrentBar(newBarIndex)        
-              console.log('drag end newBarIndex', newBarIndex) 
-              if(!isScrolling){ 
-                const perc = (seg * newBarIndex) / boundaryWidth
-                console.log('drag end perc', perc)
-                // moveScrollerTo(perc)
-              }
               setDraggerPosition(seg * newBarIndex, 0, boundaryWidth, down, v )
-              setIsDragging(false)      
+              if(!isScrolling){ 
+                console.log('DRAGGER updateCurrentBar isScrolling', isScrolling) 
+                updateCurrentBar(newBarIndex) 
+                const perc = (seg * newBarIndex) / boundaryWidth
+                // console.log('drag end perc', perc)
+                moveScrollerTo(perc)
+              }
+              // setIsDragging(false) 
+              setTimeout(() => {
+                setIsDragging(false) 
+              }, 500)      
+          } else {
+              setDraggerPosition(pos, 0, boundaryWidth, down, v )
           }
           return memo
         }
