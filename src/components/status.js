@@ -43,7 +43,7 @@ const Status = () => {
             </div>
             <div></div>
             <div className={classes.barbeatstep} >
-                <div className={classes.statusbar}>{currentBar < 99 ? currentBar < 9 ? `00${currentBar + 1}` : `0${currentBar + 1}` : currentBar + 1 }</div>
+                <div className={classes.statusbar}>{currentBar < 99 ? currentBar < 9 ? `00${currentBar + 1}` : `0${currentBar + 1}` : `${currentBar + 1}` }</div>
                 <div className={classes.statusbeat}>{ Math.floor(currentStep / numBeats) + 1 }</div>
                 <div className={classes.statusstep}>{currentStep < 9 ? `0${currentStep + 1}` : currentStep + 1 }</div>
             </div>

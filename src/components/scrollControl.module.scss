@@ -14,11 +14,10 @@
     bottom: 203px;
     left: 0;
     right: 0;
-    overflow: hidden;
+    overflow: auto;
     // width: 100%;
     // height: calc(100% - 284px);
-    overflow: auto;
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     // transition: height .5s ease-in-out;
     scrollbar-width: none; /* Firefox */
     // scrollbar-height: none; /* Firefox */
