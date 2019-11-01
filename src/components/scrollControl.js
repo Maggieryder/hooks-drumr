@@ -28,7 +28,8 @@ const ScrollControl = () => {
     const draggerRef = useRef()
 
     const [ isDragging, setIsDragging ] = useState(false)
-    const [ isScrolling, setIsScrolling ] = useState(false)
+    const [ userScroll, setUserScroll ] = useState(false)
+    const [ isUpdating, setIsUpdating ] = useState(false)
 
     const [{ dragX, scrollX }, set] = useSpring(() => ({ dragX: 0, scrollX: 0, config: config.gentle }))
 
@@ -41,22 +42,23 @@ const ScrollControl = () => {
     )
 
     const moveDragAndScroll = useCallback(
-      (pos, controller, down, v) => {    
+      (pos, controller, down, v, releaseDelay = false) => {
+        const scrollableAreaWidth = boundaries(scrollerRef.current).width
+        const draggerWidth = boundaries(draggerRef.current).width
+        const scrollableContentWidth = boundaries(scrollerContentRef.current).width
+        const maxDragRight = scrollableAreaWidth - draggerWidth
+        const maxScrollRight = scrollableContentWidth - scrollableAreaWidth    
         if (!isPlaying) {
-          const scrollableAreaWidth = boundaries(scrollerRef.current).width  
-          const scrollableContentWidth = boundaries(scrollerContentRef.current).width
-          const draggerWidth = boundaries(draggerRef.current).width
-          
-          const maxDragRight = scrollableAreaWidth - draggerWidth
-          const maxScrollRight = scrollableContentWidth - scrollableAreaWidth
 
           let newBarIndex
 
           if (controller === 'drag') { 
             const clampedDragX = clamp(pos, 0, maxDragRight)
-            const draggerSegment = segmentWidth(scrollerRef) 
+            const draggerSegment = segmentWidth(scrollerRef)
+            const scrollerSegment = segmentWidth(scrollerContentRef) 
             newBarIndex = calculatePositionIndex(pos, draggerSegment)
             const restingDragX = clamp(draggerSegment * newBarIndex, 0, maxDragRight)
+            const restingScrollX = clamp(scrollerSegment * newBarIndex, 0, maxScrollRight)
             // console.log('dragging pos clamped', pos, clampedDragX)
             console.log('dragging newBarIndex, restingDragX', newBarIndex, restingDragX)
             const dragPosition = down ? clampedDragX : restingDragX
@@ -72,60 +74,101 @@ const ScrollControl = () => {
               })
             } else {
               console.log('HERE')
-              // setIsScrolling(false) 
+              // setUserScroll(false) 
               if (currentBar !== newBarIndex) updateCurrentBar(newBarIndex)
               set({
                 dragX: dragPosition,
-                // scrollX: restingScrollX,
+                scrollX: restingScrollX,
                 immediate: down,
                 config: { velocity: v, decay: down }
               })
             }
           } else if (controller === 'scroll'){ 
-            if (!isDragging && isScrolling){
-              console.log('scrolling pos', pos)
+            if (!isDragging && !isUpdating){
+              setUserScroll(true)
               const clampedScrollX = clamp(pos, 0, maxScrollRight)
               const scrollerSegment = segmentWidth(scrollerContentRef)
               newBarIndex = calculatePositionIndex(pos, scrollerSegment)
               // const restingScrollX = clamp(scrollerSegment * newBarIndex, 0, maxScrollRight)
-              console.log('scrolling newBarIndex', newBarIndex,)
-            // const scrollPosition = down ? clampedScrollX : restingScrollX
-            // const scrollPercentage = scrollPosition / scrollableAreaWidth
+              // const scrollPosition = down ? clampedScrollX : restingScrollX
               const scrollPercentage = clampedScrollX / scrollableAreaWidth
-              if(!down){ 
-                if (currentBar !== newBarIndex) updateCurrentBar(newBarIndex)
-                set({
-                  dragX: Math.min(draggerWidth * scrollPercentage, maxDragRight),
-                  scrollX: clampedScrollX,
-                  immediate: true,
-                  config: { velocity: v, decay: true }
-                })
-              }
+              console.log('############# scrolling pos', pos)
+              console.log('############# scrolling newBarIndex', newBarIndex)
+              console.log('############# scrolling scrollPercentage', scrollPercentage)
+              // if(!down && !releaseDelay){ 
+              if (currentBar !== newBarIndex) updateCurrentBar(newBarIndex)
+              set({
+                dragX: Math.min(draggerWidth * scrollPercentage, maxDragRight),
+                scrollX: clampedScrollX,
+                immediate: true,
+                config: { velocity: v, decay: true }
+              })
+              // }
             }
           }
-        }
+        } 
       },
-      [isDragging, isScrolling, currentBar, isPlaying],
+      [isDragging, currentBar, isPlaying, isUpdating],
     )
+
+    useEffect(() => {
+        console.log('currentBar change', currentBar)
+        console.log('isDragging', isDragging)
+        let updateID 
+        if (!isDragging && !userScroll) {
+          scrollerRef.current.style.scrollBehavior = 'smooth'
+          setIsUpdating(true)
+          const scrollableAreaWidth = boundaries(scrollerRef.current).width
+          const scrollableContentWidth = boundaries(scrollerContentRef.current).width
+          const draggerWidth = boundaries(draggerRef.current).width
+          const scrollerSegment = segmentWidth(scrollerContentRef)
+          const draggerSegment = segmentWidth(scrollerRef)
+          set({
+            dragX: Math.min(draggerSegment * currentBar, scrollableAreaWidth - draggerWidth),
+            scrollX: Math.min(scrollerSegment * currentBar, scrollableContentWidth - scrollableAreaWidth),
+            immediate: true,
+            config: { velocity: 0, decay: true }
+          })
+          updateID = setTimeout(() => {
+            console.log('CLEAR updateID timeout', updateID)
+            scrollerRef.current.style.scrollBehavior = 'auto'
+            setIsUpdating(false)
+            updateID = null
+          }, 500) 
+        }
+        return (() => {
+          console.log('UNBIND updateID timeout', updateID)
+          scrollerRef.current.style.scrollBehavior = 'auto'
+          setIsUpdating(false)
+          if (updateID) clearTimeout(updateID)
+        })    
+    }, [currentBar, isDragging, userScroll, setIsUpdating])
+
+    useEffect(() => {
+      console.log('[ SCROLL_CONTROLL ] isPlaying', isPlaying )
+      scrollerRef.current.style.overflowX = isPlaying ? 'hidden' : 'auto' 
+      // scrollerRef.current.style.scrollBehavior = isUpdating ? 'smooth' : 'auto'
+    }, [ isPlaying ])
 
     const scrollerBind = useScroll(
         ({event, first, last, movement, down, velocity, direction: [dx, dy], memo = [scrollX.getValue()] }) => { 
             if (first) {
-              console.log('onScroll started event', event ) 
-              setIsScrolling(true)
+              console.log('onScroll started memo', memo[0] ) 
+              // setUserScroll(true)
             } 
             const pos = memo[0] + movement[0]
             const v = dx * velocity
-            if (event && event.gesture) moveDragAndScroll(pos, event.gesture, false, v)    
+            if (event && event.gesture) moveDragAndScroll(pos, event.gesture, true, v)    
             !last && event.preventDefault()
             if (!axis.current) {
               if (Math.abs(dx) > Math.abs(dy)) axis.current = 'x'
               else if (Math.abs(dy) > Math.abs(dx)) axis.current = 'y'
             }
-            // if (axis.current === 'x') set({ dragX: memo[0] + mx, immediate: true })
-            // else if (axis.current === 'y') set({ draggerY: memo[1] + my, immediate: true })
+            // if (axis.current === 'x') set({ dragX: memo[0] + movement[0], immediate: true })
+            // else if (axis.current === 'y') set({ draggerY: memo[1] + movement[1], immediate: true })
             if (!isFirefox) {
-              if (axis.current === 'x' && trackView !== 1) {
+              // if (axis.current === 'x' && trackView !== 1) {
+              if (axis.current === 'x') {
                 scrollerRef.current.style.overflowY= 'hidden'
               } else {
                 scrollerRef.current.style.overflowX= 'hidden'
@@ -137,8 +180,9 @@ const ScrollControl = () => {
                 scrollerRef.current.style.overflowX = 'auto'
                 scrollerRef.current.style.overflowY = 'auto'
               }
-              console.log('onScroll ENDED event', event )
-              setIsScrolling(false)  
+              console.log('onScroll ENDED memo', memo[0] )
+              // setUserScroll(false)
+              setTimeout(()=> setUserScroll(false), 1000) 
             } 
             return memo
         }, 
@@ -148,47 +192,28 @@ const ScrollControl = () => {
         }
     )
 
-    const draggerBind = useDrag(({ event, first, last, movement, down, velocity, direction, memo = [dragX.getValue()] }) => {
+    const draggerBind = useDrag(
+      ({ event, first, last, movement, down, velocity, direction, memo = [dragX.getValue()] }) => {
           const pos = memo[0] + movement[0]
           const v = direction[0] * velocity
-          moveDragAndScroll(pos, event.gesture, down, v)
+          moveDragAndScroll(pos, event.gesture, down, v, true)
           // console.log('onDrag event', event.gesture)
           if (first) { 
-              console.log('drag start')
+              console.log('drag start memo', memo[0])
               setIsDragging(true) 
           }
           if (last) { 
-              console.log('onDrag event', event.gesture)
-              setIsDragging(false)                  
+              console.log('onDrag end memo', memo[0])
+              setTimeout(()=> setIsDragging(false), 1000)                 
           }
           return memo
-      }, 
-      {
+        }, 
+        {
           domTarget: draggerRef 
           // dragDelay: true,
           // drag: true, 
-      }
+        }
     )
-
-
-    useEffect(() => {
-      console.log('currentBar change', currentBar)
-      console.log('isDragging isScrolling', isDragging, isScrolling)
-        scrollerRef.current.style.overflowX = (isPlaying) ? 'hidden' : 'auto'  
-        if (!isDragging && !isScrolling) {
-          scrollerRef.current.style.scrollBehavior = (isPlaying) ? 'smooth' : 'auto'
-          const scrollableAreaWidth = boundaries(scrollerRef.current).width
-          const draggerWidth = boundaries(draggerRef.current).width
-          const scrollerSegment = segmentWidth(scrollerContentRef)
-          const scrollPercentage = (scrollerSegment * currentBar) / scrollableAreaWidth 
-          set({
-            dragX: Math.min(draggerWidth * scrollPercentage,scrollableAreaWidth - draggerWidth),
-            scrollX: scrollerSegment * currentBar,
-            immediate: true,
-            config: { velocity: 0.15, decay: true }
-          })
-        }     
-    }, [currentBar, isPlaying, isDragging, isScrolling])
 
     useEffect(draggerBind, [draggerBind])
 
