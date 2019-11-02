@@ -96,13 +96,13 @@ const ScrollControl = () => {
               console.log('############# scrolling newBarIndex', newBarIndex)
               console.log('############# scrolling scrollPercentage', scrollPercentage)
               // if(!down && !releaseDelay){ 
-              if (currentBar !== newBarIndex) updateCurrentBar(newBarIndex)
-              set({
-                dragX: Math.min(draggerWidth * scrollPercentage, maxDragRight),
-                scrollX: clampedScrollX,
-                immediate: true,
-                config: { velocity: v, decay: true }
-              })
+              // if (currentBar !== newBarIndex) updateCurrentBar(newBarIndex)
+              // set({
+              //   // dragX: Math.min(draggerWidth * scrollPercentage, maxDragRight),
+              //   scrollX: clampedScrollX,
+              //   immediate: true,
+              //   config: { velocity: v, decay: true }
+              // })
               // }
             }
           }
@@ -114,6 +114,7 @@ const ScrollControl = () => {
     useEffect(() => {
         console.log('currentBar change', currentBar)
         console.log('isDragging', isDragging)
+        console.log('userScroll', userScroll)
         let updateID 
         if (!isDragging && !userScroll) {
           scrollerRef.current.style.scrollBehavior = 'smooth'
