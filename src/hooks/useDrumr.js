@@ -14,6 +14,7 @@ import { AUDIO_CONTEXT, MIXER } from '../api'
 import { magentacolor, purplecolor, orangecolor, cyancolor, neoncolor } from '../scss/_vars.scss'
 
 const DRUM_COLORS = [magentacolor, purplecolor, orangecolor, cyancolor, neoncolor ]
+const PATH = 'assets/audio/'
 
 // const initialTracksState = {
 //   all: [],
@@ -101,10 +102,10 @@ const useDrumr = () => {
     }
   }
 
-  const loadBuffer = async (url, callback) => {
+  const loadBuffer = async (data, callback) => {
     const request = new XMLHttpRequest();
       //header('Access-Control-Allow-Origin: *');
-      request.open('get', url, true);
+      request.open('get', data.url, true);
       request.responseType = 'arraybuffer';
       request.onload = function() {
         AUDIO_CONTEXT.decodeAudioData(request.response, function(buffer) {
@@ -115,27 +116,49 @@ const useDrumr = () => {
       request.send();
   }
 
-  const loadBuffers = async (obj, type) => {
-    const directory = obj.directory,
-    voices = obj.voices
+  const loadBuffers = async ({directory, voices}, type) => {
     let buffersToLoad = voices.length,
     buffers = [] 
     // console.log('loadBuffers voices', voices) 
     dispatch({ type: TYPES.IS_LOADING, value: true })
-    for (let i = 0;i<voices.length;i++){
-      buffers[i] = { label:voices[i].label, buffer:{}, value: voices[i].value }
-      loadBuffer('assets/audio/'+ directory + voices[i].smple, (buffer) => {
-          //console.log(buffer);
-          buffers[i].buffer = buffer
-          buffersToLoad --
-          // console.log('buffersToLoad', buffersToLoad)
-          if (buffersToLoad < 1) {
-            const bufferType = type === 'verbBuffers' ? TYPES.UPDATE_VERB_BUFFERS : TYPES.UPDATE_KIT_BUFFERS
-            dispatch({ type: bufferType, value: buffers })
-          } 
+    voices.map((voice, i) => {
+      const voiceData = {
+        url: PATH + directory + voice.smple,
+        label: voice.label,
+        value: voice.value
+      }
+      // console.log('voiceData', voiceData)
+      return loadBuffer( voiceData, (buffer) => {
+        buffers[i] = {
+          buffer: buffer,
+          label: voiceData.label,
+          value: voiceData.value
         }
-      )
-    }
+        // console.log('buffers[i]',buffers[i]);
+        buffersToLoad --
+        // console.log('buffersToLoad', buffersToLoad)
+        if (buffersToLoad < 1) {
+          const bufferType = type === 'verbBuffers' ? TYPES.UPDATE_VERB_BUFFERS : TYPES.UPDATE_KIT_BUFFERS
+          dispatch({ type: bufferType, value: buffers })
+        } 
+        return buffers
+      } 
+    )
+    })
+    // for (let i = 0;i<voices.length;i++){
+    //   buffers[i] = { label:voices[i].label, buffer:{}, value: voices[i].value }
+    //   loadBuffer( PATH + directory + voices[i].smple, (buffer) => {
+    //       //console.log(buffer);
+    //       buffers[i].buffer = buffer
+    //       buffersToLoad --
+    //       // console.log('buffersToLoad', buffersToLoad)
+    //       if (buffersToLoad < 1) {
+    //         const bufferType = type === 'verbBuffers' ? TYPES.UPDATE_VERB_BUFFERS : TYPES.UPDATE_KIT_BUFFERS
+    //         dispatch({ type: bufferType, value: buffers })
+    //       } 
+    //     }
+    //   )
+    // }
   }
 
   const setCurrentKitId = index => {
