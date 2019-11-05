@@ -7,55 +7,58 @@ const useLoadBuffers = () => {
     const [buffers, setBuffers] = useState([])
     const [loading, setLoading] = useState(false)
 
-    // useEffect(() => {
-    //     let buffersToLoad
-    //     const loadBuffer = async (url, label, value) => {
-    //         const request = new XMLHttpRequest()
-    //         //header('Access-Control-Allow-Origin: *')
-    //         request.open('get', url, true)
-    //         request.responseType = 'arraybuffer'
-    //         request.onload = function() {
-    //             AUDIO_CONTEXT.decodeAudioData(request.response, function(buffer) {
-    //                 setBuffers([...buffers, { label, value, buffer }])
-    //                 ( buffersToLoad < 1) ? setLoading(false) : buffersToLoad --   
-    //             },
-    //             function(e){ alert("Error with decoding audio data", e ); })
-    //         }
-    //         request.send()
-    //     }
-    //     function loadBuffers({ dir, voices } ) {
-    //         buffersToLoad = voices.length
-    //         setLoading(true)
-    //         voices.map( v => {
-    //             loadBuffer(PATH + dir + v.smple, v.label, v.value)
-    //             return false
-    //         })
-    //     }
-        
-    // },[ data ])
+    useEffect(() => {
+        if( !loading ) {
+            // console.log('[ useLoadBuffers ]', buffers)
+        } 
+    },[loading, buffers])
 
-    let buffersToLoad
-    const loadBuffer = async (url, label, value) => {
+    const loadBuffer = async (data, callback) => {
         const request = new XMLHttpRequest()
         //header('Access-Control-Allow-Origin: *')
-        request.open('get', url, true)
+        request.open('get', data.url, true)
         request.responseType = 'arraybuffer'
-        request.onload = function() {
+        request.onload = function() {    
             AUDIO_CONTEXT.decodeAudioData(request.response, function(buffer) {
-                setBuffers([...buffers, { label, value, buffer }])
-                buffersToLoad < 1 ? setLoading(false) : buffersToLoad --   
+                callback(buffer)
             },
-            function(e){ alert("Error with decoding audio data", e ); })
+            function(e){ console.log("Error with decoding audio data", e ) })
         }
         request.send()
     }
-    const loadBuffers = async ({ dir, voices }) => {
-        buffersToLoad = voices.length
-        console.log('buffersToLoad', buffersToLoad)
+    
+    const loadBuffers = async ({directory, voices}) => {
         setLoading(true)
-        voices.map( v => loadBuffer(PATH + dir + v.smple, v.label, v.value))
+        let buffersToLoad = voices.length,
+        data = []
+        voices.map((voice, i) => {
+            const voiceData = {
+                url: PATH + directory + voice.smple,
+                label: voice.label,
+                value: voice.value
+            }
+            return loadBuffer( voiceData, (buffer) => {
+                data.push({
+                    buffer: buffer,
+                    label: voiceData.label,
+                    value: voiceData.value
+                })
+                console.log('buffer', buffersToLoad)
+                buffersToLoad --
+                if (buffersToLoad < 1) {
+                    setBuffers(data)
+                    setLoading(false)
+                }
+            })
+            // return false
+        })
     }
-    return { buffers, loading, loadBuffers }
+
+    return { 
+        buffers, 
+        loading, 
+        loadBuffers 
+    }
 }
 
 export default useLoadBuffers

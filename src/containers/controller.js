@@ -14,7 +14,6 @@ import ScrollControl from '../components/scrollControl'
 import { useAuth } from "../hooks/useAuth.js";
 
 import useDrumr from '../hooks/useDrumr'
-import useLoadBuffers from '../hooks/useLoadBuffers'
 import useSequencer from '../hooks/useSequencer'
 import useTrack from '../hooks/useTrack'
 
@@ -31,7 +30,7 @@ const Controller = () => {
 
   const { 
     loadData, 
-    loadBuffers, 
+    loadKitData, 
     kits, 
     currentKitId, 
     setCurrentKitId, 
@@ -39,8 +38,6 @@ const Controller = () => {
     verbs,   
     tracks,
     addTrack } = useDrumr()
-
-  // const { buffers, loading, loadBuffers } = useLoadBuffers()
 
   const {
     dispatch,
@@ -100,8 +97,9 @@ const Controller = () => {
 
   useEffect(() => {
     if (kits) {
-      console.log('loadBuffers kits', kits, currentKitId)
-      loadBuffers(kits[currentKitId], 'kitBuffers')
+      // console.log('loadBuffers kits', kits, currentKitId)
+      // loadBuffers(kits[currentKitId], 'kitBuffers')
+      loadKitData(kits[currentKitId])
     }  
     return (() => {
       
@@ -113,12 +111,14 @@ const Controller = () => {
     if (all.length < 1 && kitBuffers[0].buffer) addTrack(0)
   }, [kitBuffers, all])
 
+
+
   
 
   useEffect(() => { 
     if (verbs) {
       // console.log('verbs', verbs[0])
-      loadBuffers(verbs[0], 'verbBuffers')
+      // loadBuffers(verbs[0], 'verbBuffers')
     } 
     return (() => {
       
