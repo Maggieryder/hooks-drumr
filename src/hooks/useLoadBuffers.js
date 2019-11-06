@@ -4,14 +4,14 @@ import { AUDIO_CONTEXT } from '../api'
 const PATH = 'assets/audio/'
 
 const useLoadBuffers = () => {
-    const [buffers, setBuffers] = useState([])
+    const [buffers, setBuffers] = useState(null)
     const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        if( !loading ) {
-            // console.log('[ useLoadBuffers ]', buffers)
-        } 
-    },[loading, buffers])
+    // useEffect(() => {
+    //     if( !loading ) {
+    //         // console.log('[ useLoadBuffers ]', buffers)
+    //     } 
+    // },[loading, buffers])
 
     const loadBuffer = async (data, callback) => {
         const request = new XMLHttpRequest()
@@ -28,6 +28,7 @@ const useLoadBuffers = () => {
     }
     
     const loadBuffers = async ({directory, voices}) => {
+        console.log('directory, voices', directory, voices)
         setLoading(true)
         let buffersToLoad = voices.length,
         data = []
@@ -48,6 +49,7 @@ const useLoadBuffers = () => {
                 if (buffersToLoad < 1) {
                     setBuffers(data)
                     setLoading(false)
+                    
                 }
             })
             // return false

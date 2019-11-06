@@ -45,13 +45,15 @@ const Controls = ( { track } ) => {
 
   useEffect(() => {
     // console.log('[Controls] track.id voiceId', track.id(), voiceId)
-    // console.log('[ Controls ] kitBuffers', kitBuffers)
-    all[track.id()].assignTrackBuffer(kitBuffers[voiceId].buffer)
+    console.log('[ Controls ] kitBuffers[voiceId].label', kitBuffers[voiceId].label)
+    if(kitBuffers) all[track.id()].assignTrackBuffer(kitBuffers[voiceId].buffer)
     // all[track.id()].triggerSample(AUDIO_CONTEXT.currentTime)
     return (() => {
       
     })
   }, [voiceId, kitBuffers])
+
+  if(!kitBuffers) return null
 
   return (
     <div className={classes.controls}> 
@@ -95,13 +97,13 @@ const Controls = ( { track } ) => {
         <Label>Solo</Label>
       </Control>
       <Control>
-        <Soundwave label={kitBuffers[voiceId].label} 
+        {kitBuffers && <Soundwave label={kitBuffers[voiceId].label} 
           buffer={kitBuffers[voiceId].buffer}
           isMute={(mute && !solo) || (soloed.length >= 1 && !track.isSolo())}
           onClickHandler={() => {
             triggerPlay({trackId: track.id(), value: true}) 
             track.triggerSample(AUDIO_CONTEXT.currentTime)
-          }} track={track}/>
+          }} track={track}/>}
       </Control>
     </div>
   )

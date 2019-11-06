@@ -25,6 +25,7 @@ export default function(state = initialState, action) {
               currentVerbId: action.value,
             }
         case TYPES.UPDATE_KIT_BUFFERS:
+            console.log('REDUCER update kitBuffers', action.value)
             return {
               ...state,
               kitBuffers: action.value,
@@ -48,6 +49,18 @@ export default function(state = initialState, action) {
               verbs: action.value.verbs,
               isLoading: false
             }
+        case TYPES.STORE_KITS:
+          console.log('REDUCER store-kits', action.value)
+          return {
+            ...state,
+            kits: action.value,
+          }
+        case TYPES.STORE_VERBS:
+          // console.log('REDUCER store-verbs', action.value)
+          return {
+            ...state,
+            verbs: action.value
+          }
         case TYPES.HAS_ERROR:
             return {
               ...state,

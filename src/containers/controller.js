@@ -11,7 +11,8 @@ import Processors from '../components/processors'
 import Transport from '../components/transport'
 import ScrollControl from '../components/scrollControl'
 
-import { useAuth } from "../hooks/useAuth.js";
+import { useAuth } from "../hooks/useAuth.js"
+import useLoadData from '../hooks/useLoadData'
 
 import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
@@ -24,15 +25,15 @@ import uiclasses from '../components/ui/ui.module.scss'
 
 import { MIXER, SEQUENCER } from '../api'
 
-const Controller = (props) => {
+const Controller = () => {
 
-  console.log('props', props)
+  const { response, error, isDataLoading } = useLoadData('./resources.json')
 
   const auth = useAuth()
 
   const { 
-    loadData, 
-    loadKitData, 
+    saveData, 
+    loadBuffers, 
     kits, 
     currentKitId, 
     setCurrentKitId, 
@@ -66,8 +67,8 @@ const Controller = (props) => {
   ]
 
   useEffect(() => {
-    console.log('[controller] INIT')
-    // loadData('./resources')
+    console.log('[controller] INIT', )
+    // saveData(props)
     SEQUENCER.init(dispatch, triggerPlay)
     SEQUENCER.updateCurrentBar(currentBar)
     SEQUENCER.updateNumBars(numBars)
@@ -77,6 +78,13 @@ const Controller = (props) => {
       SEQUENCER.destroy()
     })
   }, [])
+
+  useEffect(() => {
+    console.log('[ controller ] response', response)
+    if (response) {
+      saveData(response)
+    }  
+  }, [response])
 
   useEffect(() => {
     // console.log('[ controller ] all length', all.length)
@@ -101,7 +109,7 @@ const Controller = (props) => {
     if (kits) {
       // console.log('loadBuffers kits', kits, currentKitId)
       // loadBuffers(kits[currentKitId], 'kitBuffers')
-      loadKitData(kits[currentKitId])
+      loadBuffers(kits[currentKitId])
     }  
     return (() => {
       
@@ -109,13 +117,10 @@ const Controller = (props) => {
   }, [kits, currentKitId])
 
   useEffect(() => {
-    // console.log('[ controller ] kitBuffers', kitBuffers)
-    if (all.length < 1 && kitBuffers[0].buffer) addTrack(0)
+    console.log('[ controller ] kitBuffers', kitBuffers)
+    if (all.length < 1 && kitBuffers.length > 0 && kitBuffers[0].buffer) addTrack(0)
   }, [kitBuffers, all])
 
-
-
-  
 
   useEffect(() => { 
     if (verbs) {
@@ -129,7 +134,12 @@ const Controller = (props) => {
 
   useEffect(() => {
     SEQUENCER.updateCurrentBar(currentBar) 
-  }, [currentBar]);
+  }, [currentBar])
+
+  // if (kitBuffers.length < 1) return <p>Loading..</p>
+
+  if ( isDataLoading || !kitBuffers.length ) return <h1>Loading...</h1>
+  if ( error ) return <h1>Something went wrong!</h1>
 
   return (
       <div className={classes.controller}>

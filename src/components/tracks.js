@@ -20,7 +20,7 @@ const Tracks = forwardRef((props, ref) => {
   }, [])
 
   useEffect(() => {
-    console.log('[ TRACKS ] tracks numBars zoom CHANGE', all, numBars, zoom)
+    // console.log('[ TRACKS ] tracks numBars zoom CHANGE', all, numBars, zoom)
   }, [ all, numBars, zoom ])
 
   return (

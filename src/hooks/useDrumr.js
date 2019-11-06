@@ -95,28 +95,37 @@ const useDrumr = () => {
     []
   )
 
-  const loadData = async (url) => {  
-    dispatch({ type: TYPES.IS_LOADING, value: true })
-    try {
-      const response = await axios.get(`./${url}.json`)
-      // console.log('Success!',response.data.kits);
-      dispatch({ type: TYPES.DATA_LOADED, value: response.data })
-    } catch (err) {
-      dispatch({ type: TYPES.HAS_ERROR, value: err })
+  // const loadData = async (url) => {  
+  //   dispatch({ type: TYPES.IS_LOADING, value: true })
+  //   try {
+  //     const response = await axios.get(`./${url}.json`)
+  //     // console.log('Success!',response.data.kits);
+  //     dispatch({ type: TYPES.DATA_LOADED, value: response.data })
+  //   } catch (err) {
+  //     dispatch({ type: TYPES.HAS_ERROR, value: err })
+  //   }
+  // }
+
+  const saveData = useCallback(
+    ({ kits, verbs }) => {
+      console.log('saveData', kits )
+      dispatch({ type: TYPES.STORE_KITS, value: kits })
+      dispatch({ type: TYPES.STORE_VERBS, value: verbs })
+      // loadBuffers(kits[currentKitId])
+    }, []
+  )
+
+  // const loadKitBuffers = async (data) => {
+  //   loadBuffers(data)
+  //   // console.log('[useDrumr]', audio)
+  //   // dispatch({ type: TYPES.UPDATE_KIT_BUFFERS, value: buffers })
+  // }
+
+  useEffect(() => { 
+    if(!loading && buffers) {
+      dispatch({ type: TYPES.UPDATE_KIT_BUFFERS, value: buffers })
     }
-  }
-
-  const loadKitData = async (data) => {
-    const buffers = loadBuffers(data)
-    console.log('[useDrumr]', buffers)
-    // dispatch({ type: TYPES.UPDATE_KIT_BUFFERS, value: buffers })
-  }
-
-  useEffect(() => {
-      if( !loading ) {
-          console.log('[ useDrumr ]', buffers)
-      } 
-  },[loading, buffers])
+  }, [buffers, loading])
 
   // const loadBuffer = async (data, callback) => {
   //   const request = new XMLHttpRequest();
@@ -168,8 +177,9 @@ const useDrumr = () => {
   }
 
   return {
-    loadData,
-    loadKitData,
+    saveData,
+    // loadKitBuffers,
+    loadBuffers,
     setCurrentKitId,
     isLoading,
     error,

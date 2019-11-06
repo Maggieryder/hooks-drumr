@@ -38,6 +38,10 @@ export const HAS_ERROR = 'HAS_ERROR'
 
 export const DATA_LOADED = 'DATA_LOADED'
 
+export const STORE_KITS = 'STORE_KITS'
+
+export const STORE_VERBS = 'STORE_VERBS'
+
 export const ADD_TRACK = 'ADD_TRACK'
 
 export const REMOVE_TRACK = 'REMOVE_TRACK'
