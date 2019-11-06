@@ -10,7 +10,8 @@ const useLoadData = (url, options) => {
             setIsLoading(true)
             try {
                 const res = await axios.get(url, options)
-                const json = await res.json()
+                console.log(res.data)
+                const json = await res.data.json()
                 setResponse(json)
                 setIsLoading(false)
             } catch (err) {
@@ -19,6 +20,9 @@ const useLoadData = (url, options) => {
         }
         loadData()
     }, [])
+    useEffect(() => {
+        console.log('useLoadData', response, error, isLoading)
+    }, [response, error, isLoading])
     return { response, error, isLoading }
 }
 

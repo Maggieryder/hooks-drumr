@@ -24,7 +24,9 @@ import uiclasses from '../components/ui/ui.module.scss'
 
 import { MIXER, SEQUENCER } from '../api'
 
-const Controller = () => {
+const Controller = (props) => {
+
+  console.log('props', props)
 
   const auth = useAuth()
 
@@ -65,7 +67,7 @@ const Controller = () => {
 
   useEffect(() => {
     console.log('[controller] INIT')
-    loadData('./resources')
+    // loadData('./resources')
     SEQUENCER.init(dispatch, triggerPlay)
     SEQUENCER.updateCurrentBar(currentBar)
     SEQUENCER.updateNumBars(numBars)
