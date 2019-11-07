@@ -33,11 +33,11 @@ const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
             console.log('[ Soundwave ] sizeHandler')
             setCanvasWidth(canvasRef.current.parentNode.clientWidth)
             setCanvasHeight(canvasRef.current.parentNode.clientHeight)
-            drawBuffer( buffer, track.color(), 0 )
+            drawBuffer( buffer, track ? track.color() : vars.waveWhite, 0 )
         }
         const triggerNoteHandler = (e) => {
             // console.log('triggerNoteHandler', e.detail.id())
-            if (e.detail.id() === track.id()){
+            if (track && e.detail.id() === track.id()){
                 triggerPlay({trackId: track.id(), value: true})
             }
         }
@@ -91,7 +91,7 @@ const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
             })
         } else {
             // triggerPlay({trackId: track.id(),value: false})
-            drawBuffer( buffer, track.color(), 0 ) 
+            drawBuffer( buffer, track ? track.color() : vars.waveWhite, 0 ) 
         }
         
         return(()=> {
@@ -143,7 +143,7 @@ const Soundwave = ({ onClickHandler, buffer, label, track, isMute }) => {
     }, [ canvasWidth, canvasHeight, canvasRef ])
 
     return (
-        <div id={track.id()} data-label={label} className={classes['sound-wave']} style={style} onClick={onClickHandler} >
+        <div id={track ? track.id() : ''} data-label={label} className={classes['sound-wave']} style={style} onClick={onClickHandler} >
             <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} />
         </div>
     )

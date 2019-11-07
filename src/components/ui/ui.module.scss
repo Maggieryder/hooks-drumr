@@ -345,13 +345,20 @@ select:-webkit-autofill:focus {
     border-radius: 0px;
     border: 2px solid $gray;
     color: $green;
-    fill: $orange;
+    fill: $green;
     font-size: .75rem;
     text-transform: uppercase;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     appearance: none;
+    user-select: none;
+    outline-color: transparent;
+
+    &:-moz-focusring { 
+        color: transparent!important;
+        text-shadow: 0 0 0 $green!important; 
+    }
 
     &::after {
         content:'5';
@@ -373,7 +380,7 @@ select:-webkit-autofill:focus {
     }
 
     option {
-        background-color: $orange!important;
+        background-color: $gray!important;
         border: none!important;
         border-radius: 0!important;
     }

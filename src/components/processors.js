@@ -6,6 +6,7 @@ import Label from './ui/label'
 import CurrentValue from './ui/currentValue'
 import Switch from './ui/switch'
 import Processor from './processor'
+import Soundwave from './ui/soundwave'
 
 import vars from '../scss/_vars.scss'
 import classes from './processors.module.scss'
@@ -24,13 +25,19 @@ const Processors = () => {
 
   return (
     <div className={classes.processors}>
-      { verbBuffers && <Processor type='reverb'>
+      { verbBuffers && <Processor type='reverb' style={{gridTemplateColumns: '82px 2fr 3fr'}}>
                           <Control>
                             <Label>Reverb</Label>
                             <Switch isOn={reverbOn} onClick={ () => setReverbOn(!reverbOn)} activeClass={vars.greencolor} />
                           </Control>
                           <Control>  
                             <Select options={verbBuffers} onValueChange={value => setReverbId(value)} initialValue={reverbId.toString()} />
+                          </Control>
+                          <Control>  
+                          <Soundwave label={verbBuffers[reverbId].label} 
+                            buffer={verbBuffers[reverbId].buffer}
+                            isMute={false}
+                            onClickHandler={() => {}} />
                           </Control>
                         </Processor> }
 

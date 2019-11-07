@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 
 import classes from './processor.module.scss'
 
-const Processor = ({children, type}) => {
+const Processor = ({children, type, style}) => {
 
     return (
-        <div className={classes.processor} type={type}>{children}</div>
+        <div className={classes.processor} type={type} style={style}>{children}</div>
     )
 }
 

@@ -35,12 +35,13 @@ const Status = () => {
     const currentTimeArr = msToTime(AUDIO_CONTEXT.currentTime.toFixed(3))
     return (
         <div className={classes.status} >
-            <div className={classes.ctxtime}>
+            {/* <div className={classes.ctxtime}>
                 <div>{currentTimeArr[0] +':'}</div>
                 <div>{currentTimeArr[1] +':'}</div>
                 <div>{currentTimeArr[2] +':'}</div>
                 <div>{currentTimeArr[3]}</div>
-            </div>
+            </div> */}
+            <div></div>
             <div></div>
             <div className={classes.barbeatstep} >
                 <div className={classes.statusbar}>{currentBar < 99 ? currentBar < 9 ? `00${currentBar + 1}` : `0${currentBar + 1}` : `${currentBar + 1}` }</div>
