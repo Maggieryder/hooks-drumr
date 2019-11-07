@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { AUDIO_CONTEXT } from '../api'
 
 import { sortOn } from '../utils/array'

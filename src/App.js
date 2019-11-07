@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Layout from './components/layout'
 import { ProvideAuth } from "./hooks/useAuth"
 
@@ -17,5 +17,3 @@ const App = (props) => {
 }
 
 export default App;
-
-// value={{state, dispatch}}

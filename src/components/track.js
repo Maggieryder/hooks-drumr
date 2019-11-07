@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useRef } from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 
 import Bars from './bars'

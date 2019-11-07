@@ -1,10 +1,10 @@
 import React from 'react'
-import paginate from '../../utils/paginate'
-import vars from '../../scss/_vars.scss';
+// import paginate from '../../utils/paginate'
+// import vars from '../../scss/_vars.scss';
 import classes from './ui.module.scss'
 
-const BarIndicator = ({ barClickHandler, removeClickHandler, addClickHandler, numBars, currentBar }) => {
-    const { pages, startPage } = paginate(numBars, currentBar, 1, 4)
+const BarIndicator = ({ removeClickHandler, addClickHandler, numBars, currentBar }) => {
+    // const { pages, startPage } = paginate(numBars, currentBar, 1, 4)
     // console.log('items.length', items.length)
     // console.log('pages', pages)
     // console.log('startIndex', startIndex)

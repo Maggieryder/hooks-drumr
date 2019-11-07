@@ -1,6 +1,6 @@
-import React, { Fragment, useRef } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { useInView } from 'react-intersection-observer'
+// import { useInView } from 'react-intersection-observer'
 // import { useSpring, animated } from 'react-spring'
 
 import Step from './step'
@@ -11,11 +11,11 @@ import useSequencer from '../hooks/useSequencer'
 
 const Bar = ( { trackId, barId, sequence, color, isMute } ) => {
 
-  const [ref, inView, entry] = useInView({
-    /* Options */
-    // threshold: 0,
-    rootMargin: '2% 0%',
-  })
+  // const [ref, inView, entry] = useInView({
+  //   /* Options */
+  //   // threshold: 0,
+  //   rootMargin: '2% 0%',
+  // })
 
   // const props = useSpring({ opacity: inView ? 1 : 0 })
 

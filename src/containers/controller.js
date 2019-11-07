@@ -37,7 +37,9 @@ const DRUM_COLORS = [magentacolor, purplecolor, orangecolor, cyancolor, neoncolo
 
 const Controller = () => {
 
-  const {state:{ controller, tracks }, dispatch} = useContext(DrumrContext)
+  const {state, dispatch} = useContext(DrumrContext)
+
+  const { controller, tracks } = state
 
   const { response, error, isDataLoading } = useLoadData('./resources.json')
 
@@ -53,7 +55,6 @@ const Controller = () => {
   } = controller
 
   const {
-    // dispatch,
     tempo, 
     setTempo, 
     swing, 
@@ -63,7 +64,7 @@ const Controller = () => {
     setNumSteps,
     currentBar,
     addBars,
-    removeBar,
+    removeBars,
     updateCurrentBar } = useSequencer()
 
   const { triggerPlay } = useTrack()
@@ -88,7 +89,6 @@ const Controller = () => {
 )
 
 
-
 const saveData = useCallback(
   ({ kits, verbs }) => {
     console.log('saveData', kits )
@@ -97,6 +97,7 @@ const saveData = useCallback(
     // loadBuffers(kits[currentKitId])
   }, []
 )
+
 
 const setCurrentKitId = useCallback(index => {
   console.log('setCurrentKit', index)
@@ -117,7 +118,7 @@ const setCurrentKitId = useCallback(index => {
   }, [])
 
   useEffect(() => {
-    console.log('[ controller ] response', response)
+    // console.log('[ controller ] response', response)
     if (response) {
       saveData(response)
     }  
@@ -163,7 +164,7 @@ const setCurrentKitId = useCallback(index => {
     SEQUENCER.updateCurrentBar(currentBar) 
   }, [currentBar])
 
-  if ( isDataLoading ) return <h1>Loading...</h1>
+  if ( isDataLoading || !kitBuffers ) return <h1>Loading...</h1>
   if ( error || isBufferError ) return <h1>Something went wrong!</h1>
 
   return (
@@ -199,7 +200,7 @@ const setCurrentKitId = useCallback(index => {
             <BarIndicator items={Array.from(Array(numBars).keys())} 
                       barClickHandler={updateCurrentBar} 
                       addClickHandler={addBars} 
-                      removeClickHandler={removeBar} 
+                      removeClickHandler={removeBars} 
                       numBars={numBars} 
                       currentBar={currentBar} />
             <Label>+/- 2 Bars</Label>

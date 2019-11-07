@@ -8,7 +8,7 @@ import { REVERB } from '../api'
 
 const useReverb = () => {
 
-    const {state:{ controller: { verbBuffers } }, dispatch} = useContext(DrumrContext)
+    const {state:{ controller: { verbBuffers } } } = useContext(DrumrContext)
 
     const [ reverbOn, setReverbOn ] = useState(false)
     const [ reverbId, setReverbId ] = useState(0)

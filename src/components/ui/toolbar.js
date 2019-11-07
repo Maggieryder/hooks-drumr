@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useCallback, useContext} from 'react'
 import ToolbarBtn from './toolbarBtn';
-// import Modal from './modal'
-// import Login from './login'
 
+import { DrumrContext } from '../../context/DrumrContext'
 import { useAuth } from "../../hooks/useAuth";
 import useViews from "../../hooks/useViews";
 import useSequencer from '../../hooks/useSequencer'
@@ -15,6 +14,15 @@ const toolbar = () => {
     const auth = useAuth()
     const { trackView, toggleTrackView, zoom, toggleZoom } = useViews()
     const { copyBars, pasteBars } = useSequencer()
+
+    const {state, dispatch} = useContext(DrumrContext)
+
+    const storeSong = useCallback(
+        (user, params) => {
+          console.log('storeSong', user, params )
+          // loadBuffers(kits[currentKitId])
+        }, []
+    )
     
     return (
         <nav className={classes.toolbar}>
@@ -59,7 +67,7 @@ const toolbar = () => {
                 </li>
                 <li>
                     <ToolbarBtn 
-                        clickHandler={auth.user ? ()=>{} : null} 
+                        clickHandler={auth.user ? () => storeSong(auth.user, state) : null} 
                         colors={[vars.defaultWhite,vars.hiliteWhite]} 
                         size={20} 
                         icon="folder-download"

@@ -87,7 +87,7 @@ const useSequencer = () => {
     [numBars, numSteps],
   )
 
-  const removeBar = useCallback(
+  const removeBars = useCallback(
     () => {
       if (numBars > 1) {
         SEQUENCER.updateNumBars( numBars - 2 )
@@ -152,7 +152,7 @@ const useSequencer = () => {
     currentStep,
     togglePlay,
     addBars,
-    removeBar,
+    removeBars,
     onNoteTap,
     updateCurrentBar,
     copyBars,

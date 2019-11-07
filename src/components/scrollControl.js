@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext, useRef, useMemo  } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { isFirefox } from "react-device-detect";
 import { useScroll, useDrag  } from 'react-use-gesture'
 import { useSpring, animated, interpolate, config } from 'react-spring'
@@ -18,7 +18,7 @@ import classes from './scrollControl.module.scss'
 
 const ScrollControl = () => {
 
-    const { zoom, trackView } = useContext(ViewsContext)[0]
+    const { zoom } = useContext(ViewsContext)[0]
 
     const { numBars, currentBar, updateCurrentBar, isPlaying, hasClipboard } = useSequencer()
 
@@ -30,6 +30,10 @@ const ScrollControl = () => {
     const [ isDragging, setIsDragging ] = useState(false)
     const [ userScroll, setUserScroll ] = useState(false)
     const [ isUpdating, setIsUpdating ] = useState(false)
+
+    // const scrollableAreaWidth = useMemo(() => boundaries(scrollerRef.current).width, [scrollerRef])
+    // const scrollableContentWidth = useMemo(() => boundaries(scrollerContentRef.current).width, [scrollerContentRef])
+    // const draggerWidth = useMemo(() => boundaries(draggerRef.current).width, [draggerRef])
 
     const [{ dragX, scrollX }, set] = useSpring(() => ({ dragX: 0, scrollX: 0, config: config.gentle }))
 
@@ -60,7 +64,7 @@ const ScrollControl = () => {
             const restingDragX = clamp(draggerSegment * newBarIndex, 0, maxDragRight)
             const restingScrollX = clamp(scrollerSegment * newBarIndex, 0, maxScrollRight)
             // console.log('dragging pos clamped', pos, clampedDragX)
-            console.log('dragging newBarIndex, restingDragX', newBarIndex, restingDragX)
+            // console.log('dragging newBarIndex, restingDragX', newBarIndex, restingDragX)
             const dragPosition = down ? clampedDragX : restingDragX
             const dragPercentage = dragPosition / scrollableAreaWidth
             console.log('dragPercentage', dragPercentage)
@@ -92,8 +96,8 @@ const ScrollControl = () => {
               // const restingScrollX = clamp(scrollerSegment * newBarIndex, 0, maxScrollRight)
               // const scrollPosition = down ? clampedScrollX : restingScrollX
               const scrollPercentage = clampedScrollX / scrollableAreaWidth
-              console.log('############# scrolling pos', pos)
-              console.log('############# scrolling newBarIndex', newBarIndex)
+              // console.log('############# scrolling pos', pos)
+              // console.log('############# scrolling newBarIndex', newBarIndex)
               console.log('############# scrolling scrollPercentage', scrollPercentage)
               // if(!down && !releaseDelay){ 
               // if (currentBar !== newBarIndex) updateCurrentBar(newBarIndex)
@@ -168,7 +172,6 @@ const ScrollControl = () => {
             // if (axis.current === 'x') set({ dragX: memo[0] + movement[0], immediate: true })
             // else if (axis.current === 'y') set({ draggerY: memo[1] + movement[1], immediate: true })
             if (!isFirefox) {
-              // if (axis.current === 'x' && trackView !== 1) {
               if (axis.current === 'x') {
                 scrollerRef.current.style.overflowY= 'hidden'
               } else {
