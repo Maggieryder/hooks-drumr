@@ -5,8 +5,6 @@ import { TrackContext } from '../context/TrackContext'
 
 import * as TYPES from '../actions/types'
 
-// import useDrumr from '../hooks/useDrumr'
-
 const useTrack = () => {
 
   const {state: { tracks: { all }, controller: { kitBuffers } }, dispatch } = useContext(DrumrContext)

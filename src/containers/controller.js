@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect, useCallback, useContext } from 'react'
 
 import Select from '../components/ui/select'
 import InputRange from '../components/ui/inputRange'
@@ -11,10 +11,10 @@ import Processors from '../components/processors'
 import Transport from '../components/transport'
 import ScrollControl from '../components/scrollControl'
 
-import { useAuth } from "../hooks/useAuth.js"
+import { useAuth } from "../hooks/useAuth"
 import useLoadData from '../hooks/useLoadData'
 
-import useDrumr from '../hooks/useDrumr'
+import { DrumrContext } from '../context/DrumrContext'
 import useSequencer from '../hooks/useSequencer'
 import useTrack from '../hooks/useTrack'
 
@@ -25,31 +25,35 @@ import vars from '../scss/_vars.scss'
 import classes from './controller.module.scss'
 import uiclasses from '../components/ui/ui.module.scss'
 
-import { MIXER, SEQUENCER } from '../api'
+import { AUDIO_CONTEXT, MIXER, SEQUENCER } from '../api'
 
 import * as TYPES from '../actions/types'
 
+import Track from '../api/Track'
+
+import { magentacolor, purplecolor, orangecolor, cyancolor, neoncolor } from '../scss/_vars.scss'
+
+const DRUM_COLORS = [magentacolor, purplecolor, orangecolor, cyancolor, neoncolor ]
+
 const Controller = () => {
+
+  const {state:{ controller, tracks }, dispatch} = useContext(DrumrContext)
 
   const { response, error, isDataLoading } = useLoadData('./resources.json')
 
-  const { isBufferLoading, loadBuffers } = useLoadBuffers()
+  const { isBufferLoading, isBufferError, loadBuffers } = useLoadBuffers()
 
   const auth = useAuth()
 
   const { 
-    // dispatch,
-    saveData, 
     kits, 
     currentKitId, 
-    setCurrentKitId, 
     kitBuffers,
-    verbs,   
-    tracks,
-    addTrack } = useDrumr()
+    verbs   
+  } = controller
 
   const {
-    dispatch,
+    // dispatch,
     tempo, 
     setTempo, 
     swing, 
@@ -62,9 +66,12 @@ const Controller = () => {
     removeBar,
     updateCurrentBar } = useSequencer()
 
-    const { triggerPlay } = useTrack()
+  const { triggerPlay } = useTrack()
 
-    const { all, soloed, muted } = tracks
+  const { all, soloed, muted } = tracks
+
+  const [isKitLoading, setKitLoading] = useState(false)
+  const [isVerbLoading, setVerbLoading] = useState(false)
 
 
   const numStepsOptions = [
@@ -72,14 +79,39 @@ const Controller = () => {
     {label:'16', value:16}
   ]
 
+  const addTrack = useCallback((id) => {
+    const track = new Track(id, DRUM_COLORS[id], AUDIO_CONTEXT, MIXER)
+    dispatch({ type: TYPES.ADD_SEQUENCE, value: { trackId:track.id(), numSteps, numBars } })
+    dispatch({ type: TYPES.ADD_TRACK, value: { track: track } })
+  },
+  [ numSteps, numBars ]
+)
+
+
+
+const saveData = useCallback(
+  ({ kits, verbs }) => {
+    console.log('saveData', kits )
+    dispatch({ type: TYPES.STORE_KITS, value: kits })
+    dispatch({ type: TYPES.STORE_VERBS, value: verbs })
+    // loadBuffers(kits[currentKitId])
+  }, []
+)
+
+const setCurrentKitId = useCallback(index => {
+  console.log('setCurrentKit', index)
+  dispatch({ type: TYPES.UPDATE_KIT_ID, value: index })
+})
+
   useEffect(() => {
     console.log('[controller] INIT', )
     SEQUENCER.init(dispatch, triggerPlay)
     SEQUENCER.updateCurrentBar(currentBar)
     SEQUENCER.updateNumBars(numBars)
     SEQUENCER.updateTempo(tempo)
-    // addTrack(0)
+    addTrack(0)
     return (() => {
+      // console.log('should never get here!')
       SEQUENCER.destroy()
     })
   }, [])
@@ -93,30 +125,29 @@ const Controller = () => {
 
   useEffect(() => {
     if (kits) {
-      // console.log('loadBuffers kits', kits, currentKitId)
+      setKitLoading(true)
       loadBuffers(kits[currentKitId], (bufferData) => {
         dispatch({ type: TYPES.UPDATE_KIT_BUFFERS, value: bufferData })
+        setKitLoading(false)
       })
     }  
   }, [kits, currentKitId])
 
   useEffect(() => { 
     if (verbs) {
-      // console.log('verbs', verbs[0])
+      setVerbLoading(true)
       loadBuffers(verbs[0], (bufferData) => {
         dispatch({ type: TYPES.UPDATE_VERB_BUFFERS, value: bufferData })
+        setVerbLoading(false)
       })
     } 
   }, [verbs])
 
-  // useEffect(() => {
-  //   // console.log('[ controller ] all length', all.length)
-  //   SEQUENCER.updateTracks(all)
-  //   MIXER.updateTracks(all)
-  //   return (() => {
-      
-  //   })
-  // }, [all])
+  useEffect(() => {
+    console.log('[ controller ] tracks: all', all)
+    SEQUENCER.updateTracks(all)
+    MIXER.updateTracks(all)   
+  }, [all])
 
   useEffect(() => {
     // console.log('[ controller ] soloed', soloed)
@@ -128,28 +159,12 @@ const Controller = () => {
     MIXER.updateMutedTracks(muted)
   }, [muted])
 
-  // useEffect(() => {
-  //   console.log('[ controller ] kitBuffers', kitBuffers)
-  //   // if (all.length < 1 && kitBuffers && kitBuffers[0].buffer) addTrack(0)
-  // }, [kitBuffers])
-
-  useEffect(() => {
-    console.log('[ controller ] tracks: all', all)
-    if (all.length < 1)  {
-      addTrack(0)
-    } else {
-      SEQUENCER.updateTracks(all)
-      MIXER.updateTracks(all)
-    } 
-  }, [all])
-
-
   useEffect(() => {
     SEQUENCER.updateCurrentBar(currentBar) 
   }, [currentBar])
 
-  if ( isDataLoading || isBufferLoading ) return <h1>Loading...</h1>
-  if ( error ) return <h1>Something went wrong!</h1>
+  if ( isDataLoading ) return <h1>Loading...</h1>
+  if ( error || isBufferError ) return <h1>Something went wrong!</h1>
 
   return (
       <div className={classes.controller}>

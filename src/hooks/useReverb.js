@@ -1,15 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { DrumrContext } from '../context/DrumrContext'
 
-// import { DrumrContext } from '../context/DrumrContext'
 // import * as TYPES from '../actions/types'
 
 import { REVERB } from '../api'
 
-import useDrumr from './useDrumr'
 
 const useReverb = () => {
 
-    const { verbBuffers } = useDrumr()
+    const {state:{ controller: { verbBuffers } }, dispatch} = useContext(DrumrContext)
 
     const [ reverbOn, setReverbOn ] = useState(false)
     const [ reverbId, setReverbId ] = useState(0)

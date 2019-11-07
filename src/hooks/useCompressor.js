@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react'
 // import { DrumrContext } from '../context/DrumrContext'
 // import * as TYPES from '../actions/types'
 
-// import useDrumr from './useDrumr'
-
 import { COMPRESSOR } from '../api'
 
 const useCompressor = () => {

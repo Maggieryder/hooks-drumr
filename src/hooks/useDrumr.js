@@ -44,8 +44,6 @@ const useDrumr = () => {
   const { numSteps, numBars } = sequencer
   // console.log(tracks)
 
-  // const { buffers, id, loading, loadBuffers } = useLoadBuffers()
-
   const { 
     isLoading,
     error,
@@ -57,9 +55,6 @@ const useDrumr = () => {
     currentVerbId
      } = controller
 
-  // const [tracks, dispatch] = useReducer(tracksReducer, initialState)
-
-  // console.log('tracks',tracks)
 
   // const [tracks, dispatch] = useReducer((tracks, { type, value }) => {
   //   switch (type) {
@@ -72,17 +67,21 @@ const useDrumr = () => {
   //   }
   // }, []);
 
-  const addTrack = useCallback((id, color) => {
-    const track = new Track(id, DRUM_COLORS[id], AUDIO_CONTEXT, MIXER)
-    // console.log('addTrack', track)
-    // setState(state => ({ 
-    //   ...state, 
-    //   tracks: [...state.tracks, track] 
-    // }))
-    
+  // const loadData = async (url) => {  
+  //   dispatch({ type: TYPES.IS_LOADING, value: true })
+  //   try {
+  //     const response = await axios.get(`./${url}.json`)
+  //     // console.log('Success!',response.data.kits);
+  //     dispatch({ type: TYPES.DATA_LOADED, value: response.data })
+  //   } catch (err) {
+  //     dispatch({ type: TYPES.HAS_ERROR, value: err })
+  //   }
+  // }
+
+  const addTrack = useCallback((id) => {
+      const track = new Track(id, DRUM_COLORS[id], AUDIO_CONTEXT, MIXER)
       dispatch({ type: TYPES.ADD_SEQUENCE, value: { trackId:track.id(), numSteps, numBars } })
       dispatch({ type: TYPES.ADD_TRACK, value: { track: track } })
-    // console.log(' - - - TRACKS', tracks)
     },
     [ numSteps, numBars ]
   )
@@ -94,18 +93,7 @@ const useDrumr = () => {
     },
     []
   )
-
-  // const loadData = async (url) => {  
-  //   dispatch({ type: TYPES.IS_LOADING, value: true })
-  //   try {
-  //     const response = await axios.get(`./${url}.json`)
-  //     // console.log('Success!',response.data.kits);
-  //     dispatch({ type: TYPES.DATA_LOADED, value: response.data })
-  //   } catch (err) {
-  //     dispatch({ type: TYPES.HAS_ERROR, value: err })
-  //   }
-  // }
-    
+  
   const saveData = useCallback(
     ({ kits, verbs }) => {
       console.log('saveData', kits )
@@ -115,82 +103,13 @@ const useDrumr = () => {
     }, []
   )
 
-  // useEffect(() => {
-  //   if (kits) {
-  //     // console.log('loadBuffers kits', kits, currentKitId)
-  //     // loadBuffers(kits[currentKitId], 'kitBuffers')
-  //     loadBuffers(kits[currentKitId], 'kit')
-  //   }  
-  // }, [kits, currentKitId])
-
-  // useEffect(() => { 
-  //   if (verbs) {
-  //     // console.log('verbs', verbs[0])
-  //     // loadBuffers(verbs[0], 'verb')
-  //   } 
-  // }, [verbs])
-
-  // useEffect(() => { 
-  //   if(!loading && buffers) {
-  //     console.log('buffers loaded',id)
-  //     const bufferType = id === 'verb' ? TYPES.UPDATE_VERB_BUFFERS : TYPES.UPDATE_KIT_BUFFERS
-  //     dispatch({ type: bufferType, value: buffers })
-  //   }
-  // }, [buffers, id, loading])
-
-  // const loadBuffer = async (data, callback) => {
-  //   const request = new XMLHttpRequest();
-  //     //header('Access-Control-Allow-Origin: *');
-  //     request.open('get', data.url, true);
-  //     request.responseType = 'arraybuffer';
-  //     request.onload = function() {
-  //       AUDIO_CONTEXT.decodeAudioData(request.response, function(buffer) {
-  //         callback(buffer);
-  //       },
-  //       function(e){ alert("Error with decoding audio data", e ); });
-  //     };
-  //     request.send();
-  // }
-
-  // const loadBuffers = async ({directory, voices}, type) => {
-  //   let buffersToLoad = voices.length,
-  //   buffers = [] 
-  //   // console.log('loadBuffers voices', voices) 
-  //   dispatch({ type: TYPES.IS_LOADING, value: true })
-  //   voices.map((voice, i) => {
-  //     const voiceData = {
-  //       url: PATH + directory + voice.smple,
-  //       label: voice.label,
-  //       value: voice.value
-  //     }
-  //     // console.log('voiceData', voiceData)
-  //     return loadBuffer( voiceData, (buffer) => {
-  //       buffers[i] = {
-  //         buffer: buffer,
-  //         label: voiceData.label,
-  //         value: voiceData.value
-  //       }
-  //       // console.log('buffers[i]',buffers[i]);
-  //       buffersToLoad --
-  //       // console.log('buffersToLoad', buffersToLoad)
-  //       if (buffersToLoad < 1) {
-  //         const bufferType = type === 'verbBuffers' ? TYPES.UPDATE_VERB_BUFFERS : TYPES.UPDATE_KIT_BUFFERS
-  //         dispatch({ type: bufferType, value: buffers })
-  //       } 
-  //       return buffers
-  //     })
-  //   })
-  // }
-
-  const setCurrentKitId = index => {
+  const setCurrentKitId = useCallback(index => {
     console.log('setCurrentKit', index)
     dispatch({ type: TYPES.UPDATE_KIT_ID, value: index })
-  }
+  })
 
   return {
     saveData,
-    // loadKitBuffers,
-    // loadBuffers,
     setCurrentKitId,
     isLoading,
     error,

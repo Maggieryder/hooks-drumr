@@ -23,6 +23,8 @@ const Tracks = forwardRef((props, ref) => {
     // console.log('[ TRACKS ] tracks numBars zoom CHANGE', all, numBars, zoom)
   }, [ all, numBars, zoom ])
 
+  // if (!kitBuffers || !verbBuffers) return null
+
   return (
       <div ref={ref} className={classes.tracks} style={{width: `${100 * (numBars/zoom) }%`}}>         
           { kitBuffers && all.map((track, i ) => {

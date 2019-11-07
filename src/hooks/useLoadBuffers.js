@@ -8,6 +8,7 @@ const PATH = 'assets/audio/'
 const useLoadBuffers = () => {
     // const [buffers, setBuffers] = useState(null)
     const [isBufferLoading, setBufferLoading] = useState(false)
+    const [isBufferError, setBufferError] = useState(null)
 
     const loadBuffer = async (data, callback) => {
         const request = new XMLHttpRequest()
@@ -18,13 +19,14 @@ const useLoadBuffers = () => {
             AUDIO_CONTEXT.decodeAudioData(request.response, function(buffer) {
                 callback(buffer)
             },
-            function(e){ console.log("Error with decoding audio data", e ) })
+            (e) => setBufferError('Error with decoding audio data', e) )
         }
         request.send()
     }
     
     const loadBuffers = async ({directory, voices}, callback) => {
         setBufferLoading(true)
+        setBufferError(null)
         let buffersToLoad = voices.length,
         data = []
         voices.map((voice, i) => {
@@ -44,8 +46,8 @@ const useLoadBuffers = () => {
                 if (buffersToLoad < 1) {
                     const orderedData = data.sort(sortOn('value'))
                     // setBuffers(orderedData)
-                    setBufferLoading(false)  
                     callback(orderedData)
+                    setBufferLoading(false) 
                 }
             })
         })
@@ -53,6 +55,7 @@ const useLoadBuffers = () => {
 
     return { 
         // buffers, 
+        isBufferError,
         isBufferLoading, 
         loadBuffers 
     }

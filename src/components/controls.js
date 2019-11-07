@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import Control from './control'
 import Select from './ui/select'
@@ -9,7 +9,10 @@ import Switch from './ui/switch'
 import IconBtn from './ui/iconBtn'
 import Soundwave from './ui/soundwave'
 
-import useDrumr from '../hooks/useDrumr'
+import * as TYPES from '../actions/types'
+
+import { DrumrContext } from '../context/DrumrContext'
+
 import useTrack from '../hooks/useTrack'
 
 import { AUDIO_CONTEXT } from '../api'
@@ -20,7 +23,7 @@ import classes from './controls.module.scss'
 
 const Controls = ( { track } ) => {
 
-  const { tracks: { all, soloed }, kitBuffers, removeTrack } = useDrumr()
+  const {state:{ controller: { kitBuffers }, tracks: { all, soloed } }, dispatch} = useContext(DrumrContext)
 
   const { 
     voiceId, setVoiceId,
@@ -32,6 +35,14 @@ const Controls = ( { track } ) => {
     solo, setSolo,
     triggerPlay
   } = useTrack();
+
+  const removeTrack = useCallback((id) => {
+    dispatch({ type: TYPES.REMOVE_TRACK, trackId: id })
+    dispatch({ type: TYPES.REMOVE_SEQUENCE, trackId: id })
+  // console.log(' - - - TRACKS', tracks)
+  },
+  []
+)
 
   useEffect(() => {
     console.log('[track] INIT', track.id())
