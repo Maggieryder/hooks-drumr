@@ -44,7 +44,7 @@ const useDrumr = () => {
   const { numSteps, numBars } = sequencer
   // console.log(tracks)
 
-  const { buffers, loading, loadBuffers } = useLoadBuffers()
+  // const { buffers, id, loading, loadBuffers } = useLoadBuffers()
 
   const { 
     isLoading,
@@ -105,7 +105,7 @@ const useDrumr = () => {
   //     dispatch({ type: TYPES.HAS_ERROR, value: err })
   //   }
   // }
-
+    
   const saveData = useCallback(
     ({ kits, verbs }) => {
       console.log('saveData', kits )
@@ -115,17 +115,28 @@ const useDrumr = () => {
     }, []
   )
 
-  // const loadKitBuffers = async (data) => {
-  //   loadBuffers(data)
-  //   // console.log('[useDrumr]', audio)
-  //   // dispatch({ type: TYPES.UPDATE_KIT_BUFFERS, value: buffers })
-  // }
+  // useEffect(() => {
+  //   if (kits) {
+  //     // console.log('loadBuffers kits', kits, currentKitId)
+  //     // loadBuffers(kits[currentKitId], 'kitBuffers')
+  //     loadBuffers(kits[currentKitId], 'kit')
+  //   }  
+  // }, [kits, currentKitId])
 
-  useEffect(() => { 
-    if(!loading && buffers) {
-      dispatch({ type: TYPES.UPDATE_KIT_BUFFERS, value: buffers })
-    }
-  }, [buffers, loading])
+  // useEffect(() => { 
+  //   if (verbs) {
+  //     // console.log('verbs', verbs[0])
+  //     // loadBuffers(verbs[0], 'verb')
+  //   } 
+  // }, [verbs])
+
+  // useEffect(() => { 
+  //   if(!loading && buffers) {
+  //     console.log('buffers loaded',id)
+  //     const bufferType = id === 'verb' ? TYPES.UPDATE_VERB_BUFFERS : TYPES.UPDATE_KIT_BUFFERS
+  //     dispatch({ type: bufferType, value: buffers })
+  //   }
+  // }, [buffers, id, loading])
 
   // const loadBuffer = async (data, callback) => {
   //   const request = new XMLHttpRequest();
@@ -179,7 +190,7 @@ const useDrumr = () => {
   return {
     saveData,
     // loadKitBuffers,
-    loadBuffers,
+    // loadBuffers,
     setCurrentKitId,
     isLoading,
     error,

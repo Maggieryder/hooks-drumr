@@ -9,7 +9,7 @@ const initialState = {
   error: null,
   kits: null,
   verbs: null,
-  kitBuffers: [],
+  kitBuffers: null,
   verbBuffers: null,
   currentKitId: 1,
   currentVerbId: 0 

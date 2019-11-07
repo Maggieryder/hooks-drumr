@@ -18,6 +18,8 @@ import useDrumr from '../hooks/useDrumr'
 import useSequencer from '../hooks/useSequencer'
 import useTrack from '../hooks/useTrack'
 
+import useLoadBuffers from '../hooks/useLoadBuffers'
+
 import vars from '../scss/_vars.scss'
 
 import classes from './controller.module.scss'
@@ -25,15 +27,19 @@ import uiclasses from '../components/ui/ui.module.scss'
 
 import { MIXER, SEQUENCER } from '../api'
 
+import * as TYPES from '../actions/types'
+
 const Controller = () => {
 
   const { response, error, isDataLoading } = useLoadData('./resources.json')
 
+  const { isBufferLoading, loadBuffers } = useLoadBuffers()
+
   const auth = useAuth()
 
   const { 
+    // dispatch,
     saveData, 
-    loadBuffers, 
     kits, 
     currentKitId, 
     setCurrentKitId, 
@@ -68,7 +74,6 @@ const Controller = () => {
 
   useEffect(() => {
     console.log('[controller] INIT', )
-    // saveData(props)
     SEQUENCER.init(dispatch, triggerPlay)
     SEQUENCER.updateCurrentBar(currentBar)
     SEQUENCER.updateNumBars(numBars)
@@ -87,13 +92,31 @@ const Controller = () => {
   }, [response])
 
   useEffect(() => {
-    // console.log('[ controller ] all length', all.length)
-    SEQUENCER.updateTracks(all)
-    MIXER.updateTracks(all)
-    return (() => {
+    if (kits) {
+      // console.log('loadBuffers kits', kits, currentKitId)
+      loadBuffers(kits[currentKitId], (bufferData) => {
+        dispatch({ type: TYPES.UPDATE_KIT_BUFFERS, value: bufferData })
+      })
+    }  
+  }, [kits, currentKitId])
+
+  useEffect(() => { 
+    if (verbs) {
+      // console.log('verbs', verbs[0])
+      loadBuffers(verbs[0], (bufferData) => {
+        dispatch({ type: TYPES.UPDATE_VERB_BUFFERS, value: bufferData })
+      })
+    } 
+  }, [verbs])
+
+  // useEffect(() => {
+  //   // console.log('[ controller ] all length', all.length)
+  //   SEQUENCER.updateTracks(all)
+  //   MIXER.updateTracks(all)
+  //   return (() => {
       
-    })
-  }, [all])
+  //   })
+  // }, [all])
 
   useEffect(() => {
     // console.log('[ controller ] soloed', soloed)
@@ -105,40 +128,27 @@ const Controller = () => {
     MIXER.updateMutedTracks(muted)
   }, [muted])
 
-  useEffect(() => {
-    if (kits) {
-      // console.log('loadBuffers kits', kits, currentKitId)
-      // loadBuffers(kits[currentKitId], 'kitBuffers')
-      loadBuffers(kits[currentKitId])
-    }  
-    return (() => {
-      
-    })
-  }, [kits, currentKitId])
+  // useEffect(() => {
+  //   console.log('[ controller ] kitBuffers', kitBuffers)
+  //   // if (all.length < 1 && kitBuffers && kitBuffers[0].buffer) addTrack(0)
+  // }, [kitBuffers])
 
   useEffect(() => {
-    console.log('[ controller ] kitBuffers', kitBuffers)
-    if (all.length < 1 && kitBuffers.length > 0 && kitBuffers[0].buffer) addTrack(0)
-  }, [kitBuffers, all])
-
-
-  useEffect(() => { 
-    if (verbs) {
-      // console.log('verbs', verbs[0])
-      // loadBuffers(verbs[0], 'verbBuffers')
+    console.log('[ controller ] tracks: all', all)
+    if (all.length < 1)  {
+      addTrack(0)
+    } else {
+      SEQUENCER.updateTracks(all)
+      MIXER.updateTracks(all)
     } 
-    return (() => {
-      
-    })
-  }, [verbs])
+  }, [all])
+
 
   useEffect(() => {
     SEQUENCER.updateCurrentBar(currentBar) 
   }, [currentBar])
 
-  // if (kitBuffers.length < 1) return <p>Loading..</p>
-
-  if ( isDataLoading || !kitBuffers.length ) return <h1>Loading...</h1>
+  if ( isDataLoading || isBufferLoading ) return <h1>Loading...</h1>
   if ( error ) return <h1>Something went wrong!</h1>
 
   return (

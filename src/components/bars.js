@@ -20,7 +20,7 @@ const Bars = ( { track } ) => {
   // const onScroll = useCallback(e => {console.log('scolling')}, [])
 
   useEffect(() => {
-    console.log('SSSSSSEQUENCES', sequences)
+    // console.log('SSSSSSEQUENCES', sequences)
     // console.log('[ Bars ] barSequence', track.id(), ': ', barSequence)
     SEQUENCER.updateSequences(sequences)
     setBarSequence(sequences.filter(s => s.id === track.id())[0].sequence)

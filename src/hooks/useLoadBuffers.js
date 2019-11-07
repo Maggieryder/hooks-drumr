@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react'
 import { AUDIO_CONTEXT } from '../api'
 
+import { sortOn } from '../utils/array'
+
 const PATH = 'assets/audio/'
 
 const useLoadBuffers = () => {
-    const [buffers, setBuffers] = useState(null)
-    const [loading, setLoading] = useState(false)
-
-    // useEffect(() => {
-    //     if( !loading ) {
-    //         // console.log('[ useLoadBuffers ]', buffers)
-    //     } 
-    // },[loading, buffers])
+    // const [buffers, setBuffers] = useState(null)
+    const [isBufferLoading, setBufferLoading] = useState(false)
 
     const loadBuffer = async (data, callback) => {
         const request = new XMLHttpRequest()
@@ -27,9 +23,8 @@ const useLoadBuffers = () => {
         request.send()
     }
     
-    const loadBuffers = async ({directory, voices}) => {
-        console.log('directory, voices', directory, voices)
-        setLoading(true)
+    const loadBuffers = async ({directory, voices}, callback) => {
+        setBufferLoading(true)
         let buffersToLoad = voices.length,
         data = []
         voices.map((voice, i) => {
@@ -44,21 +39,21 @@ const useLoadBuffers = () => {
                     label: voiceData.label,
                     value: voiceData.value
                 })
-                console.log('buffer', buffersToLoad)
+                // console.log('buffer', buffersToLoad)
                 buffersToLoad --
                 if (buffersToLoad < 1) {
-                    setBuffers(data)
-                    setLoading(false)
-                    
+                    const orderedData = data.sort(sortOn('value'))
+                    // setBuffers(orderedData)
+                    setBufferLoading(false)  
+                    callback(orderedData)
                 }
             })
-            // return false
         })
     }
 
     return { 
-        buffers, 
-        loading, 
+        // buffers, 
+        isBufferLoading, 
         loadBuffers 
     }
 }

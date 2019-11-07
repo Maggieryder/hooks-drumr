@@ -45,7 +45,7 @@ const Controls = ( { track } ) => {
 
   useEffect(() => {
     // console.log('[Controls] track.id voiceId', track.id(), voiceId)
-    console.log('[ Controls ] kitBuffers[voiceId].label', kitBuffers[voiceId].label)
+    // console.log('[ Controls ] kitBuffers[voiceId].label', kitBuffers[voiceId].label)
     if(kitBuffers) all[track.id()].assignTrackBuffer(kitBuffers[voiceId].buffer)
     // all[track.id()].triggerSample(AUDIO_CONTEXT.currentTime)
     return (() => {

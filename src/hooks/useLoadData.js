@@ -19,6 +19,8 @@ const useLoadData = (url, options) => {
         }
         loadData()
         return (() => {
+            setResponse(null)
+            setError(null)
             setDataLoading(false)
         })
     }, [])

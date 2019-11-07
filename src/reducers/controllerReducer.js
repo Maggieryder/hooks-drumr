@@ -32,6 +32,7 @@ export default function(state = initialState, action) {
               isLoading: false
             }
         case TYPES.UPDATE_VERB_BUFFERS:
+            console.log('REDUCER update verbBuffers', action.value)
             return {
               ...state,
               verbBuffers: action.value,

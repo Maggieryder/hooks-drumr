@@ -112,9 +112,9 @@ const ScrollControl = () => {
     )
 
     useEffect(() => {
-        console.log('currentBar change', currentBar)
-        console.log('isDragging', isDragging)
-        console.log('userScroll', userScroll)
+        // console.log('currentBar change', currentBar)
+        // console.log('isDragging', isDragging)
+        // console.log('userScroll', userScroll)
         let updateID 
         if (!isDragging && !userScroll) {
           scrollerRef.current.style.scrollBehavior = 'smooth'
@@ -146,7 +146,7 @@ const ScrollControl = () => {
     }, [currentBar, isDragging, userScroll, setIsUpdating])
 
     useEffect(() => {
-      console.log('[ SCROLL_CONTROLL ] isPlaying', isPlaying )
+      // console.log('[ SCROLL_CONTROLL ] isPlaying', isPlaying )
       scrollerRef.current.style.overflowX = isPlaying ? 'hidden' : 'auto' 
       // scrollerRef.current.style.scrollBehavior = isUpdating ? 'smooth' : 'auto'
     }, [ isPlaying ])

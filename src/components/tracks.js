@@ -10,7 +10,7 @@ import { ViewsContext } from '../context/ViewsContext'
 
 const Tracks = forwardRef((props, ref) => {
 
-  const {state:{ tracks: { all }, sequencer: { numBars } } } = useContext(DrumrContext)
+  const {state:{ tracks: { all }, sequencer: { numBars }, controller: { kitBuffers } } } = useContext(DrumrContext)
   const { zoom } = useContext(ViewsContext)[0]
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Tracks = forwardRef((props, ref) => {
 
   return (
       <div ref={ref} className={classes.tracks} style={{width: `${100 * (numBars/zoom) }%`}}>         
-          { all.map((track, i ) => {
+          { kitBuffers && all.map((track, i ) => {
             return <Track key={i} track={track} />
           }) }
       </div>
